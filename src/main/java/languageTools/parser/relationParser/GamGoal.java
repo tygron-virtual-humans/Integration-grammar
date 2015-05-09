@@ -25,4 +25,8 @@ public class GamGoal {
 			  return false;
 		  }
 	  }
+	
+	public String toString() {
+		 return "{GOAL: " + value + ", " + goal + ", " + agent + "}";
+	}
 }

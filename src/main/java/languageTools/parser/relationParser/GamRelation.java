@@ -31,5 +31,7 @@ public class GamRelation {
 			  return false;
 		  }
 	  }
-
+	public String toString() {
+		return "{REL: " + agent1 + ", " + agent2 + ", " + value + "}"; 
+	}
 }

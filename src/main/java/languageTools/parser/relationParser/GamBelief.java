@@ -39,4 +39,8 @@ public class GamBelief {
 			  return false;
 		  }
 	  }
+	
+	public String toString() {
+		return "{BEL: " + likelihood + ", " + congruence + ", " + isIncremental + ", " + affected + ", " + causal + "}";
+	}
 }
