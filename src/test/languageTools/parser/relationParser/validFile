@@ -1,0 +1,3 @@
+BEL, 0.2, agent1, agent2, 0.1, false
+REL, agent1, agent2, -1
+GOAL, agent1, goal1, 3

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class EmotionConfig {
 	
-	ArrayList<GamBelief> believes;
+	ArrayList<GamBelief> beliefs;
 	ArrayList<GamGoal> goals;
 	ArrayList<GamRelation> relations;
 	
@@ -14,10 +14,28 @@ public class EmotionConfig {
 	 * @param goals
 	 * @param relations
 	 */
-  public EmotionConfig(ArrayList<GamBelief> believes,ArrayList<GamGoal> goals,ArrayList<GamRelation> relations ) {
-		this.believes = believes;
+  public EmotionConfig(ArrayList<GamBelief> beliefs,ArrayList<GamGoal> goals,ArrayList<GamRelation> relations ) {
+		this.beliefs = beliefs;
 		this.goals = goals;
 		this.relations = relations;
 	}
-
+  
+  public boolean equals(Object object) {
+	  if(object instanceof EmotionConfig) {
+		  EmotionConfig other = (EmotionConfig) object;
+		  Boolean value = true;
+		  if(!this.beliefs.equals(other.beliefs)) {
+			  value = false;
+		  }
+		  if(!this.goals.equals(other.goals)) {
+			  value = false;
+		  }
+		  if(!this.relations.equals(other.relations)) {
+			  value = false;
+		  }
+		  return value;
+	  } else {
+		  return false;
+	  }
+  }
 }
