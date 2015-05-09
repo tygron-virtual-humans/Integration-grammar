@@ -20,39 +20,20 @@ public class RelationParser {
 		String[] objects = line.split(",");
 		
 		if(objects[0] == "BEL"){
-			double likelihood = Double.parseDouble(objects[1]);
-			String causal = objects[2];
-			String affected = objects[3];
-			double congruence = Double.parseDouble(objects[4]);
-			String isincremental = null;
 			
-			//check if it is specifed
-			if(!objects[5].equals(null)){
-			isincremental = objects[5];
-			}
-			
-			GamBelief belief = new GamBelief(likelihood,causal,affected,congruence,isincremental);
+			GamBelief belief = parseBelief(objects);
 			believes.add(belief);
 		}
 		
 		if(objects[0] == "REL"){
-			String agent1 = objects[1];
-			String agent2 = objects[2];
-			double value = Double.parseDouble(objects[3]);
-			GamRelation relation = new GamRelation(agent1,agent2,value);
-			relations.add(relation);
 			
-		}
-				
+			GamRelation relation = parseRelation(objects);
+			relations.add(relation);
+		}	
 		if(objects[0] == "GOAL"){
 			
-			String agent = objects[1];
-			String goal = objects[2];
-			double value = Double.parseDouble(objects[3]);
-			
-			GamGoal gamgoal = new GamGoal(agent,goal,value);
-			goals.add(gamgoal);
-			
+			GamGoal gamgoal = parseGoal(objects);
+			goals.add(gamgoal);	
 		}
 	
 	}
@@ -62,5 +43,42 @@ public class RelationParser {
 	return configuration;
 	}
 	
+	
+	
+	public static GamBelief parseBelief(String[] objects){
+		
+		double likelihood = Double.parseDouble(objects[1]);
+		String causal = objects[2];
+		String affected = objects[3];
+		double congruence = Double.parseDouble(objects[4]);
+		String isincremental = null;
+		
+		//check if it is specifed
+		if(!objects[5].equals(null)){
+		isincremental = objects[5];
+		}
+		
+		GamBelief belief = new GamBelief(likelihood,causal,affected,congruence,isincremental);
+		return belief;	
+	}
+	
+	
+	public static GamRelation parseRelation(String[] objects){
+		String agent1 = objects[1];
+		String agent2 = objects[2];
+		double value = Double.parseDouble(objects[3]);
+		GamRelation relation = new GamRelation(agent1,agent2,value);
+		return relation;
+	}
+	
+	
+	public static GamGoal parseGoal(String[] objects){
+		String agent = objects[1];
+		String goal = objects[2];
+		double value = Double.parseDouble(objects[3]);
+		
+		GamGoal gamgoal = new GamGoal(agent,goal,value);
+		return gamgoal;
+	}
 
 }

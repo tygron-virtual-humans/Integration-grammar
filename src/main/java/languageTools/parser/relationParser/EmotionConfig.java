@@ -8,8 +8,13 @@ public class EmotionConfig {
 	ArrayList<GamGoal> goals;
 	ArrayList<GamRelation> relations;
 	
-	
-	public EmotionConfig(ArrayList<GamBelief> believes,ArrayList<GamGoal> goals,ArrayList<GamRelation> relations ){
+	/**
+	 * 
+	 * @param believes
+	 * @param goals
+	 * @param relations
+	 */
+  public EmotionConfig(ArrayList<GamBelief> believes,ArrayList<GamGoal> goals,ArrayList<GamRelation> relations ) {
 		this.believes = believes;
 		this.goals = goals;
 		this.relations = relations;
