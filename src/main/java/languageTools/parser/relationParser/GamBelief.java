@@ -63,6 +63,6 @@ public class GamBelief {
 	 * toString method
 	 */
 	public String toString() {
-		return "{BEL: " + likelihood + ", " + congruence + ", " + isIncremental + ", " + affected + ", " + causal + "}";
+		return "{BEL: " + likelihood + ", " + causal +  ", " + affected + ", "  + congruence +   ", " + isIncremental +"}";
 	}
 }

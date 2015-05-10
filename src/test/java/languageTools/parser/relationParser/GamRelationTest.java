@@ -70,5 +70,20 @@ public class GamRelationTest {
 		
 		assertFalse(relation1.equals(relation2));
 	}
+	
+	@Test
+	public void testEqualsOtherObject() throws InvalidGamRelationException {
+		GamRelation relation1 = new GamRelation("agent1","agent2", 1);
+		String c = "dsad";
+		
+		assertFalse(relation1.equals(c));
+	}
+	
+	@Test
+	public void testToString() throws InvalidGamRelationException {
+		GamRelation relation1 = new GamRelation("agent1","agent2", 1);
+		String correct = "{REL: agent1, agent2, 1.0}";
+		assertEquals(correct, relation1.toString());
+	}
 
 }

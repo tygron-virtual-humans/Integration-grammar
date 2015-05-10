@@ -43,6 +43,6 @@ public class GamGoal {
 	 * toString method
 	 */
 	public String toString() {
-		 return "{GOAL: " + value + ", " + goal + ", " + agent + "}";
+		 return "{GOAL: " + agent +  ", " + goal + ", " + value +"}";
 	}
 }

@@ -47,4 +47,11 @@ public class EmotionConfig {
       return false;
     }
   }
+  
+  public String toString() {
+	  String bel = beliefs.toString();
+	  String goal = goals.toString();
+	  String rel = relations.toString();
+	  return "{Config: " + bel + ", " + goal + ", " + rel + "}";
+  }
 }
