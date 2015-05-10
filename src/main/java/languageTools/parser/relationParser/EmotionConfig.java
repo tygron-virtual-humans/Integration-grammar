@@ -2,6 +2,7 @@
  * A class that represents a configuration of emotions by its rules. You have goals for the agents, 
  * relations between them and beliefs about how bad or good some events are for the goals.
  */
+
 package languageTools.parser.relationParser;
 
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class EmotionConfig {
     }
   }
   
+  /**
+   * toString method.
+   */
   public String toString() {
 	  String bel = beliefs.toString();
 	  String goal = goals.toString();
