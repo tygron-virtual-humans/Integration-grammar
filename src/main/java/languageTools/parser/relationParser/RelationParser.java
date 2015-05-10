@@ -1,3 +1,6 @@
+/**
+ * This class contains the methods to parse a text documents given it has the correct syntax, it returns a correct EmotionConfig object.
+ */
 package languageTools.parser.relationParser;
 
 import java.io.File;
@@ -15,17 +18,26 @@ import languageTools.exceptions.relationParser.InvalidGamRelationString;
 
 public class RelationParser {
 	
-	
+	/**
+	 * Highest level parse method
+	 * @param file - input file
+	 * @return an EmtionConfig object
+	 * @throws FileNotFoundException - occurs when the file is not found
+	 * @throws InvalidEmotionConfigFile - occurs when the syntax is not right
+	 */
 	public static EmotionConfig parse(File file) throws FileNotFoundException, InvalidEmotionConfigFile{
+	// creating scanner + lists	
 	Scanner fileScanner = new Scanner(file);
 	ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
 	ArrayList<GamGoal> goals = new ArrayList<GamGoal>();
 	ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
+	
+	//creating resulting configuration
 	EmotionConfig configuration = new EmotionConfig(beliefs,goals,relations);
 	int lineNum = 1;
 	while(fileScanner.hasNextLine()){
 		String line = fileScanner.nextLine();
-		String[] objects = line.split(",");
+		String[] objects = line.split(","); // split lines by ','
 		configuration = parseObjects(objects, configuration, lineNum);
 		lineNum++;
 		
@@ -35,13 +47,30 @@ public class RelationParser {
 	return configuration;
 	}
 	
+	/**
+	 * Highest level parse method. It creates a file out of the filepath and then uses the other parse method the return the configuration object.
+	 * @param filePath - input file path 
+	 * @return - configuration object
+	 * @throws FileNotFoundException - Occurs when file is not found
+	 * @throws InvalidEmotionConfigFile - Occurs when the EmotionConfigFile is invalid
+	 */
 	public static EmotionConfig parse(String filePath) throws FileNotFoundException, InvalidEmotionConfigFile { 
 		File file = new File(filePath);
 		return parse(file);
 	}
 	
+	/**
+	 * Method that parses a given line.
+	 * @param objects - objects that are found by splitting the line on ','
+	 * @param config - the current configuration that will be extended with the new line.
+	 * @param lineNum - linenumber of the current line (debug purposes)
+	 * @return - new config file with line extended to it.
+	 * @throws InvalidEmotionConfigFile
+	 */
 	public static EmotionConfig parseObjects(String[] objects, EmotionConfig config, int lineNum) throws InvalidEmotionConfigFile {
 		EmotionConfig res = new EmotionConfig(config.beliefs, config.goals, config.relations);
+		
+		//BELIEVES
 		if(objects[0].equals("BEL")){
 			GamBelief belief;
 			try {
@@ -51,7 +80,10 @@ public class RelationParser {
 				e.printStackTrace();
 				throw new InvalidEmotionConfigFile("Belief on line: " + lineNum + " is invalid");
 			}
-		} else if(objects[0].equals("REL")){
+		
+		}
+		//RELATIONS
+		else if(objects[0].equals("REL")){
 			GamRelation relation;
 			try {
 				relation = parseRelation(objects);
@@ -60,7 +92,10 @@ public class RelationParser {
 				e.printStackTrace();
 				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + " is invalid");
 			}
-		}	else if(objects[0].equals("GOAL")){
+			
+		}
+		//GOALS
+		else if(objects[0].equals("GOAL")){
 			GamGoal gamgoal;
 			try {
 				gamgoal = parseGoal(objects);
@@ -75,17 +110,25 @@ public class RelationParser {
 		return res;
 	}
 	
+	/**
+	 * Specific Belief parser
+	 * @param objects - parameters 
+	 * @return GamBelief object
+	 * @throws InvalidGamBeliefException
+	 * @throws InvalidGamBeliefString
+	 */
 	public static GamBelief parseBelief(String[] objects) throws InvalidGamBeliefException, InvalidGamBeliefString{
 		GamBelief belief = null;
 		try{
-			System.out.println(Arrays.toString(objects));
+			
 		 double likelihood = Double.parseDouble(objects[1]);
 		 String causal = objects[2];
 		 String affected = objects[3];
 		 double congruence = Double.parseDouble(objects[4]);
-		 System.out.println("Objects[5]: " + objects[5]);
 		 boolean isincremental = Boolean.parseBoolean(objects[5]);
-		 System.out.println(isincremental);
+		 //System.out.println(isincremental);
+		 //System.out.println("Objects[5]: " + objects[5]);
+		 //System.out.println(Arrays.toString(objects));
 		 belief = new GamBelief(likelihood,causal,affected,congruence,isincremental);
 		} catch(Throwable e) {
 			e.printStackTrace();
@@ -94,7 +137,13 @@ public class RelationParser {
 		return belief;	
 	}
 	
-	
+	/**
+	 * Specific Relation parser
+	 * @param objects - parameters
+	 * @return - GamRelation object
+	 * @throws InvalidGamRelationException
+	 * @throws InvalidGamRelationString
+	 */
 	public static GamRelation parseRelation(String[] objects) throws InvalidGamRelationException, InvalidGamRelationString{
 		GamRelation relation = null;
 		try{ 
@@ -108,7 +157,12 @@ public class RelationParser {
 		return relation;
 	}
 	
-	
+	/**
+	 * Specific Goal parser
+	 * @param objects - parameters
+	 * @return GamGoal object
+	 * @throws InvalidGamGoalString
+	 */
 	public static GamGoal parseGoal(String[] objects) throws InvalidGamGoalString{
 		GamGoal gamgoal = null;
 		try{

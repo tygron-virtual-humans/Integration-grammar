@@ -29,9 +29,9 @@ public class RelationparserTest {
 		beliefs.add(belief);
 		belief = new GamBelief(0.3, "agent2", "goal2", 0.5, true);
 		beliefs.add(belief);
-		GamGoal goal = new GamGoal("agent1", "goal1", 3);
+		GamGoal goal = new GamGoal("agent2", "goal2",0.8);
 		goals.add(goal);
-		goal = new GamGoal("agent2", "goal2", 0.8);
+		goal = new GamGoal("agent1", "goal1", 3);
 		goals.add(goal);
 		GamRelation relation = new GamRelation("agent1", "agent2", -1);
 		relations.add(relation);
@@ -46,8 +46,11 @@ public class RelationparserTest {
 		System.out.println(validConfig.relations);
 		
 		System.out.println("TESTVALIDFILE +++++++++++++++++++++++++++++++++++++++++++++++");
-
-		assertEquals(validConfig, testConfig);
+		
+		assertEquals(testConfig.beliefs,validConfig.beliefs);
+		assertEquals(testConfig.goals,validConfig.goals);
+		assertEquals(testConfig.relations,validConfig.relations);
+		assertEquals(validConfig,testConfig);
 	}
 	
 	@Test(expected = InvalidEmotionConfigFile.class)
