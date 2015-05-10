@@ -126,4 +126,21 @@ public class EmotionConfigTest {
 		
 		assertFalse(thisConfig.equals(num));
 	}
+	@Test
+	public void testTostring() throws InvalidGamBeliefException, InvalidGamRelationException {
+	 ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
+	 ArrayList<GamGoal> goals = new ArrayList<GamGoal>();
+	 ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
+	
+	 GamBelief belief = new GamBelief(0.2, "agent1", "agent2", 0.1, false);
+	 beliefs.add(belief);
+	 GamGoal goal = new GamGoal("agent1", "goal1", 3);
+	 goals.add(goal);
+	 GamRelation relation = new GamRelation("agent1", "agent2", -1);
+	 relations.add(relation);
+	
+	 EmotionConfig thisConfig = new EmotionConfig(beliefs, goals, relations);
+	 String correct = "{Config: [{BEL: 0.2, agent1, agent2, 0.1, false}], [{GOAL: agent1, goal1, 3.0}], [{REL: agent1, agent2, -1.0}]}";
+	 assertEquals(correct, thisConfig.toString());
+	}
 }

@@ -111,5 +111,19 @@ public class GamBeliefTest {
 		 assertFalse(testBel1.equals(testBel2));
 	}
 	
+	@Test
+	public void testEqualsOtherObject() throws InvalidGamBeliefException {
+		 GamBelief testBel1 = new GamBelief(0,"test1", "test2", -1, false);
+		 String c = "c";
+		 assertFalse(testBel1.equals(c));
+	}
+	
+	@Test
+	public void testToString() throws InvalidGamBeliefException {
+		 GamBelief testBel = new GamBelief(0,"test1", "test2", -1, false);
+		 String correct = "{BEL: 0.0, test1, test2, -1.0, false}";
+		 assertEquals(correct, testBel.toString());
+	}
+	
 
 }

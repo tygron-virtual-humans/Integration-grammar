@@ -49,5 +49,19 @@ public class GamGoalTest {
 		GamGoal goal2 = new GamGoal("agent1", "goal1", 0.2);
 		assertFalse(goal1.equals(goal2));
 	}
+	
+	@Test
+	public void testEqualsOtherObject() {
+		GamGoal goal1 = new GamGoal("agent1", "goal1", 0.1);
+		String c = "sda";
+		assertFalse(goal1.equals(c));
+	}
+	
+	@Test
+	public void testToString() {
+		GamGoal goal1 = new GamGoal("agent1", "goal1", 0.1);
+		String correct = "{GOAL: agent1, goal1, 0.1}";
+		assertEquals(correct, goal1.toString());
+	}
 
 }
