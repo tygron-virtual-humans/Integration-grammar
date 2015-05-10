@@ -6,7 +6,6 @@
 package languageTools.parser.relationParser;
 
 import java.util.ArrayList;
-
 public class EmotionConfig {
 
   ArrayList<GamBelief> beliefs;
@@ -34,6 +33,7 @@ public class EmotionConfig {
     if (object instanceof EmotionConfig) {
       EmotionConfig other = (EmotionConfig) object;
       Boolean value = true;
+      
       if (!this.beliefs.equals(other.beliefs)) {
         value = false;
       }
