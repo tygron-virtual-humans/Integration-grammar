@@ -9,17 +9,17 @@ public class GamGoalTest {
 	@Test
 	public void testConstructorEmpty() {
 		GamGoal testGoal = new GamGoal("", "", 0.0);
-		assertEquals("", testGoal.agent);
-		assertEquals("", testGoal.goal);
-		assertEquals(0.0, testGoal.value, 0);
+		assertEquals("", testGoal.getAgent());
+		assertEquals("", testGoal.getGoal());
+		assertEquals(0.0, testGoal.getValue(), 0);
 	}
 	
 	@Test
 	public void testConstructor() {
 		GamGoal testGoal = new GamGoal("Agent1", "Goal1", 9.2);
-		assertEquals("Agent1", testGoal.agent);
-		assertEquals("Goal1", testGoal.goal);
-		assertEquals(9.2, testGoal.value, 0);
+		assertEquals("Agent1", testGoal.getAgent());
+		assertEquals("Goal1", testGoal.getGoal());
+		assertEquals(9.2, testGoal.getValue(), 0);
 	}
 	
 	@Test

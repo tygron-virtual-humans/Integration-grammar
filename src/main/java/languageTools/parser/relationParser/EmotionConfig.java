@@ -8,9 +8,9 @@ package languageTools.parser.relationParser;
 import java.util.ArrayList;
 public class EmotionConfig {
 
-  ArrayList<GamBelief> beliefs;
-  ArrayList<GamGoal> goals;
-  ArrayList<GamRelation> relations;
+  private ArrayList<GamBelief> beliefs;
+  private ArrayList<GamGoal> goals;
+  private ArrayList<GamRelation> relations;
 
 /** 
  * Constructor for the configuration of the emotions.
@@ -20,9 +20,9 @@ public class EmotionConfig {
  */
   public EmotionConfig(ArrayList<GamBelief> beliefs,ArrayList<GamGoal> goals,
       ArrayList<GamRelation> relations ) {
-    this.beliefs = beliefs;
-    this.goals = goals;
-    this.relations = relations;
+    this.setBeliefs(beliefs);
+    this.setGoals(goals);
+    this.setRelations(relations);
   }
   
   /**
@@ -34,13 +34,13 @@ public class EmotionConfig {
       EmotionConfig other = (EmotionConfig) object;
       Boolean value = true;
       
-      if (!this.beliefs.equals(other.beliefs)) {
+      if (!this.getBeliefs().equals(other.getBeliefs())) {
         value = false;
       }
-      if (!this.goals.equals(other.goals)) {
+      if (!this.getGoals().equals(other.getGoals())) {
         value = false;
       }
-      if (!this.relations.equals(other.relations)) {
+      if (!this.getRelations().equals(other.getRelations())) {
         value = false;
       }
       return value;
@@ -53,9 +53,51 @@ public class EmotionConfig {
    * toString method.
    */
   public String toString() {
-	  String bel = beliefs.toString();
-	  String goal = goals.toString();
-	  String rel = relations.toString();
+	  String bel = getBeliefs().toString();
+	  String goal = getGoals().toString();
+	  String rel = getRelations().toString();
 	  return "{Config: " + bel + ", " + goal + ", " + rel + "}";
   }
+
+/**
+ * @return the beliefs
+ */
+public ArrayList<GamBelief> getBeliefs() {
+	return beliefs;
+}
+
+/**
+ * @param beliefs the beliefs to set
+ */
+public void setBeliefs(ArrayList<GamBelief> beliefs) {
+	this.beliefs = beliefs;
+}
+
+/**
+ * @return the goals
+ */
+public ArrayList<GamGoal> getGoals() {
+	return goals;
+}
+
+/**
+ * @param goals the goals to set
+ */
+public void setGoals(ArrayList<GamGoal> goals) {
+	this.goals = goals;
+}
+
+/**
+ * @return the relations
+ */
+public ArrayList<GamRelation> getRelations() {
+	return relations;
+}
+
+/**
+ * @param relations the relations to set
+ */
+public void setRelations(ArrayList<GamRelation> relations) {
+	this.relations = relations;
+}
 }
