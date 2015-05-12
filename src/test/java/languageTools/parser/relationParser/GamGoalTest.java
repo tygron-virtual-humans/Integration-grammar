@@ -63,5 +63,34 @@ public class GamGoalTest {
 		String correct = "{GOAL: agent1, goal1, 0.1}";
 		assertEquals(correct, goal1.toString());
 	}
-
+	
+	@Test
+	public void testSetAgent() {
+		String agentFirst = "agent1";
+		String agentSecond = "test";
+		GamGoal goal1 = new GamGoal(agentFirst, "goal1", 0.1);
+		assertEquals(agentFirst, goal1.getAgent());
+		goal1.setAgent(agentSecond);
+		assertEquals(agentSecond, goal1.getAgent());
+	}
+	
+	@Test
+	public void testSetValue() {
+		double valueFirst = 0.2;
+		double valueSecond = -3;
+		GamGoal goal1 = new GamGoal("agent1", "goal1", valueFirst);
+		assertEquals(valueFirst, goal1.getValue(), 0.0);
+		goal1.setValue(valueSecond);
+		assertEquals(valueSecond, goal1.getValue(), 0.0);
+	}
+	
+	@Test
+	public void testSetGoal() {
+		String goalFirst = "goal1";
+		String goalSecond = "test";
+		GamGoal goal1 = new GamGoal("agent1'", goalFirst, 0.1);
+		assertEquals(goalFirst, goal1.getGoal());
+		goal1.setGoal(goalSecond);
+		assertEquals(goalSecond, goal1.getGoal());
+	}
 }
