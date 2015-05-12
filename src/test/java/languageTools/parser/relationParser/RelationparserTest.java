@@ -35,12 +35,12 @@ public class RelationparserTest {
 		relation = new GamRelation("agent3", "agent4", 0.9);
 	    relations.add(relation);
 		EmotionConfig validConfig = new EmotionConfig(beliefs, goals, relations);
-		System.out.println(testConfig.beliefs);
-		System.out.println(validConfig.beliefs);
-		System.out.println(testConfig.goals);
-		System.out.println(validConfig.goals);
-		System.out.println(testConfig.relations);
-		System.out.println(validConfig.relations);
+		System.out.println(testConfig.getBeliefs());
+		System.out.println(validConfig.getBeliefs());
+		System.out.println(testConfig.getGoals());
+		System.out.println(validConfig.getGoals());
+		System.out.println(testConfig.getRelations());
+		System.out.println(validConfig.getRelations());
 		
 		System.out.println("TESTVALIDFILE +++++++++++++++++++++++++++++++++++++++++++++++");
 
@@ -55,9 +55,9 @@ public class RelationparserTest {
 	@Test(expected = InvalidEmotionConfigFile.class)
 	public void testWrongRelation() throws FileNotFoundException, InvalidEmotionConfigFile {
 		EmotionConfig testConfig = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongREL");
-		System.out.println(testConfig.beliefs);
-		System.out.println(testConfig.goals);
-		System.out.println(testConfig.relations);
+		System.out.println(testConfig.getBeliefs());
+		System.out.println(testConfig.getGoals());
+		System.out.println(testConfig.getRelations());
 	}
 	
 	@Test(expected = InvalidEmotionConfigFile.class)

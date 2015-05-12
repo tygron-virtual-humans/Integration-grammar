@@ -14,9 +14,9 @@ public class EmotionConfigTest {
 	@Test
 	public void testConstructorEmpty() {
 		EmotionConfig testEmotion = new EmotionConfig(new ArrayList<GamBelief>(), new ArrayList<GamGoal>(), new ArrayList<GamRelation>());
-		assertEquals(new ArrayList<GamBelief>(), testEmotion.beliefs);
-		assertEquals(new ArrayList<GamGoal>(), testEmotion.goals);
-		assertEquals(new ArrayList<GamBelief>(), testEmotion.relations);
+		assertEquals(new ArrayList<GamBelief>(), testEmotion.getBeliefs());
+		assertEquals(new ArrayList<GamGoal>(), testEmotion.getGoals());
+		assertEquals(new ArrayList<GamBelief>(), testEmotion.getRelations());
 	}
 	
 	@Test

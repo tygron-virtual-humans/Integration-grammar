@@ -6,7 +6,6 @@ package languageTools.parser.relationParser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
@@ -68,14 +67,14 @@ public class RelationParser {
 	 * @throws InvalidEmotionConfigFile
 	 */
 	public static EmotionConfig parseObjects(String[] objects, EmotionConfig config, int lineNum) throws InvalidEmotionConfigFile {
-		EmotionConfig res = new EmotionConfig(config.beliefs, config.goals, config.relations);
+		EmotionConfig res = new EmotionConfig(config.getBeliefs(), config.getGoals(), config.getRelations());
 		
 		//BELIEVES
 		if(objects[0].equals("BEL")){
 			GamBelief belief;
 			try {
 				belief = parseBelief(objects);
-				res.beliefs.add(belief);
+				res.getBeliefs().add(belief);
 			} catch (Throwable e) {
 				e.printStackTrace();
 				throw new InvalidEmotionConfigFile("Belief on line: " + lineNum + " is invalid");
@@ -87,7 +86,7 @@ public class RelationParser {
 			GamRelation relation;
 			try {
 				relation = parseRelation(objects);
-				res.relations.add(relation);
+				res.getRelations().add(relation);
 			} catch (Throwable e) {
 				e.printStackTrace();
 				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + " is invalid");
@@ -99,7 +98,7 @@ public class RelationParser {
 			GamGoal gamgoal;
 			try {
 				gamgoal = parseGoal(objects);
-				res.goals.add(gamgoal);	
+				res.getGoals().add(gamgoal);	
 			} catch (Throwable e) {
 				e.printStackTrace();
 				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + "is invalid");

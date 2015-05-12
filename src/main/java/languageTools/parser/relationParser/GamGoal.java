@@ -6,9 +6,9 @@ package languageTools.parser.relationParser;
 
 public class GamGoal {
 	
-	double value;
-	String goal;
-	String agent;
+	private double value;
+	private String goal;
+	private String agent;
 	
 	/**
 	 * Constructor
@@ -44,5 +44,53 @@ public class GamGoal {
 	 */
 	public String toString() {
 		 return "{GOAL: " + agent +  ", " + goal + ", " + value +"}";
+	}
+
+
+	/**
+	 * @return the value
+	 */
+	public double getValue() {
+		return value;
+	}
+
+
+	/**
+	 * @param value the value to set
+	 */
+	public void setValue(double value) {
+		this.value = value;
+	}
+
+
+	/**
+	 * @return the goal
+	 */
+	public String getGoal() {
+		return goal;
+	}
+
+
+	/**
+	 * @param goal the goal to set
+	 */
+	public void setGoal(String goal) {
+		this.goal = goal;
+	}
+
+
+	/**
+	 * @return the agent
+	 */
+	public String getAgent() {
+		return agent;
+	}
+
+
+	/**
+	 * @param agent the agent to set
+	 */
+	public void setAgent(String agent) {
+		this.agent = agent;
 	}
 }
