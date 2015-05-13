@@ -15,7 +15,7 @@ import languageTools.exceptions.relationParser.InvalidGamGoalString;
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
 import languageTools.exceptions.relationParser.InvalidGamRelationString;
 
-public class RelationParser {
+abstract public class RelationParser {
 	
 	/**
 	 * Highest level parse method
