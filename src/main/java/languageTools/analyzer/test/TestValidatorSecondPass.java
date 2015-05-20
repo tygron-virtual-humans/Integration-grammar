@@ -54,6 +54,7 @@ public class TestValidatorSecondPass {
 	private final static String AGENT = "agent/1";
 	private final static String ME = "me/1";
 	private final static String PERCEPT = "percept/1";
+	private final static String GAM = "gam/2";
 	private final static String RECEIVED = "received/2";
 	private final static String SENT = "sent/2";
 
@@ -182,6 +183,7 @@ public class TestValidatorSecondPass {
 		reserved.add(AGENT);
 		reserved.add(ME);
 		reserved.add(PERCEPT);
+		reserved.add(GAM);
 		reserved.add(RECEIVED);
 		reserved.add(SENT);
 
