@@ -5,12 +5,20 @@
 
 package languageTools.parser.relationParser;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
 public class EmotionConfig {
 
   private ArrayList<GamBelief> beliefs;
   private ArrayList<GamGoal> goals;
   private ArrayList<GamRelation> relations;
+  private static EmotionConfig configuration;
+  private double defaultUtility;
+
+
 
 /** 
  * Constructor for the configuration of the emotions.
@@ -19,12 +27,41 @@ public class EmotionConfig {
  * @param relations - the relations between the agents
  */
   public EmotionConfig(ArrayList<GamBelief> beliefs,ArrayList<GamGoal> goals,
-      ArrayList<GamRelation> relations ) {
+      ArrayList<GamRelation> relations) {
     this.setBeliefs(beliefs);
     this.setGoals(goals);
     this.setRelations(relations);
   }
   
+  /**
+   * Singleton method to get the instance
+   * @return
+   */
+  public synchronized static EmotionConfig getInstance(){
+	  if(configuration == null){
+		  configuration = new EmotionConfig(new ArrayList<GamBelief>(), new ArrayList<GamGoal>(), new ArrayList<GamRelation>());
+		  configuration.setDefaultUtility(1);
+	  }
+	  return configuration;
+	  
+	  
+  }
+  
+  public static void reset(){
+	  configuration = null;
+  }
+  
+  /**
+   * 
+   * @param filepath
+   * @throws FileNotFoundException
+   * @throws InvalidEmotionConfigFile
+   */
+  public static void parse(String filepath) throws FileNotFoundException, InvalidEmotionConfigFile{
+	  File file = new File(filepath);
+	  configuration = RelationParser.parse(file);
+	  
+  }
   /**
    * Override equals method.
    */
@@ -43,6 +80,9 @@ public class EmotionConfig {
       if (!this.getRelations().equals(other.getRelations())) {
         value = false;
       }
+      if(!(this.getDefaultUtility() == other.getDefaultUtility())){
+    	value = false;
+      }
       return value;
     } else {
       return false;
@@ -56,7 +96,7 @@ public class EmotionConfig {
 	  String bel = getBeliefs().toString();
 	  String goal = getGoals().toString();
 	  String rel = getRelations().toString();
-	  return "{Config: " + bel + ", " + goal + ", " + rel + "}";
+	  return "{Config: " + bel + ", " + goal + ", " + rel + ", " + defaultUtility + "}";
   }
 
 /**
@@ -100,4 +140,13 @@ public ArrayList<GamRelation> getRelations() {
 public void setRelations(ArrayList<GamRelation> relations) {
 	this.relations = relations;
 }
+
+public double getDefaultUtility() {
+	return this.defaultUtility;
+}
+
+public void setDefaultUtility(double defaultUtility) {
+	this.defaultUtility = defaultUtility;
+}
+
 }

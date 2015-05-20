@@ -37,6 +37,7 @@ abstract public class RelationParser {
 	while(fileScanner.hasNextLine()){
 		String line = fileScanner.nextLine();
 		String[] objects = line.split(","); // split lines by ','
+		objects[0] = objects[0].toUpperCase();
 		configuration = parseObjects(objects, configuration, lineNum);
 		lineNum++;
 		
@@ -67,7 +68,7 @@ abstract public class RelationParser {
 	 * @throws InvalidEmotionConfigFile
 	 */
 	public static EmotionConfig parseObjects(String[] objects, EmotionConfig config, int lineNum) throws InvalidEmotionConfigFile {
-		EmotionConfig res = new EmotionConfig(config.getBeliefs(), config.getGoals(), config.getRelations());
+		EmotionConfig res = EmotionConfig.getInstance();
 		
 		//BELIEVES
 		if(objects[0].equals("BEL")){
@@ -92,6 +93,13 @@ abstract public class RelationParser {
 				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + " is invalid");
 			}
 			
+		}
+		else if(objects[0].equals("DEFAULT GOAL UTILITY")){
+			
+			double utility = parseUtility(objects);
+			System.out.println("util: " + utility);
+			res.setDefaultUtility(utility);
+				
 		}
 		//GOALS
 		else if(objects[0].equals("GOAL")){
@@ -175,6 +183,19 @@ abstract public class RelationParser {
 		}
 	
 		return gamgoal;
+	}
+	
+	public static double parseUtility(String[] objects) throws InvalidEmotionConfigFile{
+		double utility;
+		try{
+		 utility = Double.parseDouble(objects[1]);
+		 
+		} catch(Throwable e) {
+			e.printStackTrace();
+			throw new InvalidEmotionConfigFile("Cannot read the default goal utlity: " + objects.toString());
+		}
+	
+		return utility;
 	}
 
 }

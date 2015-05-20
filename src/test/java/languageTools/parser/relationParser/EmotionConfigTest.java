@@ -139,8 +139,11 @@ public class EmotionConfigTest {
 	 GamRelation relation = new GamRelation("agent1", "agent2", -1);
 	 relations.add(relation);
 	
-	 EmotionConfig thisConfig = new EmotionConfig(beliefs, goals, relations);
-	 String correct = "{Config: [{BEL: 0.2, agent1, agent2, 0.1, false}], [{GOAL: agent1, goal1, 3.0}], [{REL: agent1, agent2, -1.0}]}";
+	 EmotionConfig thisConfig = EmotionConfig.getInstance();
+	 thisConfig.setBeliefs(beliefs);
+	 thisConfig.setGoals(goals);
+	 thisConfig.setRelations(relations);
+	 String correct = "{Config: [{BEL: 0.2, agent1, agent2, 0.1, false}], [{GOAL: agent1, goal1, 3.0}], [{REL: agent1, agent2, -1.0}], 1.0}";
 	 assertEquals(correct, thisConfig.toString());
 	}
 }
