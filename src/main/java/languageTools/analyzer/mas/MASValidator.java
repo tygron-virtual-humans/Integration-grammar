@@ -711,12 +711,8 @@ implements MAS2GVisitor {
 	}
 
 	@Override
-	public Object visitEmotionFile(EmotionFileContext ctx)  {
-		try{
-		 EmotionConfig.parse(visitString(ctx.string()));
-		} catch(Exception e) {
-			System.err.println("EMOTION CONFIG FAILED TO PARSE");
-		}
+	public Object visitEmotionFile(EmotionFileContext ctx) {
+		getProgram().setEmotionFile(visitString(ctx.string()));
 		return null;
 	}
 
