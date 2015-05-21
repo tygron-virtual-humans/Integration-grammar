@@ -181,7 +181,7 @@ public class RelationparserTest {
 	public void parseTest() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException {
 		//File validfile = new File("src/test/languageTools/parser/relationParser/wrongUtility");
 		//EmotionConfig conf = RelationParser.parse(validfile);
-		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/ValidFile");
+		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/validFile");
 		assertFalse(conf == null);
 		assertEquals(conf.getBeliefs(),EmotionConfig.getInstance().getBeliefs());
 		assertEquals(conf.getGoals(),EmotionConfig.getInstance().getGoals());
