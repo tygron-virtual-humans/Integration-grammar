@@ -20,4 +20,4 @@ after_script:
   - echo "== FINDBUGS_RESULT ==" && cat "target/findbugsXml.xml" && echo "== END_FINDBUGS_RESULT =="
   
 after_success:
- - coveralls
+  - mvn clean cobertura:cobertura coveralls:report
