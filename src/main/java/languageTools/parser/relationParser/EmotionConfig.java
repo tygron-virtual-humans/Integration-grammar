@@ -17,6 +17,12 @@ public class EmotionConfig {
   private ArrayList<GamRelation> relations;
   private static EmotionConfig configuration;
   private double defaultUtility;
+  private double defaultPositiveCongruence;
+  private double defaultNegativeCongruence;
+  private double defaultBelLikelihood;
+  private boolean defaultIsIncremental;
+
+
 
 
 
@@ -27,7 +33,7 @@ public class EmotionConfig {
  * @param relations - the relations between the agents
  */
   public EmotionConfig(ArrayList<GamBelief> beliefs,ArrayList<GamGoal> goals,
-      ArrayList<GamRelation> relations) {
+     ArrayList<GamRelation> relations) {
     this.setBeliefs(beliefs);
     this.setGoals(goals);
     this.setRelations(relations);
@@ -41,6 +47,10 @@ public class EmotionConfig {
 	  if(configuration == null){
 		  configuration = new EmotionConfig(new ArrayList<GamBelief>(), new ArrayList<GamGoal>(), new ArrayList<GamRelation>());
 		  configuration.setDefaultUtility(1);
+		  configuration.setDefaultNegativeCongruence(-0.1);
+		  configuration.setDefaultPositiveCongruence(0.5);
+		  configuration.setDefaultBelLikelihood(1);
+		  configuration.setDefaultIsIncremental(false);
 	  }
 	  return configuration;
 	  
@@ -121,6 +131,38 @@ public double getDefaultUtility() {
 
 public void setDefaultUtility(double defaultUtility) {
 	this.defaultUtility = defaultUtility;
+}
+
+public double getDefaultPositiveCongruence() {
+	return defaultPositiveCongruence;
+}
+
+public void setDefaultPositiveCongruence(double defaultPositiveCongruence) {
+	this.defaultPositiveCongruence = defaultPositiveCongruence;
+}
+
+public double getDefaultNegativeCongruence() {
+	return defaultNegativeCongruence;
+}
+
+public void setDefaultNegativeCongruence(double defaultNegativeCongruence) {
+	this.defaultNegativeCongruence = defaultNegativeCongruence;
+}
+
+public double getDefaultBelLikelihood() {
+	return defaultBelLikelihood;
+}
+
+public void setDefaultBelLikelihood(double defaultBelLikelihood) {
+	this.defaultBelLikelihood = defaultBelLikelihood;
+}
+
+public boolean isDefaultIsIncremental() {
+	return defaultIsIncremental;
+}
+
+public void setDefaultIsIncremental(boolean defaultIsIncremental) {
+	this.defaultIsIncremental = defaultIsIncremental;
 }
 
 }
