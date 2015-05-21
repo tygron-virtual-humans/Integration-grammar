@@ -48,6 +48,57 @@ public class AgentValidatorErrorTest {
 	}
 
 	@Test
+	public void test_KR_GAM_HAS_VARIABLE() throws KRInitFailedException {
+		setup("src/test/resources/languageTools/analyzer/agent/test_KR_GAM_HAS_VARIABLE.goal");
+
+		// Agent file should not produce any syntax errors
+		assertTrue(this.syntaxerrors.isEmpty());
+
+		// Agent file should produce errors
+		assertEquals(1, this.errors.size());
+
+		assertEquals(AgentError.KR_GAM_HAS_VARIABLE, this.errors
+				.get(0).getType());
+
+		// Agent file should produce no warnings
+		assertTrue(this.warnings.isEmpty());
+	}
+
+	@Test
+	public void test_KR_GAM_INVALID_EMOTION_NAME() throws KRInitFailedException {
+		setup("src/test/resources/languageTools/analyzer/agent/test_KR_GAM_INVALID_EMOTION_NAME.goal");
+
+		// Agent file should not produce any syntax errors
+		assertTrue(this.syntaxerrors.isEmpty());
+
+		// Agent file should produce errors
+		assertEquals(1, this.errors.size());
+
+		assertEquals(AgentError.KR_GAM_INVALID_EMOTION_NAME, this.errors
+				.get(0).getType());
+
+		// Agent file should produce no warnings
+		assertTrue(this.warnings.isEmpty());
+	}
+
+	@Test
+	public void test_KR_GAM_SECOND_ARG_NOT_NUMBER() throws KRInitFailedException {
+		setup("src/test/resources/languageTools/analyzer/agent/test_KR_GAM_SECOND_ARG_NOT_NUMBER.goal");
+
+		// Agent file should not produce any syntax errors
+		assertTrue(this.syntaxerrors.isEmpty());
+
+		// Agent file should produce errors
+		assertEquals(1, this.errors.size());
+
+		assertEquals(AgentError.KR_GAM_SECOND_ARG_NOT_NUMBER, this.errors
+				.get(0).getType());
+
+		// Agent file should produce no warnings
+		assertTrue(this.warnings.isEmpty());
+	}
+
+	@Test
 	public void test_ACTION_LABEL_ALREADY_DEFINED()
 			throws KRInitFailedException {
 		setup("src/test/resources/languageTools/analyzer/agent/test_ACTION_LABEL_ALREADY_DEFINED.goal");
