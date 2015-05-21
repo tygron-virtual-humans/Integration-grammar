@@ -62,32 +62,6 @@ public class EmotionConfig {
 	  configuration = RelationParser.parse(file);
 	  
   }
-  /**
-   * Override equals method.
-   */
-  @Override
-  public boolean equals(Object object) {
-    if (object instanceof EmotionConfig) {
-      EmotionConfig other = (EmotionConfig) object;
-      Boolean value = true;
-      
-      if (!this.getBeliefs().equals(other.getBeliefs())) {
-        value = false;
-      }
-      if (!this.getGoals().equals(other.getGoals())) {
-        value = false;
-      }
-      if (!this.getRelations().equals(other.getRelations())) {
-        value = false;
-      }
-      if(!(this.getDefaultUtility() == other.getDefaultUtility())){
-    	value = false;
-      }
-      return value;
-    } else {
-      return false;
-    }
-  }
   
   /**
    * toString method.
