@@ -77,7 +77,6 @@ abstract public class RelationParser {
 				belief = parseBelief(objects);
 				res.getBeliefs().add(belief);
 			} catch (Throwable e) {
-				e.printStackTrace();
 				throw new InvalidEmotionConfigFile("Belief on line: " + lineNum + " is invalid");
 			}
 		
@@ -89,7 +88,6 @@ abstract public class RelationParser {
 				relation = parseRelation(objects);
 				res.getRelations().add(relation);
 			} catch (Throwable e) {
-				e.printStackTrace();
 				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + " is invalid");
 			}
 			
@@ -97,10 +95,29 @@ abstract public class RelationParser {
 		else if(objects[0].equals("DEFAULT GOAL UTILITY")){
 			
 			double utility = parseUtility(objects);
-			System.out.println("util: " + utility);
 			res.setDefaultUtility(utility);
 				
 		}
+		
+		else if(objects[0].equals("DEFAULT POSITIVE CONGRUENCE")) {
+			double congruence = parseCongruence(objects);
+			res.setDefaultPositiveCongruence(congruence);
+		}
+		
+		else if(objects[0].equals("DEFAULT NEGATIVE CONGRUENCE")) {
+			double congruence = parseCongruence(objects);
+			res.setDefaultNegativeCongruence(congruence);
+		}
+		
+		else if(objects[0].equals("DEFAULT BELIEF LIKELIHOOD")) {
+			double likelihood = parseLikelihood(objects);
+			res.setDefaultBelLikelihood(likelihood);
+		}
+		else if(objects[0].equals("DEFAULT IS INCREMENTAL")) {
+			boolean isIncremental = parseIsIncremental(objects);
+			res.setDefaultIsIncremental(isIncremental);
+		}
+		
 		//GOALS
 		else if(objects[0].equals("GOAL")){
 			GamGoal gamgoal;
@@ -108,7 +125,6 @@ abstract public class RelationParser {
 				gamgoal = parseGoal(objects);
 				res.getGoals().add(gamgoal);	
 			} catch (Throwable e) {
-				e.printStackTrace();
 				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + "is invalid");
 			}
 		} else {
@@ -116,7 +132,8 @@ abstract public class RelationParser {
 		}
 		return res;
 	}
-	
+
+
 	/**
 	 * Specific Belief parser
 	 * @param objects - parameters 
@@ -138,7 +155,6 @@ abstract public class RelationParser {
 		 //System.out.println(Arrays.toString(objects));
 		 belief = new GamBelief(likelihood,causal,affected,congruence,isincremental);
 		} catch(Throwable e) {
-			e.printStackTrace();
 			throw new InvalidGamBeliefString("Cannot parse the gam belief");
 		}
 		return belief;	
@@ -178,7 +194,6 @@ abstract public class RelationParser {
 		 double value = Double.parseDouble(objects[3]);
 	     gamgoal = new GamGoal(agent,goal,value);
 		} catch(Throwable e) {
-			e.printStackTrace();
 			throw new InvalidGamGoalString("Cannot read the goal string: " + objects.toString());
 		}
 	
@@ -191,11 +206,46 @@ abstract public class RelationParser {
 		 utility = Double.parseDouble(objects[1]);
 		 
 		} catch(Throwable e) {
-			e.printStackTrace();
 			throw new InvalidEmotionConfigFile("Cannot read the default goal utlity: " + objects.toString());
 		}
 	
 		return utility;
+	}
+	
+	public static double parseCongruence(String[] objects) throws InvalidEmotionConfigFile{
+		double congruence;
+		try{
+		 congruence = Double.parseDouble(objects[1]);
+		 
+		} catch(Throwable e) {
+			throw new InvalidEmotionConfigFile("Cannot read the congruence: " + objects.toString());
+		}
+	
+		return congruence;
+	}
+	
+	public static double parseLikelihood(String[] objects) throws InvalidEmotionConfigFile{
+		double likelihood;
+		try{
+		 likelihood = Double.parseDouble(objects[1]);
+		 
+		} catch(Throwable e) {
+			throw new InvalidEmotionConfigFile("Cannot read the likelihood: " + objects.toString());
+		}
+	
+		return likelihood;
+	}
+	
+	public static boolean parseIsIncremental(String[] objects) throws InvalidEmotionConfigFile{
+		boolean isIncremental;
+		try{
+		 isIncremental = Boolean.parseBoolean(objects[1]);
+		 
+		} catch(Throwable e) {
+			throw new InvalidEmotionConfigFile("Cannot read the is incremental setting: " + objects.toString());
+		}
+	
+		return isIncremental;
 	}
 
 }
