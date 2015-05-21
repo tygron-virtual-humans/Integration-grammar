@@ -28,7 +28,7 @@ tokens{ HIDDEN }
 
 
 mas
-	: (environment | agentFiles | launchPolicy)*
+	: (environment | agentFiles | launchPolicy | emotionFile)*
       EOF
 	;
 
@@ -65,9 +65,14 @@ function
 list
 	: '[' initExpr (',' initExpr)* ']'
 	;
+	
+emotionFile
+	: 'emotionFile' '{' string '}'
+	;
+ 
 
 // Agent Files section
-
+ 
 agentFiles
 	: 'agentfiles' '{' agentFile* '}' // empty agent files section allowed because of IDE template
 	;

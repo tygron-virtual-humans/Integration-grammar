@@ -20,6 +20,7 @@ package languageTools.analyzer.mas;
 import goalhub.krTools.KRFactory;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import languageTools.analyzer.Validator;
 import languageTools.errors.mas.MASError;
 import languageTools.errors.mas.MASErrorStrategy;
 import languageTools.errors.mas.MASWarning;
+import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
 import languageTools.parser.InputStreamPosition;
 import languageTools.parser.MAS2GParser;
 import languageTools.parser.MAS2GParser.AgentFileContext;
@@ -41,6 +43,7 @@ import languageTools.parser.MAS2GParser.AgentFilesContext;
 import languageTools.parser.MAS2GParser.BasicRuleContext;
 import languageTools.parser.MAS2GParser.ConditionalRuleContext;
 import languageTools.parser.MAS2GParser.ConstantContext;
+import languageTools.parser.MAS2GParser.EmotionFileContext;
 import languageTools.parser.MAS2GParser.EntityConstraintContext;
 import languageTools.parser.MAS2GParser.EntityDescriptionContext;
 import languageTools.parser.MAS2GParser.EnvironmentContext;
@@ -56,6 +59,7 @@ import languageTools.parser.MAS2GParser.MultiplierContext;
 import languageTools.parser.MAS2GParser.StringContext;
 import languageTools.parser.MAS2GVisitor;
 import languageTools.parser.mas.MyMAS2GLexer;
+import languageTools.parser.relationParser.EmotionConfig;
 import languageTools.program.mas.Launch;
 import languageTools.program.mas.LaunchRule;
 import languageTools.program.mas.MASProgram;
@@ -185,6 +189,14 @@ implements MAS2GVisitor {
 				}
 			}
 		}
+		
+		if (ctx.emotionFile() != null) {
+			for(EmotionFileContext emotionFCtx : ctx.emotionFile()) {
+				visitEmotionFile(emotionFCtx);
+			}
+		}
+		
+		
 		return null; // Java says must return something even when Void
 	}
 
@@ -696,6 +708,16 @@ implements MAS2GVisitor {
 	@Override
 	protected void secondPass(ParseTree tree) {
 
+	}
+
+	@Override
+	public Object visitEmotionFile(EmotionFileContext ctx)  {
+		try{
+		 EmotionConfig.parse(visitString(ctx.string()));
+		} catch(Exception e) {
+			System.err.println("EMOTION CONFIG FAILED TO PARSE");
+		}
+		return null;
 	}
 
 }
