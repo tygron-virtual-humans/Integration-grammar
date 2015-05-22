@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
 import languageTools.exceptions.relationParser.InvalidGamBeliefException;
+import languageTools.exceptions.relationParser.InvalidGamGoalString;
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
 
 import org.junit.After;
@@ -85,7 +86,7 @@ public class RelationparserTest {
 	}
 	
 	@Test
-	public void testValidFileWithUtility() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException {
+	public void testValidFileWithDefaults() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException {
 		//System.out.println("TESTVALIDFILE +++++++++++++++++++++++++++++++++++++++++++++++");
 		EmotionConfig testConfig = EmotionConfig.getInstance();
 		EmotionConfig.parse("src/test/languageTools/parser/relationParser/validUtility");
@@ -111,6 +112,11 @@ public class RelationparserTest {
 		assertEquals(relations,testConfig.getRelations());
 		double util=0.56;
 		assertEquals(util,testConfig.getDefaultUtility(),0.0);
+		assertEquals(0.7,testConfig.getDefaultBelLikelihood(),0.0);
+		assertEquals(0.6,testConfig.getDefaultNegativeCongruence(),0.0);
+		assertEquals(0.5,testConfig.getDefaultPositiveCongruence(),0.0);
+		assertEquals(false,testConfig.isDefaultIsIncremental());
+		
 		
 		
 	}
@@ -145,6 +151,7 @@ public class RelationparserTest {
 		
 		
 	}
+	
 	
 	@Test(expected = InvalidEmotionConfigFile.class)
 	public void testValidFileWithWrongUtility2() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException {
@@ -193,6 +200,35 @@ public class RelationparserTest {
 	@Test
 	public void abstractTest(){
 		RelationParser test = new RelationParser(){};
+	}
+	
+	
+	@Test(expected = InvalidEmotionConfigFile.class)
+	public void parseCongruenceTest() throws InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException, FileNotFoundException{
+		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongposcongruence");
+		assertFalse(conf == null);
+		
+	}
+	
+	@Test(expected = InvalidEmotionConfigFile.class)
+	public void parseLikelihoodTest() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException{
+		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongLikelihood");
+		assertFalse(conf == null);
+		
+	}
+	
+	@Test(expected = InvalidEmotionConfigFile.class)
+	public void parseIsIncremental() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException{
+		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongIsIncremental");
+		assertFalse(conf == null);
+		
+	}
+	
+	@Test(expected = InvalidEmotionConfigFile.class)
+	public void parseIsIncremental2() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException{
+		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongIsIncremental2");
+		assertFalse(conf == null);
+		
 	}
 	
 	

@@ -41,4 +41,20 @@ public class EmotionConfigTest {
 	}
 	
 	
+	@Test
+	public void testGetters() {
+		EmotionConfig conf = EmotionConfig.getInstance();
+		 double DefaultUtility = 1;
+		 double DefaultNegativeCongruence = -0.1;
+		 double DefaultPositiveCongruence = 0.5;
+		 double DefaultBelLikelihood = 1;
+		 boolean DefaultIsIncremental = false;
+		 
+		 assertEquals(DefaultUtility,conf.getDefaultUtility(),0.0);
+		 assertEquals(DefaultNegativeCongruence,conf.getDefaultNegativeCongruence(),0.0);
+		 assertEquals(DefaultPositiveCongruence,conf.getDefaultPositiveCongruence(),0.0);
+		 assertEquals(DefaultBelLikelihood,conf.getDefaultBelLikelihood(),0.0);
+		 assertEquals(DefaultIsIncremental,conf.isDefaultIsIncremental());
+	}
+	
 }

@@ -125,42 +125,83 @@ public void setRelations(ArrayList<GamRelation> relations) {
 	this.relations = relations;
 }
 
+/**
+ * getter for he default utility
+ * @return
+ */
 public double getDefaultUtility() {
 	return this.defaultUtility;
 }
 
+/**
+ * Setter for the default utility
+ * @param defaultUtility
+ */
 public void setDefaultUtility(double defaultUtility) {
 	this.defaultUtility = defaultUtility;
 }
 
+/**
+ * getter for the default positive congruence
+ * @return
+ */
 public double getDefaultPositiveCongruence() {
 	return defaultPositiveCongruence;
 }
 
+/**
+ * setter for the default positive congruence
+ * @param defaultPositiveCongruence
+ */
 public void setDefaultPositiveCongruence(double defaultPositiveCongruence) {
 	this.defaultPositiveCongruence = defaultPositiveCongruence;
 }
 
+/**
+ * getter for the default negative congruence 
+ * @return
+ */
 public double getDefaultNegativeCongruence() {
 	return defaultNegativeCongruence;
 }
 
+
+/**
+ * setter for the default negative congruence
+ * @param defaultNegativeCongruence
+ */
 public void setDefaultNegativeCongruence(double defaultNegativeCongruence) {
 	this.defaultNegativeCongruence = defaultNegativeCongruence;
 }
 
+/**
+ * getter for the default belief likelihood
+ * @return
+ */
 public double getDefaultBelLikelihood() {
 	return defaultBelLikelihood;
 }
 
+/**
+ * setter for the default belief likelihood
+ * @param defaultBelLikelihood
+ */
 public void setDefaultBelLikelihood(double defaultBelLikelihood) {
 	this.defaultBelLikelihood = defaultBelLikelihood;
 }
 
+/**
+ * getter for the setting of the IsIncremental. See documentation.
+ * @return
+ */
 public boolean isDefaultIsIncremental() {
 	return defaultIsIncremental;
 }
 
+/**
+ * setter for the setting of the IsIncremental.
+ * @param defaultIsIncremental
+ */
 public void setDefaultIsIncremental(boolean defaultIsIncremental) {
 	this.defaultIsIncremental = defaultIsIncremental;
 }

@@ -92,32 +92,38 @@ abstract public class RelationParser {
 			}
 			
 		}
+		
+		// DEFAULT GOAL UTILITY
 		else if(objects[0].equals("DEFAULT GOAL UTILITY")){
 			
 			double utility = parseUtility(objects);
-			res.setDefaultUtility(utility);
-				
+			res.setDefaultUtility(utility);		
 		}
 		
+		//DEFAULT POSITIVE CONGRUENCE
 		else if(objects[0].equals("DEFAULT POSITIVE CONGRUENCE")) {
 			double congruence = parseCongruence(objects);
 			res.setDefaultPositiveCongruence(congruence);
 		}
 		
+		//DEFAULT NEGEATIVE CONGRUENCE
 		else if(objects[0].equals("DEFAULT NEGATIVE CONGRUENCE")) {
 			double congruence = parseCongruence(objects);
 			res.setDefaultNegativeCongruence(congruence);
 		}
 		
+		// DEFAULT BELIEF LIKELIHOOD
 		else if(objects[0].equals("DEFAULT BELIEF LIKELIHOOD")) {
 			double likelihood = parseLikelihood(objects);
 			res.setDefaultBelLikelihood(likelihood);
 		}
+		
+		//DEFAULT IS INCREMENTAL
 		else if(objects[0].equals("DEFAULT IS INCREMENTAL")) {
 			boolean isIncremental = parseIsIncremental(objects);
 			res.setDefaultIsIncremental(isIncremental);
 		}
-		
+
 		//GOALS
 		else if(objects[0].equals("GOAL")){
 			GamGoal gamgoal;
@@ -149,7 +155,8 @@ abstract public class RelationParser {
 		 String causal = objects[2];
 		 String affected = objects[3];
 		 double congruence = Double.parseDouble(objects[4]);
-		 boolean isincremental = Boolean.parseBoolean(objects[5]);
+		 boolean isincremental = parseBoolean(objects[5]);
+		 System.out.println(objects[5]);
 		 //System.out.println(isincremental);
 		 //System.out.println("Objects[5]: " + objects[5]);
 		 //System.out.println(Arrays.toString(objects));
@@ -200,6 +207,13 @@ abstract public class RelationParser {
 		return gamgoal;
 	}
 	
+	
+	/**
+	 * Sub method to parse a default utility setting
+	 * @param objects - line split by ","
+	 * @return
+	 * @throws InvalidEmotionConfigFile
+	 */
 	public static double parseUtility(String[] objects) throws InvalidEmotionConfigFile{
 		double utility;
 		try{
@@ -212,6 +226,12 @@ abstract public class RelationParser {
 		return utility;
 	}
 	
+	/**
+	 * Sub method to parse a congruence default setting
+	 * @param objects - line split by "," 
+	 * @return congruence value
+	 * @throws InvalidEmotionConfigFile
+	 */
 	public static double parseCongruence(String[] objects) throws InvalidEmotionConfigFile{
 		double congruence;
 		try{
@@ -224,6 +244,12 @@ abstract public class RelationParser {
 		return congruence;
 	}
 	
+	/**
+	 * Sub method to parse likelihood
+	 * @param objects - line split by ","
+	 * @return likelihood value
+	 * @throws InvalidEmotionConfigFile
+	 */
 	public static double parseLikelihood(String[] objects) throws InvalidEmotionConfigFile{
 		double likelihood;
 		try{
@@ -236,16 +262,43 @@ abstract public class RelationParser {
 		return likelihood;
 	}
 	
+	/**
+	 * Sub method for parsing if the default IsIncremental is true or false.
+	 * @param objects
+	 * @return
+	 * @throws InvalidEmotionConfigFile
+	 */
 	public static boolean parseIsIncremental(String[] objects) throws InvalidEmotionConfigFile{
 		boolean isIncremental;
 		try{
-		 isIncremental = Boolean.parseBoolean(objects[1]);
+		 isIncremental = parseBoolean(objects[1]);
 		 
 		} catch(Throwable e) {
 			throw new InvalidEmotionConfigFile("Cannot read the is incremental setting: " + objects.toString());
 		}
 	
 		return isIncremental;
+	}
+	
+	
+	/**
+	 * Overwrite of the Double.parseBoolean that throws errors if not true/false instead of returning false when something if not well-written.
+	 * @param string
+	 * @return
+	 * @throws InvalidEmotionConfigFile
+	 */
+	public static boolean parseBoolean(String string) throws InvalidEmotionConfigFile{
+		string = string.toUpperCase();
+		if(string.equals("TRUE")){
+			return true;
+		}
+		else if(string.equals("FALSE")){
+			return false;
+			
+		}
+		else{
+			throw new InvalidEmotionConfigFile("The boolean is not written correctly and can not be parsed");
+		}
 	}
 
 }
