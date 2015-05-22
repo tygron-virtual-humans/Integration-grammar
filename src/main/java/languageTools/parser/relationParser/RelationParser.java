@@ -101,13 +101,13 @@ abstract public class RelationParser {
 		}
 		
 		//DEFAULT POSITIVE CONGRUENCE
-		else if(objects[0].equals("DEFAULT POSITIVE CONGRUENCE")) {
+		else if(objects[0].equals("DEFAULT ACHIEVED CONGRUENCE")) {
 			double congruence = parseCongruence(objects);
 			res.setDefaultPositiveCongruence(congruence);
 		}
 		
 		//DEFAULT NEGEATIVE CONGRUENCE
-		else if(objects[0].equals("DEFAULT NEGATIVE CONGRUENCE")) {
+		else if(objects[0].equals("DEFAULT DROPPED CONGRUENCE")) {
 			double congruence = parseCongruence(objects);
 			res.setDefaultNegativeCongruence(congruence);
 		}
