@@ -156,7 +156,7 @@ abstract public class RelationParser {
 		 String affected = objects[3];
 		 double congruence = Double.parseDouble(objects[4]);
 		 boolean isincremental = parseBoolean(objects[5]);
-		 System.out.println(objects[5]);
+		 //System.out.println(objects[5]);
 		 //System.out.println(isincremental);
 		 //System.out.println("Objects[5]: " + objects[5]);
 		 //System.out.println(Arrays.toString(objects));

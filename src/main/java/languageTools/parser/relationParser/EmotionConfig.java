@@ -80,7 +80,7 @@ public class EmotionConfig {
 	  String bel = getBeliefs().toString();
 	  String goal = getGoals().toString();
 	  String rel = getRelations().toString();
-	  return "{Config: " + bel + ", " + goal + ", " + rel + ", " + defaultUtility + "}";
+	  return "{Config: " + bel + ", " + goal + ", " + rel + ", utility: " + defaultUtility + ", negativeCongruence: " + defaultNegativeCongruence + ", positiveCongruence: " + defaultPositiveCongruence + ", belieflikelihood: " + defaultBelLikelihood + ", isincremental: " + defaultIsIncremental + "}";
   }
 
 /**
