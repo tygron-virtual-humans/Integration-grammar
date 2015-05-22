@@ -131,10 +131,10 @@ abstract public class RelationParser {
 				gamgoal = parseGoal(objects);
 				res.getGoals().add(gamgoal);	
 			} catch (Throwable e) {
-				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + "is invalid");
+				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + " is invalid");
 			}
 		} else {
-			throw new InvalidEmotionConfigFile("Identifying tag on: " + lineNum + "is invalid");
+			throw new InvalidEmotionConfigFile("Identifying tag on line: " + lineNum + " is invalid");
 		}
 		return res;
 	}
