@@ -18,114 +18,7 @@ public class EmotionConfigTest {
 		assertEquals(new ArrayList<GamGoal>(), testEmotion.getGoals());
 		assertEquals(new ArrayList<GamBelief>(), testEmotion.getRelations());
 	}
-	
-	@Test
-	public void testEqualsTrue() throws InvalidGamRelationException, InvalidGamBeliefException {
-		ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
-		ArrayList<GamGoal> goals = new ArrayList<GamGoal>();
-		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
-		
-		GamBelief belief = new GamBelief(0.2, "agent1", "agent2", 0.1, false);
-		beliefs.add(belief);
-		GamGoal goal = new GamGoal("agent1", "goal1", 3);
-		goals.add(goal);
-		GamRelation relation = new GamRelation("agent1", "agent2", -1);
-		relations.add(relation);
-		
-		EmotionConfig thisConfig = new EmotionConfig(beliefs, goals, relations);
-		EmotionConfig otherConfig = new EmotionConfig(beliefs, goals, relations);
-		
-		assertTrue(thisConfig.equals(otherConfig));
-	}
 
-	@Test
-	public void testEqualsOtherBeliefs() throws InvalidGamRelationException, InvalidGamBeliefException {
-		ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
-		ArrayList<GamGoal> goals = new ArrayList<GamGoal>();
-		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
-		
-		GamBelief belief = new GamBelief(0.2, "agent1", "agent2", 0.1, false);
-		beliefs.add(belief);
-		GamGoal goal = new GamGoal("agent1", "goal1", 3);
-		goals.add(goal);
-		GamRelation relation = new GamRelation("agent1", "agent2", -1);
-		relations.add(relation);
-		
-		ArrayList<GamBelief> beliefs2 = new ArrayList<GamBelief>();
-		belief = new GamBelief(0.3, "agent1", "agent2", 0.1,true);
-		beliefs2.add(belief);
-		
-		EmotionConfig thisConfig = new EmotionConfig(beliefs, goals, relations);
-		EmotionConfig otherConfig = new EmotionConfig(beliefs2, goals, relations);
-		
-		assertFalse(thisConfig.equals(otherConfig));
-	}
-	
-	@Test
-	public void testEqualsOtherRelations() throws InvalidGamRelationException, InvalidGamBeliefException {
-		ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
-		ArrayList<GamGoal> goals = new ArrayList<GamGoal>();
-		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
-		
-		GamBelief belief = new GamBelief(0.2, "agent1", "agent2", 0.1, false);
-		beliefs.add(belief);
-		GamGoal goal = new GamGoal("agent1", "goal1", 3);
-		goals.add(goal);
-		GamRelation relation = new GamRelation("agent1", "agent2", -1);
-		relations.add(relation);
-		
-		ArrayList<GamRelation> relations2 = new ArrayList<GamRelation>();
-		relation = new GamRelation("agent3", "agent2", 1);
-		relations.add(relation);
-		
-		EmotionConfig thisConfig = new EmotionConfig(beliefs, goals, relations);
-		EmotionConfig otherConfig = new EmotionConfig(beliefs, goals, relations2);
-		
-		assertFalse(thisConfig.equals(otherConfig));
-	}
-	
-	@Test
-	public void testEqualsOtherGoals() throws InvalidGamRelationException, InvalidGamBeliefException {
-		ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
-		ArrayList<GamGoal> goals = new ArrayList<GamGoal>();
-		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
-		
-		GamBelief belief = new GamBelief(0.2, "agent1", "agent2", 0.1, false);
-		beliefs.add(belief);
-		GamGoal goal = new GamGoal("agent1", "goal1", 3);
-		goals.add(goal);
-		GamRelation relation = new GamRelation("agent1", "agent2", -1);
-		relations.add(relation);
-		
-		ArrayList<GamGoal> goals2 = new ArrayList<GamGoal>();
-		goal = new GamGoal("agent1", "goal2", 3);
-		goals.add(goal);
-		
-		EmotionConfig thisConfig = new EmotionConfig(beliefs, goals, relations);
-		EmotionConfig otherConfig = new EmotionConfig(beliefs, goals2, relations);
-		
-		assertFalse(thisConfig.equals(otherConfig));
-	}
-
-	@Test
-	public void testEqualsOtherObject() throws InvalidGamBeliefException, InvalidGamRelationException {
-		ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
-		ArrayList<GamGoal> goals = new ArrayList<GamGoal>();
-		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
-		
-		GamBelief belief = new GamBelief(0.2, "agent1", "agent2", 0.1, false);
-		beliefs.add(belief);
-		GamGoal goal = new GamGoal("agent1", "goal1", 3);
-		goals.add(goal);
-		GamRelation relation = new GamRelation("agent1", "agent2", -1);
-		relations.add(relation);
-		
-		EmotionConfig thisConfig = new EmotionConfig(beliefs, goals, relations);
-		
-		int num = 0;
-		
-		assertFalse(thisConfig.equals(num));
-	}
 	@Test
 	public void testTostring() throws InvalidGamBeliefException, InvalidGamRelationException {
 	 ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
@@ -139,8 +32,30 @@ public class EmotionConfigTest {
 	 GamRelation relation = new GamRelation("agent1", "agent2", -1);
 	 relations.add(relation);
 	
-	 EmotionConfig thisConfig = new EmotionConfig(beliefs, goals, relations);
-	 String correct = "{Config: [{BEL: 0.2, agent1, agent2, 0.1, false}], [{GOAL: agent1, goal1, 3.0}], [{REL: agent1, agent2, -1.0}]}";
+	 EmotionConfig thisConfig = EmotionConfig.getInstance();
+	 thisConfig.setBeliefs(beliefs);
+	 thisConfig.setGoals(goals);
+	 thisConfig.setRelations(relations);
+	 //System.out.println(thisConfig.toString());
+	 String correct = "{Config: [{BEL: 0.2, agent1, agent2, 0.1, false}], [{GOAL: agent1, goal1, 3.0}], [{REL: agent1, agent2, -1.0}], utility: 1.0, negativeCongruence: -0.1, positiveCongruence: 0.5, belieflikelihood: 1.0, isincremental: false}";
 	 assertEquals(correct, thisConfig.toString());
 	}
+	
+	
+	@Test
+	public void testGetters() {
+		EmotionConfig conf = EmotionConfig.getInstance();
+		 double DefaultUtility = 1;
+		 double DefaultNegativeCongruence = -0.1;
+		 double DefaultPositiveCongruence = 0.5;
+		 double DefaultBelLikelihood = 1;
+		 boolean DefaultIsIncremental = false;
+		 
+		 assertEquals(DefaultUtility,conf.getDefaultUtility(),0.0);
+		 assertEquals(DefaultNegativeCongruence,conf.getDefaultNegativeCongruence(),0.0);
+		 assertEquals(DefaultPositiveCongruence,conf.getDefaultPositiveCongruence(),0.0);
+		 assertEquals(DefaultBelLikelihood,conf.getDefaultBelLikelihood(),0.0);
+		 assertEquals(DefaultIsIncremental,conf.isDefaultIsIncremental());
+	}
+	
 }

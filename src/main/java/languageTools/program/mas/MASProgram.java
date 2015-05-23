@@ -61,6 +61,7 @@ public class MASProgram extends Program {
 	 */
 	private final List<LaunchRule> launchRules = new ArrayList<LaunchRule>();
 
+	private String emotionFile = null;
 	/**
 	 * Creates a new (empty) MAS program.
 	 *
@@ -225,5 +226,17 @@ public class MASProgram extends Program {
 		str.append(linePrefix + ">");
 
 		return str.toString();
+	}
+
+	public String getEmotionFile() {
+		return emotionFile;
+	}
+	
+	public void setEmotionFile(String file) {
+		emotionFile = file;
+	}
+	
+	public boolean hasEmotionFile() {
+		return emotionFile != null;
 	}
 }

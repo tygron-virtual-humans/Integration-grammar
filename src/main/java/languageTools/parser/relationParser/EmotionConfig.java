@@ -5,12 +5,26 @@
 
 package languageTools.parser.relationParser;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
 public class EmotionConfig {
 
   private ArrayList<GamBelief> beliefs;
   private ArrayList<GamGoal> goals;
   private ArrayList<GamRelation> relations;
+  private static EmotionConfig configuration;
+  private double defaultUtility;
+  private double defaultPositiveCongruence;
+  private double defaultNegativeCongruence;
+  private double defaultBelLikelihood;
+  private boolean defaultIsIncremental;
+
+
+
+
 
 /** 
  * Constructor for the configuration of the emotions.
@@ -19,34 +33,44 @@ public class EmotionConfig {
  * @param relations - the relations between the agents
  */
   public EmotionConfig(ArrayList<GamBelief> beliefs,ArrayList<GamGoal> goals,
-      ArrayList<GamRelation> relations ) {
+     ArrayList<GamRelation> relations) {
     this.setBeliefs(beliefs);
     this.setGoals(goals);
     this.setRelations(relations);
   }
   
   /**
-   * Override equals method.
+   * Singleton method to get the instance
+   * @return
    */
-  @Override
-  public boolean equals(Object object) {
-    if (object instanceof EmotionConfig) {
-      EmotionConfig other = (EmotionConfig) object;
-      Boolean value = true;
-      
-      if (!this.getBeliefs().equals(other.getBeliefs())) {
-        value = false;
-      }
-      if (!this.getGoals().equals(other.getGoals())) {
-        value = false;
-      }
-      if (!this.getRelations().equals(other.getRelations())) {
-        value = false;
-      }
-      return value;
-    } else {
-      return false;
-    }
+  public synchronized static EmotionConfig getInstance(){
+	  if(configuration == null){
+		  configuration = new EmotionConfig(new ArrayList<GamBelief>(), new ArrayList<GamGoal>(), new ArrayList<GamRelation>());
+		  configuration.setDefaultUtility(1);
+		  configuration.setDefaultNegativeCongruence(-0.1);
+		  configuration.setDefaultPositiveCongruence(0.5);
+		  configuration.setDefaultBelLikelihood(1);
+		  configuration.setDefaultIsIncremental(false);
+	  }
+	  return configuration;
+	  
+	  
+  }
+  
+  public static void reset(){
+	  configuration = null;
+  }
+  
+  /**
+   * 
+   * @param filepath
+   * @throws FileNotFoundException
+   * @throws InvalidEmotionConfigFile
+   */
+  public static void parse(String filepath) throws FileNotFoundException, InvalidEmotionConfigFile{
+	  File file = new File(filepath);
+	  configuration = RelationParser.parse(file);
+	  
   }
   
   /**
@@ -56,7 +80,7 @@ public class EmotionConfig {
 	  String bel = getBeliefs().toString();
 	  String goal = getGoals().toString();
 	  String rel = getRelations().toString();
-	  return "{Config: " + bel + ", " + goal + ", " + rel + "}";
+	  return "{Config: " + bel + ", " + goal + ", " + rel + ", utility: " + defaultUtility + ", negativeCongruence: " + defaultNegativeCongruence + ", positiveCongruence: " + defaultPositiveCongruence + ", belieflikelihood: " + defaultBelLikelihood + ", isincremental: " + defaultIsIncremental + "}";
   }
 
 /**
@@ -100,4 +124,86 @@ public ArrayList<GamRelation> getRelations() {
 public void setRelations(ArrayList<GamRelation> relations) {
 	this.relations = relations;
 }
+
+/**
+ * getter for he default utility
+ * @return
+ */
+public double getDefaultUtility() {
+	return this.defaultUtility;
+}
+
+/**
+ * Setter for the default utility
+ * @param defaultUtility
+ */
+public void setDefaultUtility(double defaultUtility) {
+	this.defaultUtility = defaultUtility;
+}
+
+/**
+ * getter for the default positive congruence
+ * @return
+ */
+public double getDefaultPositiveCongruence() {
+	return defaultPositiveCongruence;
+}
+
+/**
+ * setter for the default positive congruence
+ * @param defaultPositiveCongruence
+ */
+public void setDefaultPositiveCongruence(double defaultPositiveCongruence) {
+	this.defaultPositiveCongruence = defaultPositiveCongruence;
+}
+
+/**
+ * getter for the default negative congruence 
+ * @return
+ */
+public double getDefaultNegativeCongruence() {
+	return defaultNegativeCongruence;
+}
+
+
+/**
+ * setter for the default negative congruence
+ * @param defaultNegativeCongruence
+ */
+public void setDefaultNegativeCongruence(double defaultNegativeCongruence) {
+	this.defaultNegativeCongruence = defaultNegativeCongruence;
+}
+
+/**
+ * getter for the default belief likelihood
+ * @return
+ */
+public double getDefaultBelLikelihood() {
+	return defaultBelLikelihood;
+}
+
+/**
+ * setter for the default belief likelihood
+ * @param defaultBelLikelihood
+ */
+public void setDefaultBelLikelihood(double defaultBelLikelihood) {
+	this.defaultBelLikelihood = defaultBelLikelihood;
+}
+
+/**
+ * getter for the setting of the IsIncremental. See documentation.
+ * @return
+ */
+public boolean isDefaultIsIncremental() {
+	return defaultIsIncremental;
+}
+
+/**
+ * setter for the setting of the IsIncremental.
+ * @param defaultIsIncremental
+ */
+public void setDefaultIsIncremental(boolean defaultIsIncremental) {
+	this.defaultIsIncremental = defaultIsIncremental;
+}
+
 }

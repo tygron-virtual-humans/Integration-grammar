@@ -1,3 +1,4 @@
+Default Goal Uttility, 0.56
 BEL, 0.2,agent1,goal1, 0.1,False
 REL,agent1,agent2, -1
 GOAL,agent2,goal2, 0.8
