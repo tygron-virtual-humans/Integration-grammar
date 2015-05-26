@@ -23,6 +23,7 @@ public class EmotionConfig {
   private double defaultNegativeCongruence;
   private double defaultBelLikelihood;
   private boolean defaultIsIncremental;
+  private boolean whiteList;
 
 
 
@@ -51,6 +52,7 @@ public class EmotionConfig {
 		  configuration.setDefaultPositiveCongruence(1);
 		  configuration.setDefaultBelLikelihood(1);
 		  configuration.setDefaultIsIncremental(false);
+		  configuration.setWhiteList(false);
 	  }
 	  return configuration;
 	  
@@ -231,7 +233,12 @@ public GamGoal getGoal(String goalName) {
 	if(this.getGoals().containsKey(goalName)) {
 		return this.getGoals().get(goalName);
 	} else {
-		return new GamGoal("ANY", goalName, this.getDefaultUtility());
+		if(this.hasWhiteList()) {
+			return new GamGoal("ANY", goalName, 0);
+		} else {
+			return new GamGoal("ANY", goalName, this.getDefaultUtility());
+
+		}
 	}
 }
 
@@ -255,6 +262,14 @@ public GamBelief getBelief(String beliefName) throws InvalidGamBeliefException {
  */
 public boolean getDefaultIsIncremental() {
 	return this.defaultIsIncremental;
+}
+
+public boolean hasWhiteList() {
+	return whiteList;
+}
+
+public void setWhiteList(boolean whiteList) {
+	this.whiteList = whiteList;
 }
 
 }
