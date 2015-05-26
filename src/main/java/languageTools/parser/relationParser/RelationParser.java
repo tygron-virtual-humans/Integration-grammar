@@ -82,6 +82,18 @@ abstract public class RelationParser {
 			}
 		
 		}
+		
+		//whitelist
+		else if(objects[0].equals("WHITELIST")){
+			try {
+				if(objects[1].toUpperCase().equals("ON")) {
+					res.setWhiteList(true);
+				}
+			} catch (Throwable e) {
+				throw new InvalidEmotionConfigFile("Belief on line: " + lineNum + " is invalid");
+			}
+				
+		}
 		//RELATIONS
 		else if(objects[0].equals("REL")){
 			GamRelation relation;
@@ -202,7 +214,14 @@ abstract public class RelationParser {
 		 double value = Double.parseDouble(objects[3]);
 	     gamgoal = new GamGoal(agent,goal,value);
 		} catch(Throwable e) {
-			throw new InvalidGamGoalString("Cannot read the goal string: " + objects.toString());
+			try {
+			 String agent = objects[1];
+			 String goal = objects[2];
+			 gamgoal = new GamGoal(agent, goal, EmotionConfig.getInstance().getDefaultUtility());
+			} catch(Throwable f) {
+				throw new InvalidGamGoalString("Cannot read the goal string: " + objects.toString());
+			}
+			
 		}
 	
 		return gamgoal;

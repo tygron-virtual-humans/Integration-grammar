@@ -8,10 +8,16 @@ import java.util.HashMap;
 import languageTools.exceptions.relationParser.InvalidGamBeliefException;
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
 
+import org.junit.After;
 import org.junit.Test;
 
 public class EmotionConfigTest {
 
+	@After
+	public void tearDown() {
+		EmotionConfig.getInstance().reset();
+	}
+	
 	@Test
 	public void testConstructorEmpty() {
 		EmotionConfig testEmotion = new EmotionConfig(new HashMap<String,GamBelief>(), new HashMap<String,GamGoal>(), new ArrayList<GamRelation>());
@@ -84,4 +90,47 @@ public class EmotionConfigTest {
 		assertEquals(bel.isIncremental, testBel.isIncremental);
 		assertEquals(bel.congruence, testBel.congruence,0.0);
 	}
+	
+	@Test
+	public void testGetDefaultGoalNoWhitelist() {
+		EmotionConfig conf = EmotionConfig.getInstance();
+		GamGoal goal = conf.getGoal("test");
+		assertEquals("test", goal.getGoal());
+		assertEquals("ANY", goal.getAgent());
+		assertEquals(conf.getDefaultUtility(), goal.getValue(), 0.0);
+	}	
+	
+	@Test
+	public void testGetDefaultGoalWithWhitelist() {
+		EmotionConfig conf = EmotionConfig.getInstance();
+		conf.setWhiteList(true);
+		GamGoal goal = conf.getGoal("test");
+		assertEquals("test", goal.getGoal());
+		assertEquals("ANY", goal.getAgent());
+		assertEquals(0.0, goal.getValue(), 0.0);
+	}
+	
+	@Test
+	public void testGetInsertedGoalNoWhitelist() {
+		EmotionConfig conf = EmotionConfig.getInstance();
+		GamGoal goal = new GamGoal("testA", "testG", 0.9);
+		conf.addGoal(goal);
+		GamGoal testGoal = conf.getGoal("testG");
+		assertEquals("testA", testGoal.getAgent());
+		assertEquals("testG", testGoal.getGoal());
+		assertEquals(0.9, testGoal.getValue(), 0.0);
+	}
+	
+	@Test
+	public void testGetInsertedGoalWithWhitelist() {
+		EmotionConfig conf = EmotionConfig.getInstance();
+		conf.setWhiteList(true);
+		GamGoal goal = new GamGoal("testA", "testG", 0.9);
+		conf.addGoal(goal);
+		GamGoal testGoal = conf.getGoal("testG");
+		assertEquals("testA", testGoal.getAgent());
+		assertEquals("testG", testGoal.getGoal());
+		assertEquals(0.9, testGoal.getValue(), 0.0);
+	}
+	
 }
