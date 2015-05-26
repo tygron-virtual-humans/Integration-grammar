@@ -6,6 +6,7 @@ package languageTools.parser.relationParser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
@@ -27,8 +28,8 @@ abstract public class RelationParser {
 	public static EmotionConfig parse(File file) throws FileNotFoundException, InvalidEmotionConfigFile{
 	// creating scanner + lists	
 	Scanner fileScanner = new Scanner(file);
-	ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
-	ArrayList<GamGoal> goals = new ArrayList<GamGoal>();
+	HashMap<String, GamBelief> beliefs = new HashMap<String,GamBelief>();
+	HashMap<String,GamGoal> goals = new HashMap<String,GamGoal>();
 	ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 	
 	//creating resulting configuration
@@ -75,7 +76,7 @@ abstract public class RelationParser {
 			GamBelief belief;
 			try {
 				belief = parseBelief(objects);
-				res.getBeliefs().add(belief);
+				res.addBelief(belief);
 			} catch (Throwable e) {
 				throw new InvalidEmotionConfigFile("Belief on line: " + lineNum + " is invalid");
 			}
@@ -129,7 +130,7 @@ abstract public class RelationParser {
 			GamGoal gamgoal;
 			try {
 				gamgoal = parseGoal(objects);
-				res.getGoals().add(gamgoal);	
+				res.addGoal(gamgoal);	
 			} catch (Throwable e) {
 				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + " is invalid");
 			}
@@ -150,17 +151,17 @@ abstract public class RelationParser {
 	public static GamBelief parseBelief(String[] objects) throws InvalidGamBeliefException, InvalidGamBeliefString{
 		GamBelief belief = null;
 		try{
-			
-		 double likelihood = Double.parseDouble(objects[1]);
-		 String causal = objects[2];
-		 String affected = objects[3];
-		 double congruence = Double.parseDouble(objects[4]);
-		 boolean isincremental = parseBoolean(objects[5]);
+		 String beliefName = objects[1];
+		 double likelihood = Double.parseDouble(objects[2]);
+		 String causal = objects[3];
+		 String affected = objects[4];
+		 double congruence = Double.parseDouble(objects[5]);
+		 boolean isincremental = parseBoolean(objects[6]);
 		 //System.out.println(objects[5]);
 		 //System.out.println(isincremental);
 		 //System.out.println("Objects[5]: " + objects[5]);
 		 //System.out.println(Arrays.toString(objects));
-		 belief = new GamBelief(likelihood,causal,affected,congruence,isincremental);
+		 belief = new GamBelief(beliefName,likelihood,causal,affected,congruence,isincremental);
 		} catch(Throwable e) {
 			throw new InvalidGamBeliefString("Cannot parse the gam belief");
 		}

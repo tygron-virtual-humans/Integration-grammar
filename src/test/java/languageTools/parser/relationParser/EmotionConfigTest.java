@@ -3,6 +3,7 @@ package languageTools.parser.relationParser;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import languageTools.exceptions.relationParser.InvalidGamBeliefException;
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
@@ -13,22 +14,22 @@ public class EmotionConfigTest {
 
 	@Test
 	public void testConstructorEmpty() {
-		EmotionConfig testEmotion = new EmotionConfig(new ArrayList<GamBelief>(), new ArrayList<GamGoal>(), new ArrayList<GamRelation>());
-		assertEquals(new ArrayList<GamBelief>(), testEmotion.getBeliefs());
-		assertEquals(new ArrayList<GamGoal>(), testEmotion.getGoals());
-		assertEquals(new ArrayList<GamBelief>(), testEmotion.getRelations());
+		EmotionConfig testEmotion = new EmotionConfig(new HashMap<String,GamBelief>(), new HashMap<String,GamGoal>(), new ArrayList<GamRelation>());
+		assertEquals(new HashMap<String,GamBelief>(), testEmotion.getBeliefs());
+		assertEquals(new HashMap<String,GamGoal>(), testEmotion.getGoals());
+		assertEquals(new ArrayList<GamRelation>(), testEmotion.getRelations());
 	}
 
 	@Test
 	public void testTostring() throws InvalidGamBeliefException, InvalidGamRelationException {
-	 ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
-	 ArrayList<GamGoal> goals = new ArrayList<GamGoal>();
+	 HashMap<String, GamBelief> beliefs = new HashMap<String, GamBelief>();
+	 HashMap<String, GamGoal> goals = new HashMap<String, GamGoal>();
 	 ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 	
-	 GamBelief belief = new GamBelief(0.2, "agent1", "agent2", 0.1, false);
-	 beliefs.add(belief);
+	 GamBelief belief = new GamBelief("bel1", 0.2, "agent1", "agent2", 0.1, false);
+	 beliefs.put(belief.getBeliefName(), belief);
 	 GamGoal goal = new GamGoal("agent1", "goal1", 3);
-	 goals.add(goal);
+	 goals.put(goal.getGoal(),goal);
 	 GamRelation relation = new GamRelation("agent1", "agent2", -1);
 	 relations.add(relation);
 	
@@ -37,7 +38,7 @@ public class EmotionConfigTest {
 	 thisConfig.setGoals(goals);
 	 thisConfig.setRelations(relations);
 	 //System.out.println(thisConfig.toString());
-	 String correct = "{Config: [{BEL: 0.2, agent1, agent2, 0.1, false}], [{GOAL: agent1, goal1, 3.0}], [{REL: agent1, agent2, -1.0}], utility: 1.0, negativeCongruence: -0.1, positiveCongruence: 0.5, belieflikelihood: 1.0, isincremental: false}";
+	 String correct = "{Config: {bel1={BEL: bel1, 0.2, agent1, agent2, 0.1, false}}, {goal1={GOAL: agent1, goal1, 3.0}}, [{REL: agent1, agent2, -1.0}], utility: 1.0, negativeCongruence: -0.1, positiveCongruence: 0.5, belieflikelihood: 1.0, isincremental: false}";
 	 assertEquals(correct, thisConfig.toString());
 	}
 	
@@ -58,4 +59,29 @@ public class EmotionConfigTest {
 		 assertEquals(DefaultIsIncremental,conf.isDefaultIsIncremental());
 	}
 	
+	@Test
+	public void testGetDefaultBelief() throws InvalidGamBeliefException {
+		EmotionConfig conf = EmotionConfig.getInstance();
+		GamBelief bel = conf.getBelief("test"); //get a belief by a name that has not been added.
+		assertEquals("test", bel.getBeliefName());
+		assertEquals("ANY", bel.causal);
+		assertEquals("ANY", bel.affected);
+		assertEquals(conf.getDefaultBelLikelihood(), bel.likelihood, 0.0);
+		assertEquals(conf.getDefaultIsIncremental(), bel.isIncremental);
+		assertEquals(conf.getDefaultPositiveCongruence(), bel.congruence, 0.0);
+	}
+	
+	@Test
+	public void testGetInsertedBelief() throws InvalidGamBeliefException {
+		EmotionConfig conf = EmotionConfig.getInstance();
+		GamBelief bel = new GamBelief("test", 0.2,"test2", "test3", 0.1, false); //get a belief by a name that has not been added.
+		conf.addBelief(bel);
+		GamBelief testBel = conf.getBelief("test");
+		assertEquals(bel.getBeliefName(), testBel.getBeliefName());
+		assertEquals(bel.causal, testBel.causal);
+		assertEquals(bel.affected, testBel.affected);
+		assertEquals(bel.likelihood, testBel.likelihood,0.0);
+		assertEquals(bel.isIncremental, testBel.isIncremental);
+		assertEquals(bel.congruence, testBel.congruence,0.0);
+	}
 }
