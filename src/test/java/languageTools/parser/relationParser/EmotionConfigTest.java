@@ -65,7 +65,7 @@ public class EmotionConfigTest {
 		GamBelief bel = conf.getBelief("test"); //get a belief by a name that has not been added.
 		assertEquals("test", bel.getBeliefName());
 		assertEquals("ANY", bel.causal);
-		assertEquals("ANY", bel.affected);
+		assertEquals("NONE", bel.affected);
 		assertEquals(conf.getDefaultBelLikelihood(), bel.likelihood, 0.0);
 		assertEquals(conf.getDefaultIsIncremental(), bel.isIncremental);
 		assertEquals(conf.getDefaultPositiveCongruence(), bel.congruence, 0.0);
