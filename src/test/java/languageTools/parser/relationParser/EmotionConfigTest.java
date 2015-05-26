@@ -38,7 +38,7 @@ public class EmotionConfigTest {
 	 thisConfig.setGoals(goals);
 	 thisConfig.setRelations(relations);
 	 //System.out.println(thisConfig.toString());
-	 String correct = "{Config: {bel1={BEL: bel1, 0.2, agent1, agent2, 0.1, false}}, {goal1={GOAL: agent1, goal1, 3.0}}, [{REL: agent1, agent2, -1.0}], utility: 1.0, negativeCongruence: -0.1, positiveCongruence: 0.5, belieflikelihood: 1.0, isincremental: false}";
+	 String correct = "{Config: {bel1={BEL: bel1, 0.2, agent1, agent2, 0.1, false}}, {goal1={GOAL: agent1, goal1, 3.0}}, [{REL: agent1, agent2, -1.0}], utility: 1.0, negativeCongruence: -1.0, positiveCongruence: 1.0, belieflikelihood: 1.0, isincremental: false}";
 	 assertEquals(correct, thisConfig.toString());
 	}
 	
@@ -47,8 +47,8 @@ public class EmotionConfigTest {
 	public void testGetters() {
 		EmotionConfig conf = EmotionConfig.getInstance();
 		 double DefaultUtility = 1;
-		 double DefaultNegativeCongruence = -0.1;
-		 double DefaultPositiveCongruence = 0.5;
+		 double DefaultNegativeCongruence = -1;
+		 double DefaultPositiveCongruence = 1;
 		 double DefaultBelLikelihood = 1;
 		 boolean DefaultIsIncremental = false;
 		 

@@ -47,8 +47,8 @@ public class EmotionConfig {
 	  if(configuration == null){
 		  configuration = new EmotionConfig(new HashMap<String, GamBelief>(), new HashMap<String, GamGoal>(), new ArrayList<GamRelation>());
 		  configuration.setDefaultUtility(1);
-		  configuration.setDefaultNegativeCongruence(-0.1);
-		  configuration.setDefaultPositiveCongruence(0.5);
+		  configuration.setDefaultNegativeCongruence(-1);
+		  configuration.setDefaultPositiveCongruence(1);
 		  configuration.setDefaultBelLikelihood(1);
 		  configuration.setDefaultIsIncremental(false);
 	  }
