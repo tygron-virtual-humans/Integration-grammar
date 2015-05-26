@@ -245,7 +245,7 @@ public GamBelief getBelief(String beliefName) throws InvalidGamBeliefException {
 	if(this.getBeliefs().containsKey(beliefName)) {
 		return this.getBeliefs().get(beliefName);
 	} else {
-		return new GamBelief(beliefName, this.getDefaultBelLikelihood(),"ANY", "ANY", this.getDefaultPositiveCongruence(), this.getDefaultIsIncremental());
+		return new GamBelief(beliefName, this.getDefaultBelLikelihood(),"ANY", "NONE", this.getDefaultPositiveCongruence(), this.getDefaultIsIncremental());
 	}
 }
 
