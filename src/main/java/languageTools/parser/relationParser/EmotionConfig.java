@@ -8,12 +8,14 @@ package languageTools.parser.relationParser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
+import languageTools.exceptions.relationParser.InvalidGamBeliefException;
 public class EmotionConfig {
 
-  private ArrayList<GamBelief> beliefs;
-  private ArrayList<GamGoal> goals;
+  private HashMap<String,GamBelief> beliefs;
+  private HashMap<String, GamGoal> goals;
   private ArrayList<GamRelation> relations;
   private static EmotionConfig configuration;
   private double defaultUtility;
@@ -24,15 +26,13 @@ public class EmotionConfig {
 
 
 
-
-
 /** 
  * Constructor for the configuration of the emotions.
  * @param beliefs - the believes that are present about goals
  * @param goals - the specified goals for the agents
  * @param relations - the relations between the agents
  */
-  public EmotionConfig(ArrayList<GamBelief> beliefs,ArrayList<GamGoal> goals,
+  public EmotionConfig(HashMap<String, GamBelief> beliefs,HashMap<String,GamGoal> goals,
      ArrayList<GamRelation> relations) {
     this.setBeliefs(beliefs);
     this.setGoals(goals);
@@ -45,10 +45,10 @@ public class EmotionConfig {
    */
   public synchronized static EmotionConfig getInstance(){
 	  if(configuration == null){
-		  configuration = new EmotionConfig(new ArrayList<GamBelief>(), new ArrayList<GamGoal>(), new ArrayList<GamRelation>());
+		  configuration = new EmotionConfig(new HashMap<String, GamBelief>(), new HashMap<String, GamGoal>(), new ArrayList<GamRelation>());
 		  configuration.setDefaultUtility(1);
-		  configuration.setDefaultNegativeCongruence(-0.1);
-		  configuration.setDefaultPositiveCongruence(0.5);
+		  configuration.setDefaultNegativeCongruence(-1);
+		  configuration.setDefaultPositiveCongruence(1);
 		  configuration.setDefaultBelLikelihood(1);
 		  configuration.setDefaultIsIncremental(false);
 	  }
@@ -86,28 +86,28 @@ public class EmotionConfig {
 /**
  * @return the beliefs
  */
-public ArrayList<GamBelief> getBeliefs() {
+public HashMap<String,GamBelief> getBeliefs() {
 	return beliefs;
 }
 
 /**
  * @param beliefs the beliefs to set
  */
-public void setBeliefs(ArrayList<GamBelief> beliefs) {
+public void setBeliefs(HashMap<String, GamBelief> beliefs) {
 	this.beliefs = beliefs;
 }
 
 /**
  * @return the goals
  */
-public ArrayList<GamGoal> getGoals() {
+public HashMap<String,GamGoal> getGoals() {
 	return goals;
 }
 
 /**
  * @param goals the goals to set
  */
-public void setGoals(ArrayList<GamGoal> goals) {
+public void setGoals(HashMap<String, GamGoal> goals) {
 	this.goals = goals;
 }
 
@@ -204,6 +204,57 @@ public boolean isDefaultIsIncremental() {
  */
 public void setDefaultIsIncremental(boolean defaultIsIncremental) {
 	this.defaultIsIncremental = defaultIsIncremental;
+}
+
+/**
+ * Adds the goal to the emotionconfig.
+ * @param goal goal to be added
+ */
+public void addGoal(GamGoal goal) {
+	this.getGoals().put(goal.getGoal(), goal);
+}
+
+/**
+ * add the beleif to the emotionconfig
+ * @param belief belief to be aded
+ */
+public void addBelief(GamBelief belief) {
+	this.getBeliefs().put(belief.getBeliefName(), belief);
+}
+
+/**
+ * get goal configuration by the name goalName, returns a default configuration if it is not specified.
+ * @param goalName goal name for which to retrieve the configuration
+ * @return
+ */
+public GamGoal getGoal(String goalName) {
+	if(this.getGoals().containsKey(goalName)) {
+		return this.getGoals().get(goalName);
+	} else {
+		return new GamGoal("ANY", goalName, this.getDefaultUtility());
+	}
+}
+
+/**
+ * get belief configuration by the beliefName, returns as default configuration if it is not specified.
+ * @param beliefName
+ * @return
+ * @throws InvalidGamBeliefException 
+ */
+public GamBelief getBelief(String beliefName) throws InvalidGamBeliefException {
+	if(this.getBeliefs().containsKey(beliefName)) {
+		return this.getBeliefs().get(beliefName);
+	} else {
+		return new GamBelief(beliefName, this.getDefaultBelLikelihood(),"ANY", "NONE", this.getDefaultPositiveCongruence(), this.getDefaultIsIncremental());
+	}
+}
+
+/**
+ * returns default is incremental
+ * @return
+ */
+public boolean getDefaultIsIncremental() {
+	return this.defaultIsIncremental;
 }
 
 }
