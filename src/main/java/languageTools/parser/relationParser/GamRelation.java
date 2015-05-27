@@ -8,10 +8,10 @@ import languageTools.exceptions.relationParser.InvalidGamRelationException;
 public class GamRelation {
 	
 	String agent1;
+
 	String agent2;
 	double value;
-	
-	
+
 	/**
 	 * Constructor
 	 * @param agent1 - the first agent in the relation
@@ -51,4 +51,30 @@ public class GamRelation {
 	public String toString() {
 		return "{REL: " + agent1 + ", " + agent2 + ", " + value + "}"; 
 	}
+	
+	public String getAgent1() {
+		return agent1;
+	}
+
+	public void setAgent1(String agent1) {
+		this.agent1 = agent1;
+	}
+
+	public String getAgent2() {
+		return agent2;
+	}
+
+	public void setAgent2(String agent2) {
+		this.agent2 = agent2;
+	}
+	
+	
+	public double getValue() {
+		return value;
+	}
+
+	public void setValue(double value) {
+		this.value = value;
+	}
+	
 }
