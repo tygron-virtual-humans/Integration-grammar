@@ -70,7 +70,7 @@ abstract public class RelationParser {
 	 */
 	public static EmotionConfig parseObjects(String[] objects, EmotionConfig config, int lineNum) throws InvalidEmotionConfigFile {
 		EmotionConfig res = EmotionConfig.getInstance();
-		
+		objects = removeWhiteSpaces(objects);
 		//BELIEVES
 		if(objects[0].equals("BEL")){
 			GamBelief belief;
@@ -320,5 +320,13 @@ abstract public class RelationParser {
 			throw new InvalidEmotionConfigFile("The boolean is not written correctly and can not be parsed");
 		}
 	}
-
+	
+	public static String[] removeWhiteSpaces(String[] objects) {
+		String[] res = new String[objects.length];
+		for(int i = 0; i<objects.length; i++) {
+			res[i] = objects[i].trim();
+		}
+		
+		return res;
+	}
 }

@@ -3,4 +3,4 @@ REL,agent1,agent2, -1
 GOAL,agent2,goal2, 0.8
 BEL,bel2, 0.3,agent2,goal2, 0.5,True 
 REL, agent3, agent4, 0.9
-GOAL,agent1,goal1
+GOAL,agent1
