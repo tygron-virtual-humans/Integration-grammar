@@ -44,18 +44,6 @@ public enum AgentError implements ValidatorErrorType {
 	 */
 	IMPORT_MISSING_FILE,
 	/**
-	 * Gam predicate contains variable emotion name or value
-	 */
-	KR_GAM_HAS_VARIABLE,
-	/**
-	 * has a invalid emotion name
-	 */
-	KR_GAM_INVALID_EMOTION_NAME, 
-	/**
-	 * the second argument should be a number
-	 */
-	KR_GAM_SECOND_ARG_NOT_NUMBER, 
-	/**
 	 * An expression in a knowledge representation language that is queried
 	 * should be defined.
 	 */
