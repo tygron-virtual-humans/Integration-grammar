@@ -133,5 +133,12 @@ public class GamBeliefTest {
 		 assertFalse(testBel1.equals(testBel2));
 	}
 	
+	@Test
+	public void setNameString() throws InvalidGamBeliefException {
+		 GamBelief testBel1 = new GamBelief("bel1", 0.2,"test1", "test2", -1, false);
+		 testBel1.setBeliefName("bel2");
+		 assertEquals(testBel1.getBeliefName(),"bel2");
+	}
+	
 
 }
