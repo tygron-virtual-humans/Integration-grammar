@@ -22,8 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import jpl.Compound;
-import swiprolog.language.PrologQuery;
 import krTools.errors.exceptions.ParserException;
 import krTools.language.DatabaseFormula;
 import krTools.language.Query;
@@ -64,7 +62,8 @@ public class ModuleValidatorSecondPass {
 	private final static String AGENT = "agent/1";
 	private final static String ME = "me/1";
 	private final static String PERCEPT = "percept/1";
-	private final static String GAM = "gam/2";
+	private final static String EMOTION2 = "emotion/2";
+	private final static String EMOTION3 = "emotion/3";
 	private final static String RECEIVED = "received/2";
 	private final static String SENT = "sent/2";
 
@@ -238,14 +237,6 @@ public class ModuleValidatorSecondPass {
 		// Remove queries that are undefined knowledge queries
 		undefinedGoalQueries.removeAll(this.program.getKRInterface()
 				.getUndefined(this.knowledge, new HashSet<Query>()));
-		
-		// Retrieve all gamygdala queries
-		Set<Query> gamygdalaQueries = new HashSet<Query>();
-		for (Query query : this.beliefQueries) {
-			if (query.getSignature().equals("gam/2")) {
-				gamygdalaQueries.add(query);
-			}
-		}
 
 		// Reserved keywords that should not be reported, e.g., percept/1,
 		// received/2
@@ -253,44 +244,10 @@ public class ModuleValidatorSecondPass {
 		reserved.add(AGENT);
 		reserved.add(ME);
 		reserved.add(PERCEPT);
-		reserved.add(GAM);
+		reserved.add(EMOTION2);
+		reserved.add(EMOTION3);
 		reserved.add(RECEIVED);
 		reserved.add(SENT);
-		
-		// List of 16 possible emtion names
-		Set<String> emotionSet = new HashSet<>();
-		emotionSet.add("distress");
-		emotionSet.add("fear");
-		emotionSet.add("hope");
-		emotionSet.add("joy");
-		emotionSet.add("satisfaction");
-		emotionSet.add("fear-confirmed");
-		emotionSet.add("disappointment");
-		emotionSet.add("relief");
-		emotionSet.add("happy-for");
-		emotionSet.add("resentment");
-		emotionSet.add("pity");
-		emotionSet.add("gloating");
-		emotionSet.add("gratitude");
-		emotionSet.add("anger");
-		emotionSet.add("gratification");
-		emotionSet.add("remorse");
-
-		for (Query query : gamygdalaQueries) {
-			if (!query.isClosed()) {
-				this.firstPass.reportError(
-						AgentError.KR_GAM_HAS_VARIABLE,
-						query.getSourceInfo(), query.getSignature());
-			} else if (!emotionSet.contains(((Compound)((PrologQuery)query).getTerm()).arg(1).toString())) {
-				this.firstPass.reportError(
-						AgentError.KR_GAM_INVALID_EMOTION_NAME,
-						query.getSourceInfo(), query.getSignature());
-			} else if (!((Compound)((PrologQuery)query).getTerm()).arg(2).isFloat()) {
-				this.firstPass.reportError(
-						AgentError.KR_GAM_SECOND_ARG_NOT_NUMBER,
-						query.getSourceInfo(), query.getSignature());
-			}
-		}
 
 		// Report undefined and unused KR expressions
 		for (DatabaseFormula dbf : unusedKnowledgeOrBeliefs) {
