@@ -1,15 +1,14 @@
 package languageTools.parser.relationParser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
 import languageTools.exceptions.relationParser.InvalidGamBeliefException;
-import languageTools.exceptions.relationParser.InvalidGamGoalString;
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
 
 import org.junit.After;

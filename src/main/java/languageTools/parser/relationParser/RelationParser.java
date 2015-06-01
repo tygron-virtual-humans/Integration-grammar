@@ -132,13 +132,13 @@ abstract public class RelationParser {
 		}
 		
 		//DEFAULT IS INCREMENTAL
-		else if(objects[0].equals("DEFAULT IS INCREMENTAL")) {
+		else if(objects[0].equalsIgnoreCase("DEFAULT IS INCREMENTAL")) {
 			boolean isIncremental = parseIsIncremental(objects);
 			res.setDefaultIsIncremental(isIncremental);
 		}
 
 		//GOALS
-		else if(objects[0].equals("GOAL")){
+		else if(objects[0].equalsIgnoreCase("GOAL")){
 			GamGoal gamgoal;
 			try {
 				gamgoal = parseGoal(objects);
@@ -146,7 +146,30 @@ abstract public class RelationParser {
 			} catch (Throwable e) {
 				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + " is invalid");
 			}
-		} else {
+		} 
+		
+		//DECAY
+		else if (objects[0].equalsIgnoreCase("decay")) {
+			if (objects.length != 3) { //DECAY, TYPE, VALUE
+				throw new InvalidEmotionConfigFile("Invalid Decay configuration, use: \"decay, type, value\"");
+			}
+			
+			if (objects[1].equalsIgnoreCase("exp") || objects[1].equalsIgnoreCase("exponential")) {
+				res.setDecayExponential(true);
+			} else if (objects[1].equalsIgnoreCase("lin") || objects[1].equalsIgnoreCase("lineair")) {
+				res.setDecayExponential(false);
+			} else {
+				throw new InvalidEmotionConfigFile("Invalid Decay type, use: \"exponential\" or \"lineair\"");
+			}
+			
+			try {
+				res.setDecay(Double.parseDouble(objects[2]));
+			} catch(Throwable e) {
+				throw new InvalidEmotionConfigFile("Invalid Decay value");
+			}
+		}
+		
+		else {
 			throw new InvalidEmotionConfigFile("Identifying tag on line: " + lineNum + " is invalid");
 		}
 		return res;
@@ -209,10 +232,10 @@ abstract public class RelationParser {
 	public static GamGoal parseGoal(String[] objects) throws InvalidGamGoalString{
 		GamGoal gamgoal = null;
 		try{
-		 String agent = objects[1];
-		 String goal = objects[2];
-		 double value = Double.parseDouble(objects[3]);
-	     gamgoal = new GamGoal(agent,goal,value);
+			String agent = objects[1];
+			String goal = objects[2];
+			double value = Double.parseDouble(objects[3]);
+			gamgoal = new GamGoal(agent,goal,value);
 		} catch(Throwable e) {
 			try {
 			 String agent = objects[1];
@@ -290,9 +313,8 @@ abstract public class RelationParser {
 	 */
 	public static boolean parseIsIncremental(String[] objects) throws InvalidEmotionConfigFile{
 		boolean isIncremental;
-		try{
-		 isIncremental = parseBoolean(objects[1]);
-		 
+		try {
+			isIncremental = parseBoolean(objects[1]);
 		} catch(Throwable e) {
 			throw new InvalidEmotionConfigFile("Cannot read the is incremental setting: " + objects.toString());
 		}
@@ -308,15 +330,11 @@ abstract public class RelationParser {
 	 * @throws InvalidEmotionConfigFile
 	 */
 	public static boolean parseBoolean(String string) throws InvalidEmotionConfigFile{
-		string = string.toUpperCase();
-		if(string.equals("TRUE")){
+		if (string.equalsIgnoreCase("TRUE")){
 			return true;
-		}
-		else if(string.equals("FALSE")){
+		} else if (string.equalsIgnoreCase("FALSE")){
 			return false;
-			
-		}
-		else{
+		} else{
 			throw new InvalidEmotionConfigFile("The boolean is not written correctly and can not be parsed");
 		}
 	}
