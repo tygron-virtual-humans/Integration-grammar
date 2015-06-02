@@ -54,7 +54,7 @@ public class EmotionConfig {
 			configuration.setDefaultIsIncremental(false);
 			configuration.setWhiteList(false);
 			configuration.setDecayExponential(true);
-			configuration.setDecay(0.95);
+			configuration.setDecay(0.8);
 		}
 		return configuration;
 	}

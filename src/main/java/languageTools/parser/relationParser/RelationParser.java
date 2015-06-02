@@ -156,10 +156,10 @@ abstract public class RelationParser {
 			
 			if (objects[1].equalsIgnoreCase("exp") || objects[1].equalsIgnoreCase("exponential")) {
 				res.setDecayExponential(true);
-			} else if (objects[1].equalsIgnoreCase("lin") || objects[1].equalsIgnoreCase("lineair")) {
+			} else if (objects[1].equalsIgnoreCase("lin") || objects[1].equalsIgnoreCase("linear")) {
 				res.setDecayExponential(false);
 			} else {
-				throw new InvalidEmotionConfigFile("Invalid Decay type, use: \"exponential\" or \"lineair\"");
+				throw new InvalidEmotionConfigFile("Invalid Decay type, use: \"exponential\" or \"linear\"");
 			}
 			
 			try {
