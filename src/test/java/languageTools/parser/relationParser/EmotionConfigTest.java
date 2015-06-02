@@ -32,9 +32,10 @@ public class EmotionConfigTest {
 	 HashMap<String, GamGoal> goals = new HashMap<String, GamGoal>();
 	 ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 	
-	 GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
+	
+	 GamBelief  belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
 	 beliefs.put(belief.getBeliefName(),belief);
-	 belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
+	 belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
 	 beliefs.put(belief.getBeliefName(),belief);
 	 GamGoal goal = new GamGoal("goal2", 0.8, false);
 	 goals.put(goal.getGoal(),goal);
