@@ -35,11 +35,7 @@ public class EmotionConfigTest {
 	
 	 GamBelief  belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
 	 beliefs.put(belief.getBeliefName(),belief);
-	 belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
-	 beliefs.put(belief.getBeliefName(),belief);
 	 GamGoal goal = new GamGoal("goal2", 0.8, false);
-	 goals.put(goal.getGoal(),goal);
-	 goal = new GamGoal("goal1", 3, true);
 	 goals.put(goal.getGoal(),goal);
 	 GamRelation relation = new GamRelation("agent1", "agent2", -1);
 	 relations.add(relation);
@@ -51,7 +47,7 @@ public class EmotionConfigTest {
 	 thisConfig.setGoals(goals);
 	 thisConfig.setRelations(relations);
 	 //System.out.println(thisConfig.toString());
-	 String correct = "{Config: {subgoal2={SUB: subgoal2, 0.3, maingoal2, 0.5, true}, subgoal1={SUB: subgoal1, 0.2, maingoal1, 0.1, false}}, {goal2={CGOAL: goal2, 0.8}, goal1={IGOAL: goal1, 3.0}}, [{REL: agent1, agent2, -1.0}, {REL: agent3, agent4, 0.9}], utility: 1.0, negativeCongruence: -1.0, positiveCongruence: 1.0, belieflikelihood: 1.0, isincremental: false}";
+	 String correct = "{Config: {subgoal2={SUB: subgoal2, 0.3, maingoal2, 0.5, true}}, {goal2={CGOAL: goal2, 0.8}}, [{REL: agent1, agent2, -1.0}, {REL: agent3, agent4, 0.9}], utility: 1.0, negativeCongruence: -1.0, positiveCongruence: 1.0, belieflikelihood: 1.0, isincremental: false}";
 	 assertEquals(correct, thisConfig.toString());
 	}
 	
