@@ -72,13 +72,13 @@ abstract public class RelationParser {
 		EmotionConfig res = EmotionConfig.getInstance();
 		objects = removeWhiteSpaces(objects);
 		//BELIEVES
-		if(objects[0].equals("BEL")){
+		if(objects[0].equals("SUB")){
 			GamBelief belief;
 			try {
 				belief = parseBelief(objects);
 				res.addBelief(belief);
 			} catch (Throwable e) {
-				throw new InvalidEmotionConfigFile("Belief on line: " + lineNum + " is invalid");
+				throw new InvalidEmotionConfigFile("Subgoal on line: " + lineNum + " is invalid");
 			}
 		
 		}
@@ -90,7 +90,7 @@ abstract public class RelationParser {
 					res.setWhiteList(true);
 				}
 			} catch (Throwable e) {
-				throw new InvalidEmotionConfigFile("Belief on line: " + lineNum + " is invalid");
+				throw new InvalidEmotionConfigFile("Cannot read whitelist parameter on: " + lineNum);
 			}
 				
 		}
@@ -138,7 +138,7 @@ abstract public class RelationParser {
 		}
 
 		//GOALS
-		else if(objects[0].equals("GOAL")){
+		else if(objects[0].equals("IGOAL") || objects[0].equals("CGOAL")){
 			GamGoal gamgoal;
 			try {
 				gamgoal = parseGoal(objects);
@@ -165,15 +165,14 @@ abstract public class RelationParser {
 		try{
 		 String beliefName = objects[1];
 		 double likelihood = Double.parseDouble(objects[2]);
-		 String causal = objects[3];
-		 String affected = objects[4];
-		 double congruence = Double.parseDouble(objects[5]);
-		 boolean isincremental = parseBoolean(objects[6]);
+		 String affected = objects[3];
+		 double congruence = Double.parseDouble(objects[4]);
+		 boolean isincremental = parseBoolean(objects[5]);
 		 //System.out.println(objects[5]);
 		 //System.out.println(isincremental);
 		 //System.out.println("Objects[5]: " + objects[5]);
 		 //System.out.println(Arrays.toString(objects));
-		 belief = new GamBelief(beliefName,likelihood,causal,affected,congruence,isincremental);
+		 belief = new GamBelief(beliefName,likelihood,affected,congruence,isincremental);
 		} catch(Throwable e) {
 			throw new InvalidGamBeliefString("Cannot parse the gam belief");
 		}
@@ -209,15 +208,21 @@ abstract public class RelationParser {
 	public static GamGoal parseGoal(String[] objects) throws InvalidGamGoalString{
 		GamGoal gamgoal = null;
 		try{
-		 String agent = objects[1];
-		 String goal = objects[2];
-		 double value = Double.parseDouble(objects[3]);
-	     gamgoal = new GamGoal(agent,goal,value);
+		Boolean isIndividual = false;
+		if(objects[0].equals("IGOAL")) {
+			isIndividual = true;
+		}
+		 String goal = objects[1];
+		 double value = Double.parseDouble(objects[2]);
+	     gamgoal = new GamGoal(goal,value, isIndividual);
 		} catch(Throwable e) {
 			try {
-			 String agent = objects[1];
-			 String goal = objects[2];
-			 gamgoal = new GamGoal(agent, goal, EmotionConfig.getInstance().getDefaultUtility());
+			 Boolean isIndividual = false;
+			 if(objects[0].equals("IGOAL")) {
+			  isIndividual = true;
+			 }
+			 String goal = objects[1];
+			 gamgoal = new GamGoal(goal, EmotionConfig.getInstance().getDefaultUtility(), isIndividual);
 			} catch(Throwable f) {
 				throw new InvalidGamGoalString("Cannot read the goal string: " + objects.toString());
 			}

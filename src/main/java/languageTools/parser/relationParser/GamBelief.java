@@ -9,7 +9,6 @@ public class GamBelief {
 	String beliefName;
 
 	double likelihood;
-	String causal;
 	String affected;
 	double congruence;
 	boolean isIncremental;
@@ -23,7 +22,7 @@ public class GamBelief {
 	 * @param isIncremental - optional
 	 * @throws InvalidGamBeliefException
 	 */
-	public GamBelief(String beliefName, double likelihood,String causal, String affected, double congruence, Boolean isIncremental) throws InvalidGamBeliefException{
+	public GamBelief(String beliefName, double likelihood, String affected, double congruence, Boolean isIncremental) throws InvalidGamBeliefException{
 		
 		//check that it is between given boundaries -1 and 1
 		if(likelihood < -1 || likelihood > 1) {
@@ -36,7 +35,6 @@ public class GamBelief {
 		}
 		this.beliefName = beliefName;
 		this.likelihood = likelihood;
-		this.causal = causal;
 		this.affected = affected;
 		this.congruence = congruence;
 		this.isIncremental = isIncremental;
@@ -55,7 +53,6 @@ public class GamBelief {
 			  value = value && this.congruence == other.congruence;
 			  value = value && this.isIncremental == other.isIncremental;
 			  value = value && this.affected.equals(other.affected);
-			  value = value && this.causal.equals(other.causal);
 			  return value;
 		  } else {
 			  return false;
@@ -66,7 +63,7 @@ public class GamBelief {
 	 * toString method
 	 */
 	public String toString() {
-		return "{BEL: " + beliefName + ", " + likelihood + ", " + causal +  ", " + affected + ", "  + congruence +   ", " + isIncremental +"}";
+		return "{SUB: " + beliefName + ", " + likelihood + ", " + affected + ", "  + congruence +   ", " + isIncremental +"}";
 	}
 	
 	/**
