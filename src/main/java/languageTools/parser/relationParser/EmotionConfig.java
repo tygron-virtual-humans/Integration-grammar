@@ -58,13 +58,15 @@ public class EmotionConfig {
 	  
 	  
   }
-  
+  /**
+   * Method that resets the configuration instance to null
+   */
   public static void reset(){
 	  configuration = null;
   }
   
   /**
-   * 
+   * Method that parses the file that is given as a classpath as String.
    * @param filepath
    * @throws FileNotFoundException
    * @throws InvalidEmotionConfigFile
@@ -221,7 +223,7 @@ public void addGoal(GamGoal goal) {
  * @param belief belief to be aded
  */
 public void addBelief(GamBelief belief) {
-	this.getBeliefs().put(belief.getBeliefName(), belief);
+	this.getBeliefs().put(belief.getGoalName(), belief);
 }
 
 /**
@@ -248,11 +250,11 @@ public GamGoal getGoal(String goalName) {
  * @return
  * @throws InvalidGamBeliefException 
  */
-public GamBelief getBelief(String beliefName) throws InvalidGamBeliefException {
-	if(this.getBeliefs().containsKey(beliefName)) {
-		return this.getBeliefs().get(beliefName);
+public GamBelief getBelief(String goal) throws InvalidGamBeliefException {
+	if(this.getBeliefs().containsKey(goal)) {
+		return this.getBeliefs().get(goal);
 	} else {
-		return new GamBelief(beliefName, this.getDefaultBelLikelihood(),"ANY", "NONE", this.getDefaultPositiveCongruence(), this.getDefaultIsIncremental());
+		return new GamBelief(goal, this.getDefaultBelLikelihood(), "NONE", this.getDefaultPositiveCongruence(), this.getDefaultIsIncremental());
 	}
 }
 
@@ -264,10 +266,18 @@ public boolean getDefaultIsIncremental() {
 	return this.defaultIsIncremental;
 }
 
+/**
+ * returns if a whitelist is set or not
+ * @return
+ */
 public boolean hasWhiteList() {
 	return whiteList;
 }
 
+/**
+ * Sets the whitelist to true or false
+ * @param whiteList
+ */
 public void setWhiteList(boolean whiteList) {
 	this.whiteList = whiteList;
 }

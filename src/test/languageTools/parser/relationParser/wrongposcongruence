@@ -1,7 +1,7 @@
-BEL,bel1, 0.2,agent1,goal1, 0.1,False
+BEL,bel1, 0.2,goal1, 0.1,False
 REL,agent1,agent2, -1
 GOAL,agent2,goal2, 0.8
-BEL,bel2, 0.3,agent2,goal2, 0.5,True
+BEL,bel2, 0.3,goal2, 0.5,True
 REL,agent3,agent4, 0.9
 GOAL,agent1,goal1, 3
 DEFAULT ACHIEVED CONGRUENCE, ee

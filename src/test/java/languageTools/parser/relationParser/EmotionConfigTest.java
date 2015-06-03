@@ -32,8 +32,8 @@ public class EmotionConfigTest {
 	 HashMap<String, GamGoal> goals = new HashMap<String, GamGoal>();
 	 ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 	
-	 GamBelief belief = new GamBelief("bel1", 0.2, "agent1", "agent2", 0.1, false);
-	 beliefs.put(belief.getBeliefName(), belief);
+	 GamBelief belief = new GamBelief("bel1", 0.2, "agent2", 0.1, false);
+	 beliefs.put(belief.getGoalName(), belief);
 	 GamGoal goal = new GamGoal("agent1", "goal1", 3);
 	 goals.put(goal.getGoal(),goal);
 	 GamRelation relation = new GamRelation("agent1", "agent2", -1);
@@ -44,7 +44,7 @@ public class EmotionConfigTest {
 	 thisConfig.setGoals(goals);
 	 thisConfig.setRelations(relations);
 	 //System.out.println(thisConfig.toString());
-	 String correct = "{Config: {bel1={BEL: bel1, 0.2, agent1, agent2, 0.1, false}}, {goal1={GOAL: agent1, goal1, 3.0}}, [{REL: agent1, agent2, -1.0}], utility: 1.0, negativeCongruence: -1.0, positiveCongruence: 1.0, belieflikelihood: 1.0, isincremental: false}";
+	 String correct = "{Config: {bel1={BEL: bel1, 0.2, agent2, 0.1, false}}, {goal1={GOAL: agent1, goal1, 3.0}}, [{REL: agent1, agent2, -1.0}], utility: 1.0, negativeCongruence: -1.0, positiveCongruence: 1.0, belieflikelihood: 1.0, isincremental: false}";
 	 assertEquals(correct, thisConfig.toString());
 	}
 	
@@ -69,9 +69,8 @@ public class EmotionConfigTest {
 	public void testGetDefaultBelief() throws InvalidGamBeliefException {
 		EmotionConfig conf = EmotionConfig.getInstance();
 		GamBelief bel = conf.getBelief("test"); //get a belief by a name that has not been added.
-		assertEquals("test", bel.getBeliefName());
-		assertEquals("ANY", bel.causal);
-		assertEquals("NONE", bel.affected);
+		assertEquals("test", bel.getGoalName());
+		assertEquals("NONE", bel.getAffectedGoalName());
 		assertEquals(conf.getDefaultBelLikelihood(), bel.likelihood, 0.0);
 		assertEquals(conf.getDefaultIsIncremental(), bel.isIncremental);
 		assertEquals(conf.getDefaultPositiveCongruence(), bel.congruence, 0.0);
@@ -80,12 +79,11 @@ public class EmotionConfigTest {
 	@Test
 	public void testGetInsertedBelief() throws InvalidGamBeliefException {
 		EmotionConfig conf = EmotionConfig.getInstance();
-		GamBelief bel = new GamBelief("test", 0.2,"test2", "test3", 0.1, false); //get a belief by a name that has not been added.
+		GamBelief bel = new GamBelief("test", 0.2, "test3", 0.1, false); //get a belief by a name that has not been added.
 		conf.addBelief(bel);
 		GamBelief testBel = conf.getBelief("test");
-		assertEquals(bel.getBeliefName(), testBel.getBeliefName());
-		assertEquals(bel.causal, testBel.causal);
-		assertEquals(bel.affected, testBel.affected);
+		assertEquals(bel.getGoalName(), testBel.getGoalName());
+		assertEquals(bel.getAffectedGoalName(), testBel.getAffectedGoalName());
 		assertEquals(bel.likelihood, testBel.likelihood,0.0);
 		assertEquals(bel.isIncremental, testBel.isIncremental);
 		assertEquals(bel.congruence, testBel.congruence,0.0);
