@@ -6,11 +6,9 @@ package languageTools.parser.relationParser;
 import languageTools.exceptions.relationParser.InvalidGamBeliefException;
 
 public class GamBelief {
-	String beliefName;
-
+	String goalName;
 	double likelihood;
-	
-	String affected;
+	String affectedGoalName;
 	double congruence;
 	boolean isIncremental;
 	
@@ -23,7 +21,8 @@ public class GamBelief {
 	 * @param isIncremental - optional
 	 * @throws InvalidGamBeliefException
 	 */
-	public GamBelief(String beliefName, double likelihood, String affected, double congruence, Boolean isIncremental) throws InvalidGamBeliefException{
+	
+	public GamBelief(String goalName, double likelihood, String affectedGoalName, double congruence, Boolean isIncremental) throws InvalidGamBeliefException{
 		
 		//check that it is between given boundaries -1 and 1
 		if(likelihood < -1 || likelihood > 1) {
@@ -34,9 +33,9 @@ public class GamBelief {
 		if(congruence < -1 || congruence > 1) {
 			throw new InvalidGamBeliefException("Congruence of belief is not in the [-1, 1] range");
 		}
-		this.beliefName = beliefName;
+		this.goalName = goalName;
 		this.likelihood = likelihood;
-		this.affected = affected;
+		this.affectedGoalName = affectedGoalName;
 		this.congruence = congruence;
 		this.isIncremental = isIncremental;
 	}
@@ -49,11 +48,11 @@ public class GamBelief {
 		  if(object instanceof GamBelief) {
 			  GamBelief other = (GamBelief) object;
 			  Boolean value = true;
-			  value = value && this.beliefName.equals(other.beliefName);
+			  value = value && this.goalName.equals(other.goalName);
 			  value = value && this.likelihood == other.likelihood;
 			  value = value && this.congruence == other.congruence;
 			  value = value && this.isIncremental == other.isIncremental;
-			  value = value && this.affected.equals(other.affected);
+			  value = value && this.affectedGoalName.equals(other.affectedGoalName);
 			  return value;
 		  } else {
 			  return false;
@@ -64,23 +63,40 @@ public class GamBelief {
 	 * toString method
 	 */
 	public String toString() {
-		return "{SUB: " + beliefName + ", " + likelihood + ", " + affected + ", "  + congruence +   ", " + isIncremental +"}";
+		return "{BEL: " + goalName + ", " + likelihood + ", " + affectedGoalName + ", "  + congruence +   ", " + isIncremental +"}";
+
 	}
 	
 	/**
 	 * returns the name of the belief
 	 * @return name of belief
 	 */
-	public String getBeliefName() {
-		return beliefName;
+	public String getGoalName() {
+		return goalName;
 	}
 
 	/**
 	 * sets the belief name
 	 * @param beliefName new belief name
 	 */
-	public void setBeliefName(String beliefName) {
-		this.beliefName = beliefName;
+	public void setGoalName(String goalName) {
+		this.goalName = goalName;
+	}
+	
+	/**
+	 * gets the affected goal of the subgoal
+	 * @return
+	 */
+	public String getAffectedGoalName() {
+		return affectedGoalName;
+	}
+
+	/**
+	 * sets the affected goal of the subgoal
+	 * @param affectedGoalName
+	 */
+	public void setAffectedGoalName(String affectedGoalName) {
+		this.affectedGoalName = affectedGoalName;
 	}
 	
 	public double getLikelihood() {
@@ -91,17 +107,6 @@ public class GamBelief {
 	public void setLikelihood(double likelihood) {
 		this.likelihood = likelihood;
 	}
-
-
-	public String getAffected() {
-		return affected;
-	}
-
-
-	public void setAffected(String affected) {
-		this.affected = affected;
-	}
-
 
 	public double getCongruence() {
 		return congruence;

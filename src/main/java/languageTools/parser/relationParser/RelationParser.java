@@ -163,16 +163,16 @@ abstract public class RelationParser {
 	public static GamBelief parseBelief(String[] objects) throws InvalidGamBeliefException, InvalidGamBeliefString{
 		GamBelief belief = null;
 		try{
-		 String beliefName = objects[1];
+		 String goalName = objects[1];
 		 double likelihood = Double.parseDouble(objects[2]);
-		 String affected = objects[3];
+		 String affectedGoalName = objects[3];
 		 double congruence = Double.parseDouble(objects[4]);
 		 boolean isincremental = parseBoolean(objects[5]);
 		 //System.out.println(objects[5]);
 		 //System.out.println(isincremental);
 		 //System.out.println("Objects[5]: " + objects[5]);
 		 //System.out.println(Arrays.toString(objects));
-		 belief = new GamBelief(beliefName,likelihood,affected,congruence,isincremental);
+		 belief = new GamBelief(goalName, likelihood, affectedGoalName, congruence, isincremental);
 		} catch(Throwable e) {
 			throw new InvalidGamBeliefString("Cannot parse the gam belief");
 		}

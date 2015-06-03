@@ -12,9 +12,9 @@ public class GamBeliefTest {
 	 GamBelief testBel = new GamBelief("bel1",0, "test2", 0.2, false);
 	 assertEquals(0, testBel.likelihood, 0);
 	 assertEquals(0.2, testBel.congruence, 0);
-	 assertEquals("test2", testBel.affected);
+	 assertEquals("test2", testBel.getAffectedGoalName());
 	 assertEquals(false, testBel.isIncremental);
-	 assertEquals("bel1", testBel.getBeliefName());
+	 assertEquals("bel1", testBel.getGoalName());
 	}
 	
 	@Test
@@ -79,6 +79,13 @@ public class GamBeliefTest {
 	public void testEqualsOtherLikelihood() throws InvalidGamBeliefException {
 		 GamBelief testBel1 = new GamBelief("bel", 0, "test2", -1, false);
 		 GamBelief testBel2 = new GamBelief("bel", 0.2, "test2", -1, false);
+		 assertFalse(testBel1.equals(testBel2));
+	}
+	
+	@Test
+	public void testEqualsOtherAgent() throws InvalidGamBeliefException {
+		 GamBelief testBel1 = new GamBelief("bel", 0, "test2", -1, false);
+		 GamBelief testBel2 = new GamBelief("bel", 0, "test1", -1, false);
 		 assertFalse(testBel1.equals(testBel2));
 	}
 	
