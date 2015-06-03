@@ -264,7 +264,6 @@ public GamGoal getGoal(String goalName) {
  * @return
  * @throws InvalidGamBeliefException 
  */
-
 public ArrayList<GamBelief> getBelief(String beliefName) throws InvalidGamBeliefException {
 	if(this.getBeliefs().containsKey(beliefName)) {
 		return this.getBeliefs().get(beliefName);

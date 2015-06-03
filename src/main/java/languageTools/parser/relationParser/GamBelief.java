@@ -21,7 +21,7 @@ public class GamBelief {
 	 * @param isIncremental - optional
 	 * @throws InvalidGamBeliefException
 	 */
-	
+
 	public GamBelief(String goalName, double likelihood, String affectedGoalName, double congruence, Boolean isIncremental) throws InvalidGamBeliefException{
 		
 		//check that it is between given boundaries -1 and 1
@@ -64,7 +64,6 @@ public class GamBelief {
 	 */
 	public String toString() {
 		return "{BEL: " + goalName + ", " + likelihood + ", " + affectedGoalName + ", "  + congruence +   ", " + isIncremental +"}";
-
 	}
 	
 	/**

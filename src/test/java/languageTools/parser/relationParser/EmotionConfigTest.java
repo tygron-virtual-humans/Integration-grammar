@@ -76,7 +76,6 @@ public class EmotionConfigTest {
 		EmotionConfig conf = EmotionConfig.getInstance();
 		ArrayList<GamBelief> bel = conf.getBelief("test"); //get a belief by a name that has not been added.
 		assertEquals(new ArrayList<GamBelief>(), bel);
-
 	}
 	
 	@Test
