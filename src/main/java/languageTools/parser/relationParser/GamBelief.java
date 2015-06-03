@@ -9,6 +9,7 @@ public class GamBelief {
 	String beliefName;
 
 	double likelihood;
+	
 	String affected;
 	double congruence;
 	boolean isIncremental;
@@ -81,5 +82,45 @@ public class GamBelief {
 	public void setBeliefName(String beliefName) {
 		this.beliefName = beliefName;
 	}
+	
+	public double getLikelihood() {
+		return likelihood;
+	}
+
+
+	public void setLikelihood(double likelihood) {
+		this.likelihood = likelihood;
+	}
+
+
+	public String getAffected() {
+		return affected;
+	}
+
+
+	public void setAffected(String affected) {
+		this.affected = affected;
+	}
+
+
+	public double getCongruence() {
+		return congruence;
+	}
+
+
+	public void setCongruence(double congruence) {
+		this.congruence = congruence;
+	}
+
+
+	public boolean isIncremental() {
+		return isIncremental;
+	}
+
+
+	public void setIncremental(boolean isIncremental) {
+		this.isIncremental = isIncremental;
+	}
+
 
 }

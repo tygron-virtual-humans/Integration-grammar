@@ -28,7 +28,7 @@ abstract public class RelationParser {
 	public static EmotionConfig parse(File file) throws FileNotFoundException, InvalidEmotionConfigFile{
 	// creating scanner + lists	
 	Scanner fileScanner = new Scanner(file);
-	HashMap<String, GamBelief> beliefs = new HashMap<String,GamBelief>();
+	HashMap<String, ArrayList<GamBelief>> beliefs = new HashMap<String,ArrayList<GamBelief>>();
 	HashMap<String,GamGoal> goals = new HashMap<String,GamGoal>();
 	ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 	

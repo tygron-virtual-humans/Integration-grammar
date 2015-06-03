@@ -28,14 +28,18 @@ public class RelationparserTest {
 		//System.out.println("TESTVALIDFILE +++++++++++++++++++++++++++++++++++++++++++++++");
 		EmotionConfig testConfig = EmotionConfig.getInstance();
 		EmotionConfig.parse("src/test/languageTools/parser/relationParser/validFile");
-		HashMap<String,GamBelief> beliefs = new HashMap<String,GamBelief>();
+		HashMap<String,ArrayList<GamBelief>> beliefs = new HashMap<String,ArrayList<GamBelief>>();
 		HashMap<String, GamGoal> goals = new HashMap<String,GamGoal>();
 		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 		
 		GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
-		beliefs.put(belief.getBeliefName(),belief);
+		ArrayList<GamBelief> toPut = new ArrayList<GamBelief>();
+		toPut.add(belief);
+		beliefs.put(belief.getBeliefName(), toPut);
 		belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
-		beliefs.put(belief.getBeliefName(),belief);
+		toPut = new ArrayList<GamBelief>();
+		toPut.add(belief);
+		beliefs.put(belief.getBeliefName(), toPut);
 		GamGoal goal = new GamGoal("goal2", 0.8, false);
 		goals.put(goal.getGoal(),goal);
 		goal = new GamGoal("goal1", 3, true);
@@ -91,14 +95,18 @@ public class RelationparserTest {
 		//System.out.println("TESTVALIDFILE +++++++++++++++++++++++++++++++++++++++++++++++");
 		EmotionConfig testConfig = EmotionConfig.getInstance();
 		EmotionConfig.parse("src/test/languageTools/parser/relationParser/validUtility");
-		HashMap<String,GamBelief> beliefs = new HashMap<String,GamBelief>();
+		HashMap<String,ArrayList<GamBelief>> beliefs = new HashMap<String,ArrayList<GamBelief>>();
 		HashMap<String,GamGoal> goals = new HashMap<String,GamGoal>();
 		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 		
 		GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
-		beliefs.put(belief.getBeliefName(),belief);
+		ArrayList<GamBelief> toPut = new ArrayList<GamBelief>();
+		toPut.add(belief);
+		beliefs.put(belief.getBeliefName(), toPut);
 		belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
-		beliefs.put(belief.getBeliefName(),belief);
+		toPut = new ArrayList<GamBelief>();
+		toPut.add(belief);
+		beliefs.put(belief.getBeliefName(), toPut);
 		GamGoal goal = new GamGoal("goal2", 0.8, false);
 		goals.put(goal.getGoal(),goal);
 		goal = new GamGoal("goal1", 3, true);

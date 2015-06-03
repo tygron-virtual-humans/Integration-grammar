@@ -14,7 +14,7 @@ import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
 import languageTools.exceptions.relationParser.InvalidGamBeliefException;
 public class EmotionConfig {
 
-  private HashMap<String,GamBelief> beliefs;
+  private HashMap<String,ArrayList<GamBelief>> beliefs;
   private HashMap<String, GamGoal> goals;
   private ArrayList<GamRelation> relations;
   private static EmotionConfig configuration;
@@ -33,7 +33,7 @@ public class EmotionConfig {
  * @param goals - the specified goals for the agents
  * @param relations - the relations between the agents
  */
-  public EmotionConfig(HashMap<String, GamBelief> beliefs,HashMap<String,GamGoal> goals,
+  public EmotionConfig(HashMap<String, ArrayList<GamBelief>> beliefs,HashMap<String,GamGoal> goals,
      ArrayList<GamRelation> relations) {
     this.setBeliefs(beliefs);
     this.setGoals(goals);
@@ -46,7 +46,7 @@ public class EmotionConfig {
    */
   public synchronized static EmotionConfig getInstance(){
 	  if(configuration == null){
-		  configuration = new EmotionConfig(new HashMap<String, GamBelief>(), new HashMap<String, GamGoal>(), new ArrayList<GamRelation>());
+		  configuration = new EmotionConfig(new HashMap<String, ArrayList<GamBelief>>(), new HashMap<String, GamGoal>(), new ArrayList<GamRelation>());
 		  configuration.setDefaultUtility(1);
 		  configuration.setDefaultNegativeCongruence(-1);
 		  configuration.setDefaultPositiveCongruence(1);
@@ -88,14 +88,14 @@ public class EmotionConfig {
 /**
  * @return the beliefs
  */
-public HashMap<String,GamBelief> getBeliefs() {
+public HashMap<String,ArrayList<GamBelief>> getBeliefs() {
 	return beliefs;
 }
 
 /**
  * @param beliefs the beliefs to set
  */
-public void setBeliefs(HashMap<String, GamBelief> beliefs) {
+public void setBeliefs(HashMap<String, ArrayList<GamBelief>> beliefs) {
 	this.beliefs = beliefs;
 }
 
@@ -221,7 +221,21 @@ public void addGoal(GamGoal goal) {
  * @param belief belief to be aded
  */
 public void addBelief(GamBelief belief) {
-	this.getBeliefs().put(belief.getBeliefName(), belief);
+	if(this.getBeliefs().containsKey(belief.getBeliefName())) {
+	 this.getBeliefs().get(belief.getBeliefName()).add(belief);
+	 ArrayList<GamBelief> beliefs = this.getBeliefs().get(belief.getBeliefName());
+	 for(int i = beliefs.size()-1; i>=0; i--) {
+		 if(beliefs.get(i).getAffected().equals(belief.getAffected())) {
+			 beliefs.remove(i); //Otherwise we would count these as a "double" subgoal, only keep the latest info added
+		 }
+	 }
+	 beliefs.add(belief);
+	 this.getBeliefs().put(belief.getBeliefName(), beliefs);
+	} else {
+		ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
+		beliefs.add(belief);
+		this.getBeliefs().put(belief.getBeliefName(), beliefs);
+	}
 }
 
 /**
@@ -248,11 +262,11 @@ public GamGoal getGoal(String goalName) {
  * @return
  * @throws InvalidGamBeliefException 
  */
-public GamBelief getBelief(String beliefName) throws InvalidGamBeliefException {
+public ArrayList<GamBelief> getBelief(String beliefName) throws InvalidGamBeliefException {
 	if(this.getBeliefs().containsKey(beliefName)) {
 		return this.getBeliefs().get(beliefName);
 	} else {
-		return new GamBelief(beliefName, this.getDefaultBelLikelihood(), "NONE", this.getDefaultPositiveCongruence(), this.getDefaultIsIncremental());
+		return new ArrayList<GamBelief>();
 	}
 }
 
