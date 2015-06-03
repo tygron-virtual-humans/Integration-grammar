@@ -32,11 +32,14 @@ public class EmotionConfigTest {
 	 HashMap<String, GamGoal> goals = new HashMap<String, GamGoal>();
 	 ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 	
-	 GamBelief belief = new GamBelief("bel1", 0.2, "agent1", "agent2", 0.1, false);
-	 beliefs.put(belief.getBeliefName(), belief);
-	 GamGoal goal = new GamGoal("agent1", "goal1", 3);
+	
+	 GamBelief  belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
+	 beliefs.put(belief.getBeliefName(),belief);
+	 GamGoal goal = new GamGoal("goal2", 0.8, false);
 	 goals.put(goal.getGoal(),goal);
 	 GamRelation relation = new GamRelation("agent1", "agent2", -1);
+	 relations.add(relation);
+	 relation = new GamRelation("agent3", "agent4", 0.9);
 	 relations.add(relation);
 	
 	 EmotionConfig thisConfig = EmotionConfig.getInstance();
@@ -44,7 +47,7 @@ public class EmotionConfigTest {
 	 thisConfig.setGoals(goals);
 	 thisConfig.setRelations(relations);
 	 //System.out.println(thisConfig.toString());
-	 String correct = "{Config: {bel1={BEL: bel1, 0.2, agent1, agent2, 0.1, false}}, {goal1={GOAL: agent1, goal1, 3.0}}, [{REL: agent1, agent2, -1.0}], utility: 1.0, negativeCongruence: -1.0, positiveCongruence: 1.0, belieflikelihood: 1.0, isincremental: false}";
+	 String correct = "{Config: {subgoal2={SUB: subgoal2, 0.3, maingoal2, 0.5, true}}, {goal2={CGOAL: goal2, 0.8}}, [{REL: agent1, agent2, -1.0}, {REL: agent3, agent4, 0.9}], utility: 1.0, negativeCongruence: -1.0, positiveCongruence: 1.0, belieflikelihood: 1.0, isincremental: false}";
 	 assertEquals(correct, thisConfig.toString());
 	}
 	
@@ -70,7 +73,6 @@ public class EmotionConfigTest {
 		EmotionConfig conf = EmotionConfig.getInstance();
 		GamBelief bel = conf.getBelief("test"); //get a belief by a name that has not been added.
 		assertEquals("test", bel.getBeliefName());
-		assertEquals("ANY", bel.causal);
 		assertEquals("NONE", bel.affected);
 		assertEquals(conf.getDefaultBelLikelihood(), bel.likelihood, 0.0);
 		assertEquals(conf.getDefaultIsIncremental(), bel.isIncremental);
@@ -80,11 +82,10 @@ public class EmotionConfigTest {
 	@Test
 	public void testGetInsertedBelief() throws InvalidGamBeliefException {
 		EmotionConfig conf = EmotionConfig.getInstance();
-		GamBelief bel = new GamBelief("test", 0.2,"test2", "test3", 0.1, false); //get a belief by a name that has not been added.
+		GamBelief bel = new GamBelief("test", 0.2, "test3", 0.1, false); //get a belief by a name that has not been added.
 		conf.addBelief(bel);
 		GamBelief testBel = conf.getBelief("test");
 		assertEquals(bel.getBeliefName(), testBel.getBeliefName());
-		assertEquals(bel.causal, testBel.causal);
 		assertEquals(bel.affected, testBel.affected);
 		assertEquals(bel.likelihood, testBel.likelihood,0.0);
 		assertEquals(bel.isIncremental, testBel.isIncremental);
@@ -96,7 +97,6 @@ public class EmotionConfigTest {
 		EmotionConfig conf = EmotionConfig.getInstance();
 		GamGoal goal = conf.getGoal("test");
 		assertEquals("test", goal.getGoal());
-		assertEquals("ANY", goal.getAgent());
 		assertEquals(conf.getDefaultUtility(), goal.getValue(), 0.0);
 	}	
 	
@@ -106,17 +106,16 @@ public class EmotionConfigTest {
 		conf.setWhiteList(true);
 		GamGoal goal = conf.getGoal("test");
 		assertEquals("test", goal.getGoal());
-		assertEquals("ANY", goal.getAgent());
 		assertEquals(0.0, goal.getValue(), 0.0);
 	}
 	
 	@Test
 	public void testGetInsertedGoalNoWhitelist() {
 		EmotionConfig conf = EmotionConfig.getInstance();
-		GamGoal goal = new GamGoal("testA", "testG", 0.9);
+		GamGoal goal = new GamGoal("testG", 0.9, false);
 		conf.addGoal(goal);
 		GamGoal testGoal = conf.getGoal("testG");
-		assertEquals("testA", testGoal.getAgent());
+		assertEquals(false, testGoal.isIndividualGoal());
 		assertEquals("testG", testGoal.getGoal());
 		assertEquals(0.9, testGoal.getValue(), 0.0);
 	}
@@ -125,10 +124,10 @@ public class EmotionConfigTest {
 	public void testGetInsertedGoalWithWhitelist() {
 		EmotionConfig conf = EmotionConfig.getInstance();
 		conf.setWhiteList(true);
-		GamGoal goal = new GamGoal("testA", "testG", 0.9);
+		GamGoal goal = new GamGoal("testG", 0.9, true);
 		conf.addGoal(goal);
 		GamGoal testGoal = conf.getGoal("testG");
-		assertEquals("testA", testGoal.getAgent());
+		assertEquals(true, testGoal.isIndividualGoal());
 		assertEquals("testG", testGoal.getGoal());
 		assertEquals(0.9, testGoal.getValue(), 0.0);
 	}

@@ -234,9 +234,9 @@ public GamGoal getGoal(String goalName) {
 		return this.getGoals().get(goalName);
 	} else {
 		if(this.hasWhiteList()) {
-			return new GamGoal("ANY", goalName, 0);
+			return new GamGoal(goalName, 0, false);
 		} else {
-			return new GamGoal("ANY", goalName, this.getDefaultUtility());
+			return new GamGoal(goalName, this.getDefaultUtility(),false);
 
 		}
 	}
@@ -252,7 +252,7 @@ public GamBelief getBelief(String beliefName) throws InvalidGamBeliefException {
 	if(this.getBeliefs().containsKey(beliefName)) {
 		return this.getBeliefs().get(beliefName);
 	} else {
-		return new GamBelief(beliefName, this.getDefaultBelLikelihood(),"ANY", "NONE", this.getDefaultPositiveCongruence(), this.getDefaultIsIncremental());
+		return new GamBelief(beliefName, this.getDefaultBelLikelihood(), "NONE", this.getDefaultPositiveCongruence(), this.getDefaultIsIncremental());
 	}
 }
 
