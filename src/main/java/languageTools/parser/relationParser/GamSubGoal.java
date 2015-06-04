@@ -1,11 +1,11 @@
 /**
- * Class that represents a Gamygdala belief rule and its values.
+ * Class that represents a Gamygdala SubGoal rule and its values.
  */
 package languageTools.parser.relationParser;
 
-import languageTools.exceptions.relationParser.InvalidGamBeliefException;
+import languageTools.exceptions.relationParser.InvalidGamSubGoalException;
 
-public class GamBelief {
+public class GamSubGoal {
 	String goalName;
 	double likelihood;
 	String affectedGoalName;
@@ -13,25 +13,25 @@ public class GamBelief {
 	boolean isIncremental;
 	
 	/**
-	 * Constructor of a GAM belief
-	 * @param likelihood - likelihood that this belief is true.
+	 * Constructor of a GAM SubGoal
+	 * @param likelihood - likelihood that this SubGoal is true.
 	 * @param causal - agent who caused this event
 	 * @param affected - goals that are affected by the agent
 	 * @param congruence - how important
 	 * @param isIncremental - optional
-	 * @throws InvalidGamBeliefException
+	 * @throws InvalidGamSubGoalException
 	 */
 
-	public GamBelief(String goalName, double likelihood, String affectedGoalName, double congruence, Boolean isIncremental) throws InvalidGamBeliefException{
+	public GamSubGoal(String goalName, double likelihood, String affectedGoalName, double congruence, Boolean isIncremental) throws InvalidGamSubGoalException{
 		
 		//check that it is between given boundaries -1 and 1
 		if(likelihood < -1 || likelihood > 1) {
-			throw new InvalidGamBeliefException("Likelihood of belief is not in the [-1, 1] range");
+			throw new InvalidGamSubGoalException("Likelihood of SubGoal is not in the [-1, 1] range");
 		}
 		
 		//same check
 		if(congruence < -1 || congruence > 1) {
-			throw new InvalidGamBeliefException("Congruence of belief is not in the [-1, 1] range");
+			throw new InvalidGamSubGoalException("Congruence of SubGoal is not in the [-1, 1] range");
 		}
 		this.goalName = goalName;
 		this.likelihood = likelihood;
@@ -45,8 +45,8 @@ public class GamBelief {
 	 * Equals method
 	 */
 	public boolean equals(Object object) {
-		  if(object instanceof GamBelief) {
-			  GamBelief other = (GamBelief) object;
+		  if(object instanceof GamSubGoal) {
+			  GamSubGoal other = (GamSubGoal) object;
 			  Boolean value = true;
 			  value = value && this.goalName.equals(other.goalName);
 			  value = value && this.likelihood == other.likelihood;
@@ -67,16 +67,16 @@ public class GamBelief {
 	}
 	
 	/**
-	 * returns the name of the belief
-	 * @return name of belief
+	 * returns the name of the SubGoal
+	 * @return name of SubGoal
 	 */
 	public String getGoalName() {
 		return goalName;
 	}
 
 	/**
-	 * sets the belief name
-	 * @param beliefName new belief name
+	 * sets the SubGoal name
+	 * @param SubGoalName new SubGoal name
 	 */
 	public void setGoalName(String goalName) {
 		this.goalName = goalName;

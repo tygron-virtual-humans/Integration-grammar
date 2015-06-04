@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import languageTools.exceptions.relationParser.InvalidGamBeliefException;
+import languageTools.exceptions.relationParser.InvalidGamSubGoalException;
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
 
 import org.junit.After;
@@ -20,23 +20,23 @@ public class EmotionConfigTest {
 	
 	@Test
 	public void testConstructorEmpty() {
-		EmotionConfig testEmotion = new EmotionConfig(new HashMap<String,ArrayList<GamBelief>>(), new HashMap<String,GamGoal>(), new ArrayList<GamRelation>());
-		assertEquals(new HashMap<String,ArrayList<GamBelief>>(), testEmotion.getBeliefs());
+		EmotionConfig testEmotion = new EmotionConfig(new HashMap<String,ArrayList<GamSubGoal>>(), new HashMap<String,GamGoal>(), new ArrayList<GamRelation>());
+		assertEquals(new HashMap<String,ArrayList<GamSubGoal>>(), testEmotion.getSubGoals());
 		assertEquals(new HashMap<String,GamGoal>(), testEmotion.getGoals());
 		assertEquals(new ArrayList<GamRelation>(), testEmotion.getRelations());
 	}
 
 	@Test
-	public void testTostring() throws InvalidGamBeliefException, InvalidGamRelationException {
-	 HashMap<String, ArrayList<GamBelief>> beliefs = new HashMap<String, ArrayList<GamBelief>>();
+	public void testTostring() throws InvalidGamSubGoalException, InvalidGamRelationException {
+	 HashMap<String, ArrayList<GamSubGoal>> SubGoals = new HashMap<String, ArrayList<GamSubGoal>>();
 	 HashMap<String, GamGoal> goals = new HashMap<String, GamGoal>();
 	 ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 	
 
-	ArrayList<GamBelief> beliefsList = new ArrayList<GamBelief>();
-	 GamBelief  belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
-	 beliefsList.add(belief);
-	 beliefs.put(belief.getGoalName(), beliefsList);
+	ArrayList<GamSubGoal> SubGoalsList = new ArrayList<GamSubGoal>();
+	 GamSubGoal  SubGoal = new GamSubGoal("subgoal2",0.3,  "maingoal2", 0.5, true);
+	 SubGoalsList.add(SubGoal);
+	 SubGoals.put(SubGoal.getGoalName(), SubGoalsList);
 	 GamGoal goal = new GamGoal("goal2", 0.8, false);
 	 goals.put(goal.getGoal(),goal);
 	 GamRelation relation = new GamRelation("agent1", "agent2", -1);
@@ -45,12 +45,12 @@ public class EmotionConfigTest {
 	 relations.add(relation);
 	
 	 EmotionConfig thisConfig = EmotionConfig.getInstance();
-	 thisConfig.setBeliefs(beliefs);
+	 thisConfig.setSubGoals(SubGoals);
 	 thisConfig.setGoals(goals);
 	 thisConfig.setRelations(relations);
 	 //System.out.println(thisConfig.toString());
 
-	 String correct = "{Config: {subgoal2=[{SUB: subgoal2, 0.3, maingoal2, 0.5, true}]}, {goal2={CGOAL: goal2, 0.8}}, [{REL: agent1, agent2, -1.0}, {REL: agent3, agent4, 0.9}], utility: 1.0, negativeCongruence: -1.0, positiveCongruence: 1.0, belieflikelihood: 1.0, isincremental: false}";
+	 String correct = "{Config: {subgoal2=[{SUB: subgoal2, 0.3, maingoal2, 0.5, true}]}, {goal2={CGOAL: goal2, 0.8}}, [{REL: agent1, agent2, -1.0}, {REL: agent3, agent4, 0.9}], utility: 1.0, negativeCongruence: -1.0, positiveCongruence: 1.0, SubGoallikelihood: 1.0, isincremental: false}";
 	 assertEquals(correct, thisConfig.toString());
 	}
 	
@@ -72,47 +72,47 @@ public class EmotionConfigTest {
 	}
 	
 	@Test
-	public void testGetDefaultBelief() throws InvalidGamBeliefException {
+	public void testGetDefaultSubGoal() throws InvalidGamSubGoalException {
 		EmotionConfig conf = EmotionConfig.getInstance();
-		ArrayList<GamBelief> bel = conf.getBelief("test"); //get a belief by a name that has not been added.
-		assertEquals(new ArrayList<GamBelief>(), bel);
+		ArrayList<GamSubGoal> bel = conf.getSubGoal("test"); //get a SubGoal by a name that has not been added.
+		assertEquals(new ArrayList<GamSubGoal>(), bel);
 	}
 	
 	@Test
-	public void testGetInsertedBelief() throws InvalidGamBeliefException {
+	public void testGetInsertedSubGoal() throws InvalidGamSubGoalException {
 		EmotionConfig conf = EmotionConfig.getInstance();
-		GamBelief bel = new GamBelief("test", 0.2, "test3", 0.1, false); //get a belief by a name that has not been added.
-		conf.addBelief(bel);
-		ArrayList<GamBelief> testBel = conf.getBelief("test");
-		ArrayList<GamBelief> correctBel = new ArrayList<GamBelief>();
+		GamSubGoal bel = new GamSubGoal("test", 0.2, "test3", 0.1, false); //get a SubGoal by a name that has not been added.
+		conf.addSubGoal(bel);
+		ArrayList<GamSubGoal> testBel = conf.getSubGoal("test");
+		ArrayList<GamSubGoal> correctBel = new ArrayList<GamSubGoal>();
 		correctBel.add(bel);
 		assertEquals(correctBel, testBel);
 	}
 	
 	@Test
-	public void testGetInsertedBeliefMutipleDistinctAffected() throws InvalidGamBeliefException {
+	public void testGetInsertedSubGoalMutipleDistinctAffected() throws InvalidGamSubGoalException {
 		EmotionConfig conf = EmotionConfig.getInstance();
-		GamBelief bel = new GamBelief("test", 0.2, "test3", 0.1, false); //get a belief by a name that has not been added.
-		GamBelief  belief = new GamBelief("test",0.3,  "maingoal2", 0.5, true);
-		conf.addBelief(bel);
-		conf.addBelief(belief);
-		ArrayList<GamBelief> testBel = conf.getBelief("test");
-		ArrayList<GamBelief> correctBel = new ArrayList<GamBelief>();
+		GamSubGoal bel = new GamSubGoal("test", 0.2, "test3", 0.1, false); //get a SubGoal by a name that has not been added.
+		GamSubGoal  SubGoal = new GamSubGoal("test",0.3,  "maingoal2", 0.5, true);
+		conf.addSubGoal(bel);
+		conf.addSubGoal(SubGoal);
+		ArrayList<GamSubGoal> testBel = conf.getSubGoal("test");
+		ArrayList<GamSubGoal> correctBel = new ArrayList<GamSubGoal>();
 		correctBel.add(bel);
-		correctBel.add(belief);
+		correctBel.add(SubGoal);
 		assertEquals(correctBel, testBel);
 	}
 	
 	@Test
-	public void testGetInsertedBeliefMutipleSameAffected() throws InvalidGamBeliefException {
+	public void testGetInsertedSubGoalMutipleSameAffected() throws InvalidGamSubGoalException {
 		EmotionConfig conf = EmotionConfig.getInstance();
-		GamBelief bel = new GamBelief("test", 0.2, "test3", 0.1, false); //get a belief by a name that has not been added.
-		GamBelief  belief = new GamBelief("test",0.3,  "test3", 0.5, true);
-		conf.addBelief(bel);
-		conf.addBelief(belief);
-		ArrayList<GamBelief> testBel = conf.getBelief("test");
-		ArrayList<GamBelief> correctBel = new ArrayList<GamBelief>();
-		correctBel.add(belief);
+		GamSubGoal bel = new GamSubGoal("test", 0.2, "test3", 0.1, false); //get a SubGoal by a name that has not been added.
+		GamSubGoal  SubGoal = new GamSubGoal("test",0.3,  "test3", 0.5, true);
+		conf.addSubGoal(bel);
+		conf.addSubGoal(SubGoal);
+		ArrayList<GamSubGoal> testBel = conf.getSubGoal("test");
+		ArrayList<GamSubGoal> correctBel = new ArrayList<GamSubGoal>();
+		correctBel.add(SubGoal);
 		assertEquals(correctBel, testBel);
 	}
 	

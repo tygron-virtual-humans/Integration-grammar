@@ -1,7 +1,7 @@
 package languageTools.parser.relationParser;
 
 import static org.junit.Assert.*;
-import languageTools.exceptions.relationParser.InvalidGamBeliefException;
+import languageTools.exceptions.relationParser.InvalidGamSubGoalException;
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
 
 import org.junit.Test;
@@ -17,13 +17,13 @@ public class GamRelationTest {
 	}
 	
 	@Test
-	public void testValue1() throws InvalidGamBeliefException, InvalidGamRelationException {
+	public void testValue1() throws InvalidGamSubGoalException, InvalidGamRelationException {
 	 GamRelation testRelation = new GamRelation("agent1", "agent2", 1);
 	 assertEquals(1, testRelation.value, 0);
 	}
 	
 	@Test
-	public void testValueMin1() throws InvalidGamBeliefException, InvalidGamRelationException {
+	public void testValueMin1() throws InvalidGamSubGoalException, InvalidGamRelationException {
 	 GamRelation testRelation = new GamRelation("agent1", "agent2", -1);
 	 assertEquals(-1, testRelation.value, 0);
 	}
