@@ -35,11 +35,11 @@ public class RelationparserTest {
 		GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
 		ArrayList<GamBelief> toPut = new ArrayList<GamBelief>();
 		toPut.add(belief);
-		beliefs.put(belief.getBeliefName(), toPut);
+		beliefs.put(belief.getGoalName(), toPut);
 		belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
 		toPut = new ArrayList<GamBelief>();
 		toPut.add(belief);
-		beliefs.put(belief.getBeliefName(), toPut);
+		beliefs.put(belief.getGoalName(), toPut);
 		GamGoal goal = new GamGoal("goal2", 0.8, false);
 		goals.put(goal.getGoal(),goal);
 		goal = new GamGoal("goal1", 3, true);
@@ -98,16 +98,18 @@ public class RelationparserTest {
 		HashMap<String,ArrayList<GamBelief>> beliefs = new HashMap<String,ArrayList<GamBelief>>();
 		HashMap<String,GamGoal> goals = new HashMap<String,GamGoal>();
 		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
-		
+
 		GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
 		ArrayList<GamBelief> toPut = new ArrayList<GamBelief>();
 		toPut.add(belief);
-		beliefs.put(belief.getBeliefName(), toPut);
+		beliefs.put(belief.getGoalName(), toPut);
 		belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
 		toPut = new ArrayList<GamBelief>();
 		toPut.add(belief);
-		beliefs.put(belief.getBeliefName(), toPut);
+		beliefs.put(belief.getGoalName(), toPut);
 		GamGoal goal = new GamGoal("goal2", 0.8, false);
+
+
 		goals.put(goal.getGoal(),goal);
 		goal = new GamGoal("goal1", 3, true);
 		goals.put(goal.getGoal(),goal);
@@ -139,11 +141,13 @@ public class RelationparserTest {
 		HashMap<String,GamGoal> goals = new HashMap<String,GamGoal>();
 		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 		
+
 		GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
-		beliefs.put(belief.getBeliefName(),belief);
+		beliefs.put(belief.getGoalName(),belief);
 		belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
-		beliefs.put(belief.getBeliefName(),belief);
+		beliefs.put(belief.getGoalName(),belief);
 		GamGoal goal = new GamGoal("goal2", 0.8, false);
+
 		goals.put(goal.getGoal(),goal);
 		goal = new GamGoal("goal1", 3, true);
 		goals.put(goal.getGoal(),goal);
@@ -172,10 +176,11 @@ public class RelationparserTest {
 		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 		
 		GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
-		beliefs.put(belief.getBeliefName(),belief);
+		beliefs.put(belief.getGoalName(),belief);
 		belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
-		beliefs.put(belief.getBeliefName(),belief);
+		beliefs.put(belief.getGoalName(),belief);
 		GamGoal goal = new GamGoal("goal2", 0.8, false);
+
 		goals.put(goal.getGoal(),goal);
 		goal = new GamGoal("goal1", 3, true);
 		goals.put(goal.getGoal(),goal);

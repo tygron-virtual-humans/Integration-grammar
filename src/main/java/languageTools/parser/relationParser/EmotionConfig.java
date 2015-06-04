@@ -58,13 +58,15 @@ public class EmotionConfig {
 	  
 	  
   }
-  
+  /**
+   * Method that resets the configuration instance to null
+   */
   public static void reset(){
 	  configuration = null;
   }
   
   /**
-   * 
+   * Method that parses the file that is given as a classpath as String.
    * @param filepath
    * @throws FileNotFoundException
    * @throws InvalidEmotionConfigFile
@@ -221,20 +223,20 @@ public void addGoal(GamGoal goal) {
  * @param belief belief to be aded
  */
 public void addBelief(GamBelief belief) {
-	if(this.getBeliefs().containsKey(belief.getBeliefName())) {
-	 this.getBeliefs().get(belief.getBeliefName()).add(belief);
-	 ArrayList<GamBelief> beliefs = this.getBeliefs().get(belief.getBeliefName());
+	if(this.getBeliefs().containsKey(belief.getGoalName())) {
+	 this.getBeliefs().get(belief.getGoalName()).add(belief);
+	 ArrayList<GamBelief> beliefs = this.getBeliefs().get(belief.getGoalName());
 	 for(int i = beliefs.size()-1; i>=0; i--) {
-		 if(beliefs.get(i).getAffected().equals(belief.getAffected())) {
+		 if(beliefs.get(i).getAffectedGoalName().equals(belief.getAffectedGoalName())) {
 			 beliefs.remove(i); //Otherwise we would count these as a "double" subgoal, only keep the latest info added
 		 }
 	 }
 	 beliefs.add(belief);
-	 this.getBeliefs().put(belief.getBeliefName(), beliefs);
+	 this.getBeliefs().put(belief.getGoalName(), beliefs);
 	} else {
 		ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
 		beliefs.add(belief);
-		this.getBeliefs().put(belief.getBeliefName(), beliefs);
+		this.getBeliefs().put(belief.getGoalName(), beliefs);
 	}
 }
 
@@ -278,10 +280,18 @@ public boolean getDefaultIsIncremental() {
 	return this.defaultIsIncremental;
 }
 
+/**
+ * returns if a whitelist is set or not
+ * @return
+ */
 public boolean hasWhiteList() {
 	return whiteList;
 }
 
+/**
+ * Sets the whitelist to true or false
+ * @param whiteList
+ */
 public void setWhiteList(boolean whiteList) {
 	this.whiteList = whiteList;
 }

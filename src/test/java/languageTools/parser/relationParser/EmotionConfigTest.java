@@ -32,10 +32,11 @@ public class EmotionConfigTest {
 	 HashMap<String, GamGoal> goals = new HashMap<String, GamGoal>();
 	 ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 	
+
 	ArrayList<GamBelief> beliefsList = new ArrayList<GamBelief>();
 	 GamBelief  belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
 	 beliefsList.add(belief);
-	 beliefs.put(belief.getBeliefName(), beliefsList);
+	 beliefs.put(belief.getGoalName(), beliefsList);
 	 GamGoal goal = new GamGoal("goal2", 0.8, false);
 	 goals.put(goal.getGoal(),goal);
 	 GamRelation relation = new GamRelation("agent1", "agent2", -1);
@@ -48,6 +49,7 @@ public class EmotionConfigTest {
 	 thisConfig.setGoals(goals);
 	 thisConfig.setRelations(relations);
 	 //System.out.println(thisConfig.toString());
+
 	 String correct = "{Config: {subgoal2=[{SUB: subgoal2, 0.3, maingoal2, 0.5, true}]}, {goal2={CGOAL: goal2, 0.8}}, [{REL: agent1, agent2, -1.0}, {REL: agent3, agent4, 0.9}], utility: 1.0, negativeCongruence: -1.0, positiveCongruence: 1.0, belieflikelihood: 1.0, isincremental: false}";
 	 assertEquals(correct, thisConfig.toString());
 	}
