@@ -85,5 +85,33 @@ public class GamRelationTest {
 		String correct = "{REL: agent1, agent2, 1.0}";
 		assertEquals(correct, relation1.toString());
 	}
+	
+	@Test
+	public void settersTest() throws InvalidGamRelationException{
+		GamRelation relation1 = new GamRelation("agent1","agent2", 1);
+		relation1.setAgent1("agent2");
+		relation1.setAgent2("agent3");
+		relation1.setValue(0.5);
+		
+		GamRelation relation2 = new GamRelation("agent2","agent3", 0.5);
+		
+		assertEquals(relation2,relation1);
+		
+	}
+	
+	@Test
+	public void getterTest() throws InvalidGamRelationException{
+		GamRelation relation = new GamRelation("agent1","agent2", 0.87);
+		String agent1 = relation.getAgent1();
+		String agent2 = relation.getAgent2();
+		double value = relation.getValue();
+		
+		//GamRelation relation2 = new GamRelation("agent2","agent3", 1);
+		
+		assertEquals(agent1,"agent1");
+		assertEquals(agent2,"agent2");
+		assertEquals(value,0.87,0.0);
+		
+	}
 
 }
