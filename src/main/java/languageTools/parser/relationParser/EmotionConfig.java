@@ -1,6 +1,6 @@
 /**
  * A class that represents a configuration of emotions by its rules. You have goals for the agents, 
- * relations between them and beliefs about how bad or good some events are for the goals.
+ * relations between them and SubGoals about how bad or good some events are for the goals.
  */
 
 package languageTools.parser.relationParser;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
-import languageTools.exceptions.relationParser.InvalidGamBeliefException;
+import languageTools.exceptions.relationParser.InvalidGamSubGoalException;
 public class EmotionConfig {
 
-  private HashMap<String,ArrayList<GamBelief>> beliefs;
+  private HashMap<String,ArrayList<GamSubGoal>> SubGoals;
   private HashMap<String, GamGoal> goals;
   private ArrayList<GamRelation> relations;
   private static EmotionConfig configuration;
@@ -29,13 +29,13 @@ public class EmotionConfig {
 
 /** 
  * Constructor for the configuration of the emotions.
- * @param beliefs - the believes that are present about goals
+ * @param SubGoals - the believes that are present about goals
  * @param goals - the specified goals for the agents
  * @param relations - the relations between the agents
  */
-  public EmotionConfig(HashMap<String, ArrayList<GamBelief>> beliefs,HashMap<String,GamGoal> goals,
+  public EmotionConfig(HashMap<String, ArrayList<GamSubGoal>> SubGoals,HashMap<String,GamGoal> goals,
      ArrayList<GamRelation> relations) {
-    this.setBeliefs(beliefs);
+    this.setSubGoals(SubGoals);
     this.setGoals(goals);
     this.setRelations(relations);
   }
@@ -46,7 +46,7 @@ public class EmotionConfig {
    */
   public synchronized static EmotionConfig getInstance(){
 	  if(configuration == null){
-		  configuration = new EmotionConfig(new HashMap<String, ArrayList<GamBelief>>(), new HashMap<String, GamGoal>(), new ArrayList<GamRelation>());
+		  configuration = new EmotionConfig(new HashMap<String, ArrayList<GamSubGoal>>(), new HashMap<String, GamGoal>(), new ArrayList<GamRelation>());
 		  configuration.setDefaultUtility(1);
 		  configuration.setDefaultNegativeCongruence(-1);
 		  configuration.setDefaultPositiveCongruence(1);
@@ -81,24 +81,24 @@ public class EmotionConfig {
    * toString method.
    */
   public String toString() {
-	  String bel = getBeliefs().toString();
+	  String bel = getSubGoals().toString();
 	  String goal = getGoals().toString();
 	  String rel = getRelations().toString();
-	  return "{Config: " + bel + ", " + goal + ", " + rel + ", utility: " + defaultUtility + ", negativeCongruence: " + defaultNegativeCongruence + ", positiveCongruence: " + defaultPositiveCongruence + ", belieflikelihood: " + defaultBelLikelihood + ", isincremental: " + defaultIsIncremental + "}";
+	  return "{Config: " + bel + ", " + goal + ", " + rel + ", utility: " + defaultUtility + ", negativeCongruence: " + defaultNegativeCongruence + ", positiveCongruence: " + defaultPositiveCongruence + ", SubGoallikelihood: " + defaultBelLikelihood + ", isincremental: " + defaultIsIncremental + "}";
   }
 
 /**
- * @return the beliefs
+ * @return the SubGoals
  */
-public HashMap<String,ArrayList<GamBelief>> getBeliefs() {
-	return beliefs;
+public HashMap<String,ArrayList<GamSubGoal>> getSubGoals() {
+	return SubGoals;
 }
 
 /**
- * @param beliefs the beliefs to set
+ * @param SubGoals the SubGoals to set
  */
-public void setBeliefs(HashMap<String, ArrayList<GamBelief>> beliefs) {
-	this.beliefs = beliefs;
+public void setSubGoals(HashMap<String, ArrayList<GamSubGoal>> SubGoals) {
+	this.SubGoals = SubGoals;
 }
 
 /**
@@ -179,7 +179,7 @@ public void setDefaultNegativeCongruence(double defaultNegativeCongruence) {
 }
 
 /**
- * getter for the default belief likelihood
+ * getter for the default SubGoal likelihood
  * @return
  */
 public double getDefaultBelLikelihood() {
@@ -187,7 +187,7 @@ public double getDefaultBelLikelihood() {
 }
 
 /**
- * setter for the default belief likelihood
+ * setter for the default SubGoal likelihood
  * @param defaultBelLikelihood
  */
 public void setDefaultBelLikelihood(double defaultBelLikelihood) {
@@ -220,23 +220,23 @@ public void addGoal(GamGoal goal) {
 
 /**
  * add the beleif to the emotionconfig
- * @param belief belief to be aded
+ * @param SubGoal SubGoal to be aded
  */
-public void addBelief(GamBelief belief) {
-	if(this.getBeliefs().containsKey(belief.getGoalName())) {
-	 this.getBeliefs().get(belief.getGoalName()).add(belief);
-	 ArrayList<GamBelief> beliefs = this.getBeliefs().get(belief.getGoalName());
-	 for(int i = beliefs.size()-1; i>=0; i--) {
-		 if(beliefs.get(i).getAffectedGoalName().equals(belief.getAffectedGoalName())) {
-			 beliefs.remove(i); //Otherwise we would count these as a "double" subgoal, only keep the latest info added
+public void addSubGoal(GamSubGoal SubGoal) {
+	if(this.getSubGoals().containsKey(SubGoal.getGoalName())) {
+	 this.getSubGoals().get(SubGoal.getGoalName()).add(SubGoal);
+	 ArrayList<GamSubGoal> SubGoals = this.getSubGoals().get(SubGoal.getGoalName());
+	 for(int i = SubGoals.size()-1; i>=0; i--) {
+		 if(SubGoals.get(i).getAffectedGoalName().equals(SubGoal.getAffectedGoalName())) {
+			 SubGoals.remove(i); //Otherwise we would count these as a "double" subgoal, only keep the latest info added
 		 }
 	 }
-	 beliefs.add(belief);
-	 this.getBeliefs().put(belief.getGoalName(), beliefs);
+	 SubGoals.add(SubGoal);
+	 this.getSubGoals().put(SubGoal.getGoalName(), SubGoals);
 	} else {
-		ArrayList<GamBelief> beliefs = new ArrayList<GamBelief>();
-		beliefs.add(belief);
-		this.getBeliefs().put(belief.getGoalName(), beliefs);
+		ArrayList<GamSubGoal> SubGoals = new ArrayList<GamSubGoal>();
+		SubGoals.add(SubGoal);
+		this.getSubGoals().put(SubGoal.getGoalName(), SubGoals);
 	}
 }
 
@@ -259,16 +259,16 @@ public GamGoal getGoal(String goalName) {
 }
 
 /**
- * get belief configuration by the beliefName, returns as default configuration if it is not specified.
- * @param beliefName
+ * get SubGoal configuration by the SubGoalName, returns as default configuration if it is not specified.
+ * @param SubGoalName
  * @return
- * @throws InvalidGamBeliefException 
+ * @throws InvalidGamSubGoalException 
  */
-public ArrayList<GamBelief> getBelief(String beliefName) throws InvalidGamBeliefException {
-	if(this.getBeliefs().containsKey(beliefName)) {
-		return this.getBeliefs().get(beliefName);
+public ArrayList<GamSubGoal> getSubGoal(String SubGoalName) throws InvalidGamSubGoalException {
+	if(this.getSubGoals().containsKey(SubGoalName)) {
+		return this.getSubGoals().get(SubGoalName);
 	} else {
-		return new ArrayList<GamBelief>();
+		return new ArrayList<GamSubGoal>();
 	}
 }
 

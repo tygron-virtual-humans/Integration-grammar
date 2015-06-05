@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
-import languageTools.exceptions.relationParser.InvalidGamBeliefException;
-import languageTools.exceptions.relationParser.InvalidGamBeliefString;
+import languageTools.exceptions.relationParser.InvalidGamSubGoalException;
+import languageTools.exceptions.relationParser.InvalidGamSubGoalString;
 import languageTools.exceptions.relationParser.InvalidGamGoalString;
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
 import languageTools.exceptions.relationParser.InvalidGamRelationString;
@@ -28,12 +28,12 @@ abstract public class RelationParser {
 	public static EmotionConfig parse(File file) throws FileNotFoundException, InvalidEmotionConfigFile{
 	// creating scanner + lists	
 	Scanner fileScanner = new Scanner(file);
-	HashMap<String, ArrayList<GamBelief>> beliefs = new HashMap<String,ArrayList<GamBelief>>();
+	HashMap<String, ArrayList<GamSubGoal>> SubGoals = new HashMap<String,ArrayList<GamSubGoal>>();
 	HashMap<String,GamGoal> goals = new HashMap<String,GamGoal>();
 	ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 	
 	//creating resulting configuration
-	EmotionConfig configuration = new EmotionConfig(beliefs,goals,relations);
+	EmotionConfig configuration = new EmotionConfig(SubGoals,goals,relations);
 	int lineNum = 1;
 	while(fileScanner.hasNextLine()){
 		String line = fileScanner.nextLine();
@@ -73,10 +73,10 @@ abstract public class RelationParser {
 		objects = removeWhiteSpaces(objects);
 		//BELIEVES
 		if(objects[0].equals("SUB")){
-			GamBelief belief;
+			GamSubGoal SubGoal;
 			try {
-				belief = parseBelief(objects);
-				res.addBelief(belief);
+				SubGoal = parseSubGoal(objects);
+				res.addSubGoal(SubGoal);
 			} catch (Throwable e) {
 				throw new InvalidEmotionConfigFile("Subgoal on line: " + lineNum + " is invalid");
 			}
@@ -125,7 +125,7 @@ abstract public class RelationParser {
 			res.setDefaultNegativeCongruence(congruence);
 		}
 		
-		// DEFAULT BELIEF LIKELIHOOD
+		// DEFAULT SubGoal LIKELIHOOD
 		else if(objects[0].equals("DEFAULT BELIEF LIKELIHOOD")) {
 			double likelihood = parseLikelihood(objects);
 			res.setDefaultBelLikelihood(likelihood);
@@ -154,14 +154,14 @@ abstract public class RelationParser {
 
 
 	/**
-	 * Specific Belief parser
+	 * Specific SubGoal parser
 	 * @param objects - parameters 
-	 * @return GamBelief object
-	 * @throws InvalidGamBeliefException
-	 * @throws InvalidGamBeliefString
+	 * @return GamSubGoal object
+	 * @throws InvalidGamSubGoalException
+	 * @throws InvalidGamSubGoalString
 	 */
-	public static GamBelief parseBelief(String[] objects) throws InvalidGamBeliefException, InvalidGamBeliefString{
-		GamBelief belief = null;
+	public static GamSubGoal parseSubGoal(String[] objects) throws InvalidGamSubGoalException, InvalidGamSubGoalString{
+		GamSubGoal SubGoal = null;
 		try{
 		 String goalName = objects[1];
 		 double likelihood = Double.parseDouble(objects[2]);
@@ -172,11 +172,11 @@ abstract public class RelationParser {
 		 //System.out.println(isincremental);
 		 //System.out.println("Objects[5]: " + objects[5]);
 		 //System.out.println(Arrays.toString(objects));
-		 belief = new GamBelief(goalName, likelihood, affectedGoalName, congruence, isincremental);
+		 SubGoal = new GamSubGoal(goalName, likelihood, affectedGoalName, congruence, isincremental);
 		} catch(Throwable e) {
-			throw new InvalidGamBeliefString("Cannot parse the gam belief");
+			throw new InvalidGamSubGoalString("Cannot parse the gam SubGoal");
 		}
-		return belief;	
+		return SubGoal;	
 	}
 	
 	/**

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
-import languageTools.exceptions.relationParser.InvalidGamBeliefException;
+import languageTools.exceptions.relationParser.InvalidGamSubGoalException;
 import languageTools.exceptions.relationParser.InvalidGamGoalString;
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
 
@@ -24,22 +24,22 @@ public class RelationparserTest {
 
 	
 	@Test
-	public void testValidFile() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException {
+	public void testValidFile() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamSubGoalException, InvalidGamRelationException {
 		//System.out.println("TESTVALIDFILE +++++++++++++++++++++++++++++++++++++++++++++++");
 		EmotionConfig testConfig = EmotionConfig.getInstance();
 		EmotionConfig.parse("src/test/languageTools/parser/relationParser/validFile");
-		HashMap<String,ArrayList<GamBelief>> beliefs = new HashMap<String,ArrayList<GamBelief>>();
+		HashMap<String,ArrayList<GamSubGoal>> SubGoals = new HashMap<String,ArrayList<GamSubGoal>>();
 		HashMap<String, GamGoal> goals = new HashMap<String,GamGoal>();
 		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 		
-		GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
-		ArrayList<GamBelief> toPut = new ArrayList<GamBelief>();
-		toPut.add(belief);
-		beliefs.put(belief.getGoalName(), toPut);
-		belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
-		toPut = new ArrayList<GamBelief>();
-		toPut.add(belief);
-		beliefs.put(belief.getGoalName(), toPut);
+		GamSubGoal SubGoal = new GamSubGoal("subgoal1",0.2, "maingoal1", 0.1, false);
+		ArrayList<GamSubGoal> toPut = new ArrayList<GamSubGoal>();
+		toPut.add(SubGoal);
+		SubGoals.put(SubGoal.getGoalName(), toPut);
+		SubGoal = new GamSubGoal("subgoal2",0.3,  "maingoal2", 0.5, true);
+		toPut = new ArrayList<GamSubGoal>();
+		toPut.add(SubGoal);
+		SubGoals.put(SubGoal.getGoalName(), toPut);
 		GamGoal goal = new GamGoal("goal2", 0.8, false);
 		goals.put(goal.getGoal(),goal);
 		goal = new GamGoal("goal1", 3, true);
@@ -48,9 +48,9 @@ public class RelationparserTest {
 		relations.add(relation);
 		relation = new GamRelation("agent3", "agent4", 0.9);
 	    relations.add(relation);
-		//EmotionConfig validConfig = new EmotionConfig(beliefs, goals, relations);
-//		System.out.println(testConfig.getBeliefs());
-//		System.out.println(validConfig.getBeliefs());
+		//EmotionConfig validConfig = new EmotionConfig(SubGoals, goals, relations);
+//		System.out.println(testConfig.getSubGoals());
+//		System.out.println(validConfig.getSubGoals());
 //		System.out.println(testConfig.getGoals());
 //		System.out.println(validConfig.getGoals());
 //		System.out.println(testConfig.getRelations());
@@ -58,7 +58,7 @@ public class RelationparserTest {
 //		
 //		System.out.println("TESTVALIDFILE +++++++++++++++++++++++++++++++++++++++++++++++");
 		
-		assertEquals(beliefs,testConfig.getBeliefs());
+		assertEquals(SubGoals,testConfig.getSubGoals());
 		assertEquals(goals,testConfig.getGoals());
 		assertEquals(relations,testConfig.getRelations());
 		double util=1;
@@ -67,14 +67,14 @@ public class RelationparserTest {
 	}
 	
 	@Test(expected = InvalidEmotionConfigFile.class)
-	public void testWrongBelief() throws FileNotFoundException, InvalidEmotionConfigFile {
+	public void testWrongSubGoal() throws FileNotFoundException, InvalidEmotionConfigFile {
 		EmotionConfig testConfig = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongBEL");
 	}
 	
 	@Test(expected = InvalidEmotionConfigFile.class)
 	public void testWrongRelation() throws FileNotFoundException, InvalidEmotionConfigFile {
 		EmotionConfig testConfig = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongREL");
-		//System.out.println(testConfig.getBeliefs());
+		//System.out.println(testConfig.getSubGoals());
 		//System.out.println(testConfig.getGoals());
 		//System.out.println(testConfig.getRelations());
 	}
@@ -91,22 +91,22 @@ public class RelationparserTest {
 	}
 	
 	@Test
-	public void testValidFileWithDefaults() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException {
+	public void testValidFileWithDefaults() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamSubGoalException, InvalidGamRelationException {
 		//System.out.println("TESTVALIDFILE +++++++++++++++++++++++++++++++++++++++++++++++");
 		EmotionConfig testConfig = EmotionConfig.getInstance();
 		EmotionConfig.parse("src/test/languageTools/parser/relationParser/validUtility");
-		HashMap<String,ArrayList<GamBelief>> beliefs = new HashMap<String,ArrayList<GamBelief>>();
+		HashMap<String,ArrayList<GamSubGoal>> SubGoals = new HashMap<String,ArrayList<GamSubGoal>>();
 		HashMap<String,GamGoal> goals = new HashMap<String,GamGoal>();
 		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 
-		GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
-		ArrayList<GamBelief> toPut = new ArrayList<GamBelief>();
-		toPut.add(belief);
-		beliefs.put(belief.getGoalName(), toPut);
-		belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
-		toPut = new ArrayList<GamBelief>();
-		toPut.add(belief);
-		beliefs.put(belief.getGoalName(), toPut);
+		GamSubGoal SubGoal = new GamSubGoal("subgoal1",0.2, "maingoal1", 0.1, false);
+		ArrayList<GamSubGoal> toPut = new ArrayList<GamSubGoal>();
+		toPut.add(SubGoal);
+		SubGoals.put(SubGoal.getGoalName(), toPut);
+		SubGoal = new GamSubGoal("subgoal2",0.3,  "maingoal2", 0.5, true);
+		toPut = new ArrayList<GamSubGoal>();
+		toPut.add(SubGoal);
+		SubGoals.put(SubGoal.getGoalName(), toPut);
 		GamGoal goal = new GamGoal("goal2", 0.8, false);
 
 
@@ -118,7 +118,7 @@ public class RelationparserTest {
 		relation = new GamRelation("agent3", "agent4", 0.9);
 	    relations.add(relation);
 	
-		assertEquals(beliefs,testConfig.getBeliefs());
+		assertEquals(SubGoals,testConfig.getSubGoals());
 		assertEquals(goals,testConfig.getGoals());
 		assertEquals(relations,testConfig.getRelations());
 		double util=0.56;
@@ -133,19 +133,19 @@ public class RelationparserTest {
 	}
 	
 	@Test(expected = InvalidEmotionConfigFile.class)
-	public void testValidFileWithWrongUtility() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException {
+	public void testValidFileWithWrongUtility() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamSubGoalException, InvalidGamRelationException {
 		//System.out.println("TESTVALIDFILE +++++++++++++++++++++++++++++++++++++++++++++++");
 		EmotionConfig testConfig = EmotionConfig.getInstance();
 		EmotionConfig.parse("src/test/languageTools/parser/relationParser/invalidUtility");
-		HashMap<String,GamBelief> beliefs = new HashMap<String,GamBelief>();
+		HashMap<String,GamSubGoal> SubGoals = new HashMap<String,GamSubGoal>();
 		HashMap<String,GamGoal> goals = new HashMap<String,GamGoal>();
 		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 		
 
-		GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
-		beliefs.put(belief.getGoalName(),belief);
-		belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
-		beliefs.put(belief.getGoalName(),belief);
+		GamSubGoal SubGoal = new GamSubGoal("subgoal1",0.2, "maingoal1", 0.1, false);
+		SubGoals.put(SubGoal.getGoalName(),SubGoal);
+		SubGoal = new GamSubGoal("subgoal2",0.3,  "maingoal2", 0.5, true);
+		SubGoals.put(SubGoal.getGoalName(),SubGoal);
 		GamGoal goal = new GamGoal("goal2", 0.8, false);
 
 		goals.put(goal.getGoal(),goal);
@@ -156,7 +156,7 @@ public class RelationparserTest {
 		relation = new GamRelation("agent3", "agent4", 0.9);
 	    relations.add(relation);
 	    
-		assertEquals(beliefs,testConfig.getBeliefs());
+		assertEquals(SubGoals,testConfig.getSubGoals());
 		assertEquals(goals,testConfig.getGoals());
 		assertEquals(relations,testConfig.getRelations());
 		double util=0.56;
@@ -167,18 +167,18 @@ public class RelationparserTest {
 	
 	
 	@Test(expected = InvalidEmotionConfigFile.class)
-	public void testValidFileWithWrongUtility2() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException {
+	public void testValidFileWithWrongUtility2() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamSubGoalException, InvalidGamRelationException {
 		//System.out.println("TESTVALIDFILE +++++++++++++++++++++++++++++++++++++++++++++++");
 		EmotionConfig testConfig = EmotionConfig.getInstance();
 		EmotionConfig.parse("src/test/languageTools/parser/relationParser/wrongUtility");
-		HashMap<String,GamBelief> beliefs = new HashMap<String,GamBelief>();
+		HashMap<String,GamSubGoal> SubGoals = new HashMap<String,GamSubGoal>();
 		HashMap<String,GamGoal> goals = new HashMap<String,GamGoal>();
 		ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 		
-		GamBelief belief = new GamBelief("subgoal1",0.2, "maingoal1", 0.1, false);
-		beliefs.put(belief.getGoalName(),belief);
-		belief = new GamBelief("subgoal2",0.3,  "maingoal2", 0.5, true);
-		beliefs.put(belief.getGoalName(),belief);
+		GamSubGoal SubGoal = new GamSubGoal("subgoal1",0.2, "maingoal1", 0.1, false);
+		SubGoals.put(SubGoal.getGoalName(),SubGoal);
+		SubGoal = new GamSubGoal("subgoal2",0.3,  "maingoal2", 0.5, true);
+		SubGoals.put(SubGoal.getGoalName(),SubGoal);
 		GamGoal goal = new GamGoal("goal2", 0.8, false);
 
 		goals.put(goal.getGoal(),goal);
@@ -189,7 +189,7 @@ public class RelationparserTest {
 		relation = new GamRelation("agent3", "agent4", 0.9);
 	    relations.add(relation);
 	
-		assertEquals(beliefs,testConfig.getBeliefs());
+		assertEquals(SubGoals,testConfig.getSubGoals());
 		assertEquals(goals,testConfig.getGoals());
 		assertEquals(relations,testConfig.getRelations());
 		double util=0.56;
@@ -199,12 +199,12 @@ public class RelationparserTest {
 	}
 	
 	@Test
-	public void parseTest() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException {
+	public void parseTest() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamSubGoalException, InvalidGamRelationException {
 		//File validfile = new File("src/test/languageTools/parser/relationParser/wrongUtility");
 		//EmotionConfig conf = RelationParser.parse(validfile);
 		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/validFile");
 		assertFalse(conf == null);
-		assertEquals(conf.getBeliefs(),EmotionConfig.getInstance().getBeliefs());
+		assertEquals(conf.getSubGoals(),EmotionConfig.getInstance().getSubGoals());
 		assertEquals(conf.getGoals(),EmotionConfig.getInstance().getGoals());
 		assertEquals(conf.getRelations(),EmotionConfig.getInstance().getRelations());
 		
@@ -218,28 +218,28 @@ public class RelationparserTest {
 	
 	
 	@Test(expected = InvalidEmotionConfigFile.class)
-	public void parseCongruenceTest() throws InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException, FileNotFoundException{
+	public void parseCongruenceTest() throws InvalidEmotionConfigFile, InvalidGamSubGoalException, InvalidGamRelationException, FileNotFoundException{
 		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongposcongruence");
 		assertFalse(conf == null);
 		
 	}
 	
 	@Test(expected = InvalidEmotionConfigFile.class)
-	public void parseLikelihoodTest() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException{
+	public void parseLikelihoodTest() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamSubGoalException, InvalidGamRelationException{
 		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongLikelihood");
 		assertFalse(conf == null);
 		
 	}
 	
 	@Test(expected = InvalidEmotionConfigFile.class)
-	public void parseIsIncremental() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException{
+	public void parseIsIncremental() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamSubGoalException, InvalidGamRelationException{
 		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongIsIncremental");
 		assertFalse(conf == null);
 		
 	}
 	
 	@Test(expected = InvalidEmotionConfigFile.class)
-	public void parseIsIncremental2() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamBeliefException, InvalidGamRelationException{
+	public void parseIsIncremental2() throws FileNotFoundException, InvalidEmotionConfigFile, InvalidGamSubGoalException, InvalidGamRelationException{
 		EmotionConfig conf = RelationParser.parse("src/test/languageTools/parser/relationParser/wrongIsIncremental2");
 		assertFalse(conf == null);
 		
