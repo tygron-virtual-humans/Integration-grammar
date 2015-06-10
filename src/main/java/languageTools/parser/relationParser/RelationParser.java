@@ -225,7 +225,6 @@ abstract public class RelationParser {
 				if(objects.length > 3) {
 					agent = objects[3];
 				} else {
-					System.out.println("ANY AGENT SET1: " + goal + " " + objects.length + " " + objects.toString()); 
 					agent = "ANYAGENT";
 				}
 			} catch(Throwable t) {
@@ -233,7 +232,6 @@ abstract public class RelationParser {
 				try {
 					agent = objects[2];
 				} catch(Throwable t2) {
-					System.out.println("ANY AGENT SET2: " + goal + " " +  objects.length);
 					agent = "ANYAGENT";
 				}
 			}
