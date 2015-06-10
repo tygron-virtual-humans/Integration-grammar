@@ -1,0 +1,6 @@
+SUB,subgoal1, 0.2, maingoal1, 0.1,False
+REL,agent1,agent2  , -1
+CGOAL,goal2, 0.8
+SUB,subgoal2, 0.3, maingoal2, 0.5,True
+REL,agent3,agent4, 0.9
+IGOAL,goal1, 3, testAgent
