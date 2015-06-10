@@ -29,7 +29,7 @@ abstract public class RelationParser {
 	// creating scanner + lists	
 	Scanner fileScanner = new Scanner(file);
 	HashMap<String, ArrayList<GamSubGoal>> SubGoals = new HashMap<String,ArrayList<GamSubGoal>>();
-	HashMap<String,GamGoal> goals = new HashMap<String,GamGoal>();
+	HashMap<String,HashMap<String,GamGoal>> goals = new HashMap<String,HashMap<String,GamGoal>>();
 	ArrayList<GamRelation> relations = new ArrayList<GamRelation>();
 	
 	//creating resulting configuration
@@ -168,13 +168,18 @@ abstract public class RelationParser {
 		 String affectedGoalName = objects[3];
 		 double congruence = Double.parseDouble(objects[4]);
 		 boolean isincremental = parseBoolean(objects[5]);
-		 //System.out.println(objects[5]);
-		 //System.out.println(isincremental);
-		 //System.out.println("Objects[5]: " + objects[5]);
-		 //System.out.println(Arrays.toString(objects));
 		 SubGoal = new GamSubGoal(goalName, likelihood, affectedGoalName, congruence, isincremental);
 		} catch(Throwable e) {
-			throw new InvalidGamSubGoalString("Cannot parse the gam SubGoal");
+			try{
+			 String goalName = objects[1];
+			 String affectedGoalName = objects[2];
+			 double likelihood = EmotionConfig.getInstance().getDefaultBelLikelihood();
+			 double congruence = Double.parseDouble(objects[3]);
+			 boolean isincremental = parseBoolean(objects[4]);
+			 SubGoal = new GamSubGoal(goalName, likelihood, affectedGoalName, congruence, isincremental);
+			} catch(Throwable t) {
+				throw new InvalidGamSubGoalString("Cannot parse the gam SubGoal");
+			}
 		}
 		return SubGoal;	
 	}
@@ -207,28 +212,30 @@ abstract public class RelationParser {
 	 */
 	public static GamGoal parseGoal(String[] objects) throws InvalidGamGoalString{
 		GamGoal gamgoal = null;
-		try{
-		Boolean isIndividual = false;
-		if(objects[0].equals("IGOAL")) {
-			isIndividual = true;
-		}
-		 String goal = objects[1];
-		 double value = Double.parseDouble(objects[2]);
-	     gamgoal = new GamGoal(goal,value, isIndividual);
-		} catch(Throwable e) {
-			try {
-			 Boolean isIndividual = false;
-			 if(objects[0].equals("IGOAL")) {
-			  isIndividual = true;
-			 }
-			 String goal = objects[1];
-			 gamgoal = new GamGoal(goal, EmotionConfig.getInstance().getDefaultUtility(), isIndividual);
-			} catch(Throwable f) {
-				throw new InvalidGamGoalString("Cannot read the goal string: " + objects.toString());
+		//try{
+			Boolean isIndividual = false;
+			if(objects[0].equals("IGOAL")) {
+				isIndividual = true;
 			}
-			
-		}
-	
+			String goal = objects[1];
+			double value = 0.0;
+			String agent;
+			try{
+				value = Double.parseDouble(objects[2]);
+				if(objects.length > 3) {
+					agent = objects[3];
+				} else {
+					agent = "ANYAGENT";
+				}
+			} catch(Throwable t) {
+				value = EmotionConfig.getInstance().getDefaultUtility();
+				try {
+					agent = objects[2];
+				} catch(Throwable t2) {
+					agent = "ANYAGENT";
+				}
+			}
+		gamgoal = new GamGoal(goal,value, isIndividual, agent);	
 		return gamgoal;
 	}
 	

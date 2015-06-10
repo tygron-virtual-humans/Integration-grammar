@@ -9,7 +9,18 @@ public class GamGoal {
 	private double value;
 	private String goal;
 	private boolean individualGoal;
+	private String agent; //Holds which agent this goal definition belongs to (ANYAGENT means that these values hold for any agent that does not have them set specifically)
 	
+	public String getAgent() {
+		return agent;
+	}
+
+
+	public void setAgent(String agent) {
+		this.agent = agent;
+	}
+
+
 	public boolean isIndividualGoal() {
 		return individualGoal;
 	}
@@ -26,10 +37,11 @@ public class GamGoal {
 	 * @param goal - the name of the goal
 	 * @param value - value that represent how badly the agents want this. 1 is high, -1 is low.
 	 */
-	public GamGoal(String goal, double value, boolean individualGoal){
+	public GamGoal(String goal, double value, boolean individualGoal, String agent){
 		this.value = value;
 		this.goal = goal;
 		this.individualGoal = individualGoal;
+		this.agent = agent;
 	}
 	
 	
@@ -43,6 +55,7 @@ public class GamGoal {
 			  res = res && this.value == other.value;
 			  res = res && this.goal.equals(other.goal);
 			  res = res && this.individualGoal == other.individualGoal;
+			  res = res && this.getAgent().equals(other.getAgent());
 			  return res;
 		  } else {
 			  return false;
@@ -54,9 +67,9 @@ public class GamGoal {
 	 */
 	public String toString() {
 		if(individualGoal) {
-		 return "{IGOAL: " + goal + ", " + value +"}";
+		 return "{IGOAL: " + goal + ", " + value + ", " + agent + "}";
 		} else {
-		 return "{CGOAL: " + goal + ", " + value +"}";	
+		 return "{CGOAL: " + goal + ", " + value + ", " + agent + "}";	
 		}
 	}
 

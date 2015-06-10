@@ -15,7 +15,7 @@ import languageTools.exceptions.relationParser.InvalidGamSubGoalException;
 public class EmotionConfig {
 
   private HashMap<String,ArrayList<GamSubGoal>> SubGoals;
-  private HashMap<String, GamGoal> goals;
+  private HashMap<String, HashMap<String,GamGoal>> goals;
   private ArrayList<GamRelation> relations;
   private static EmotionConfig configuration;
   private double defaultUtility;
@@ -33,7 +33,7 @@ public class EmotionConfig {
  * @param goals - the specified goals for the agents
  * @param relations - the relations between the agents
  */
-  public EmotionConfig(HashMap<String, ArrayList<GamSubGoal>> SubGoals,HashMap<String,GamGoal> goals,
+  public EmotionConfig(HashMap<String, ArrayList<GamSubGoal>> SubGoals,HashMap<String,HashMap<String,GamGoal>> goals,
      ArrayList<GamRelation> relations) {
     this.setSubGoals(SubGoals);
     this.setGoals(goals);
@@ -46,7 +46,7 @@ public class EmotionConfig {
    */
   public synchronized static EmotionConfig getInstance(){
 	  if(configuration == null){
-		  configuration = new EmotionConfig(new HashMap<String, ArrayList<GamSubGoal>>(), new HashMap<String, GamGoal>(), new ArrayList<GamRelation>());
+		  configuration = new EmotionConfig(new HashMap<String, ArrayList<GamSubGoal>>(), new HashMap<String, HashMap<String,GamGoal>>(), new ArrayList<GamRelation>());
 		  configuration.setDefaultUtility(1);
 		  configuration.setDefaultNegativeCongruence(-1);
 		  configuration.setDefaultPositiveCongruence(1);
@@ -104,14 +104,14 @@ public void setSubGoals(HashMap<String, ArrayList<GamSubGoal>> SubGoals) {
 /**
  * @return the goals
  */
-public HashMap<String,GamGoal> getGoals() {
+public HashMap<String,HashMap<String,GamGoal>> getGoals() {
 	return goals;
 }
 
 /**
  * @param goals the goals to set
  */
-public void setGoals(HashMap<String, GamGoal> goals) {
+public void setGoals(HashMap<String, HashMap<String,GamGoal>> goals) {
 	this.goals = goals;
 }
 
@@ -215,7 +215,14 @@ public void setDefaultIsIncremental(boolean defaultIsIncremental) {
  * @param goal goal to be added
  */
 public void addGoal(GamGoal goal) {
-	this.getGoals().put(goal.getGoal(), goal);
+	if(goals.containsKey(goal.getGoal())) {
+		goals.get(goal.getGoal()).put(goal.getAgent(), goal);
+	} else {
+		HashMap<String, GamGoal> toPut = new HashMap<String, GamGoal>();
+		toPut.put(goal.getAgent(), goal);
+		goals.put(goal.getGoal(), toPut);
+		
+	}
 }
 
 /**
@@ -245,15 +252,16 @@ public void addSubGoal(GamSubGoal SubGoal) {
  * @param goalName goal name for which to retrieve the configuration
  * @return
  */
-public GamGoal getGoal(String goalName) {
-	if(this.getGoals().containsKey(goalName)) {
-		return this.getGoals().get(goalName);
+public GamGoal getGoal(String goalName, String agentName) {
+	if(this.getGoals().containsKey(goalName) && this.getGoals().get(goalName).containsKey(agentName)){
+		return this.getGoals().get(goalName).get(agentName);
+	} else if(this.getGoals().containsKey(goalName) && this.getGoals().get(goalName).containsKey("ANYAGENT")){ //The string ANYAGENT is used to signify these goalparamters hold for any agent that does not have them set individually
+		return this.getGoals().get(goalName).get("ANYAGENT");
 	} else {
 		if(this.hasWhiteList()) {
-			return new GamGoal(goalName, 0, false);
+			return new GamGoal(goalName, 0, false, "ANYAGENT");
 		} else {
-			return new GamGoal(goalName, this.getDefaultUtility(),false);
-
+			return new GamGoal(goalName, this.getDefaultUtility(),false, "ANYAGENT");
 		}
 	}
 }
