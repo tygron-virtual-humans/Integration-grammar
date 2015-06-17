@@ -24,6 +24,8 @@ public class EmotionConfig {
   private double defaultBelLikelihood;
   private boolean defaultIsIncremental;
   private boolean whiteList;
+  private boolean isDecayExponential;
+  private double decay;
 
 
 
@@ -53,6 +55,8 @@ public class EmotionConfig {
 		  configuration.setDefaultBelLikelihood(1);
 		  configuration.setDefaultIsIncremental(false);
 		  configuration.setWhiteList(false);
+		  configuration.setDecayExponential(true);
+		  configuration.setDecay(0.8);
 	  }
 	  return configuration;
 	  
@@ -302,6 +306,22 @@ public boolean hasWhiteList() {
  */
 public void setWhiteList(boolean whiteList) {
 	this.whiteList = whiteList;
+}
+
+public boolean isDecayExponential() {
+	return isDecayExponential;
+}
+
+public void setDecayExponential(boolean isExponential) {
+	this.isDecayExponential = isExponential;
+}
+
+public double getDecay() {
+	return decay;
+}
+
+public void setDecay(double decay) {
+	this.decay = decay;
 }
 
 }

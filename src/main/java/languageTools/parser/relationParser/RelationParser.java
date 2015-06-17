@@ -146,10 +146,42 @@ abstract public class RelationParser {
 			} catch (Throwable e) {
 				throw new InvalidEmotionConfigFile("Relation on line: " + lineNum + " is invalid");
 			}
-		} else {
+		}
+		
+		//DECAY
+		else if (objects[0].equalsIgnoreCase("decay")) {
+			
+			parseDecay(objects,res);
+		}
+		
+		
+		else {
 			throw new InvalidEmotionConfigFile("Identifying tag on line: " + lineNum + " is invalid");
 		}
 		return res;
+	}
+	
+	
+	
+	public static void parseDecay(String[] objects, EmotionConfig res) throws InvalidEmotionConfigFile{
+		
+		if (objects.length != 3) { //DECAY, TYPE, VALUE
+			throw new InvalidEmotionConfigFile("Invalid Decay configuration, use: \"decay, type, value\"");
+		}
+		
+		if (objects[1].equalsIgnoreCase("exp") || objects[1].equalsIgnoreCase("exponential")) {
+			res.setDecayExponential(true);
+		} else if (objects[1].equalsIgnoreCase("lin") || objects[1].equalsIgnoreCase("linear")) {
+			res.setDecayExponential(false);
+		} else {
+			throw new InvalidEmotionConfigFile("Invalid Decay type, use: \"exponential\" or \"linear\"");
+		}
+		
+		try {
+			res.setDecay(Double.parseDouble(objects[2]));
+		} catch(Throwable e) {
+			throw new InvalidEmotionConfigFile("Invalid Decay value");
+		}	
 	}
 
 
