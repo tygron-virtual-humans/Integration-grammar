@@ -4,6 +4,10 @@
 
 package languageTools.parser.relationParser;
 
+/**
+ * Represents the configuration of a gamygdala goal
+ *
+ */
 public class GamGoal {
 	
 	private double value;
@@ -11,21 +15,37 @@ public class GamGoal {
 	private boolean individualGoal;
 	private String agent; //Holds which agent this goal definition belongs to (ANYAGENT means that these values hold for any agent that does not have them set specifically)
 	
+	/**
+	 * Returns the agent for who this goal is valid (ANYAGENT if it is valid for any agent)
+	 * @return
+	 */
 	public String getAgent() {
 		return agent;
 	}
 
-
+	/**
+	 * Sets the agent for who this goal is valid.
+	 * @param agent
+	 */
 	public void setAgent(String agent) {
 		this.agent = agent;
 	}
 
 
+	/**
+	 * Returns true if this goal is an individual goal, that is a goal that only affects the emotions
+	 * of the individual agent that achieves/drops it.
+	 * @return
+	 */
 	public boolean isIndividualGoal() {
 		return individualGoal;
 	}
 
-
+	
+	/**
+	 * Set whether this is an individual goal or not (it is a common goal otherwise)
+	 * @param individualGoal
+	 */
 	public void setIndividualGoal(boolean individualGoal) {
 		this.individualGoal = individualGoal;
 	}

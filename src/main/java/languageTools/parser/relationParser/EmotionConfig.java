@@ -12,6 +12,9 @@ import java.util.HashMap;
 
 import languageTools.exceptions.relationParser.InvalidEmotionConfigFile;
 import languageTools.exceptions.relationParser.InvalidGamSubGoalException;
+/**
+ * Representation of the gamygdala configuration. It holds the configurations about goals, subgoals and relations
+ */
 public class EmotionConfig {
 
   private HashMap<String,ArrayList<GamSubGoal>> SubGoals;
@@ -308,18 +311,34 @@ public void setWhiteList(boolean whiteList) {
 	this.whiteList = whiteList;
 }
 
+/**
+ * Returns true if the decay function is set to be exponential
+ * @return
+ */
 public boolean isDecayExponential() {
 	return isDecayExponential;
 }
 
+/**
+ * Sets the decay to be exponential if isExponential is true, the decay function is linear otherwise
+ * @param isExponential
+ */
 public void setDecayExponential(boolean isExponential) {
 	this.isDecayExponential = isExponential;
 }
 
+/**
+ * Returns the decay value
+ * @return
+ */
 public double getDecay() {
 	return decay;
 }
 
+/**
+ * Sets the decay value
+ * @param decay
+ */
 public void setDecay(double decay) {
 	this.decay = decay;
 }

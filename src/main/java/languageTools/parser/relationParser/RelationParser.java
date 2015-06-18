@@ -16,6 +16,10 @@ import languageTools.exceptions.relationParser.InvalidGamGoalString;
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
 import languageTools.exceptions.relationParser.InvalidGamRelationString;
 
+/**
+ * Parser for an emotionconfiguration
+ *
+ */
 abstract public class RelationParser {
 	
 	/**
@@ -162,7 +166,12 @@ abstract public class RelationParser {
 	}
 	
 	
-	
+	/**
+	 * Parses the decay set in the emotionconfig
+	 * @param objects
+	 * @param res
+	 * @throws InvalidEmotionConfigFile
+	 */
 	public static void parseDecay(String[] objects, EmotionConfig res) throws InvalidEmotionConfigFile{
 		
 		if (objects.length != 3) { //DECAY, TYPE, VALUE

@@ -5,6 +5,10 @@ package languageTools.parser.relationParser;
 
 import languageTools.exceptions.relationParser.InvalidGamSubGoalException;
 
+/**
+ * Represents the configuration of a subgoal for gamygdala
+ *
+ */
 public class GamSubGoal {
 	String goalName;
 	double likelihood;
@@ -98,30 +102,46 @@ public class GamSubGoal {
 		this.affectedGoalName = affectedGoalName;
 	}
 	
+	/**
+	 * returns the likelihood of this subgoal
+	 */
 	public double getLikelihood() {
 		return likelihood;
 	}
 
-
+	/**
+	 * Sets the likelihood of this subgoal
+	 */
 	public void setLikelihood(double likelihood) {
 		this.likelihood = likelihood;
 	}
-
+	
+	/**
+	 * Get the congurence that this subgoal should be appraised with
+	 */
 	public double getCongruence() {
 		return congruence;
 	}
 
-
+	/**
+	 * Set the congruence
+	 */
 	public void setCongruence(double congruence) {
 		this.congruence = congruence;
 	}
 
-
+	/**
+ 	* returns true if the subgoal should be appraised as an incremental goal
+ 	* @return
+ 	*/
 	public boolean isIncremental() {
 		return isIncremental;
 	}
 
-
+	/**
+	 * Set whether the goal is incremental or not
+	 * @param isIncremental
+	 */
 	public void setIncremental(boolean isIncremental) {
 		this.isIncremental = isIncremental;
 	}

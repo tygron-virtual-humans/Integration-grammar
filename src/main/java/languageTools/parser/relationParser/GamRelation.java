@@ -5,6 +5,10 @@ package languageTools.parser.relationParser;
 
 import languageTools.exceptions.relationParser.InvalidGamRelationException;
 
+/**
+ * Represent the configuration of a gamygdala relation
+ *
+ */
 public class GamRelation {
 	
 	String agent1;
@@ -52,27 +56,51 @@ public class GamRelation {
 		return "{REL: " + agent1 + ", " + agent2 + ", " + value + "}"; 
 	}
 	
+	/**
+	 * Returns the first (source) agent of the relation this is the agent that has the relation
+	 * @return
+	 */
 	public String getAgent1() {
 		return agent1;
 	}
-
+	
+	/**
+	 * Set the first (source) agent
+	 * @param agent1
+	 */
 	public void setAgent1(String agent1) {
 		this.agent1 = agent1;
 	}
 
+	/**
+	 * get the second (destination) agent, this is the agent with who the first agent has a relation with
+	 * @return
+	 */
 	public String getAgent2() {
 		return agent2;
 	}
-
+	
+	/**
+	 * Set the second agetn
+	 * @param agent2
+	 */
 	public void setAgent2(String agent2) {
 		this.agent2 = agent2;
 	}
 	
 	
+	/**
+ 	* Return the value (how good or bad this relation is) of the relation.
+ 	* @return [-1, 1]
+ 	*/
 	public double getValue() {
 		return value;
 	}
 
+	/**
+	 * Set the value (how good or bad this relation is) of the relation
+	 * @param value [-1, 1]
+	 */
 	public void setValue(double value) {
 		this.value = value;
 	}
