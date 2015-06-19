@@ -79,8 +79,6 @@ public class AgentValidatorSecondPass {
 	private final static String AGENT = "agent/1";
 	private final static String ME = "me/1";
 	private final static String PERCEPT = "percept/1";
-	private final static String EMOTION2 = "emotion/2";
-	private final static String EMOTION3 = "emotion/3";
 	private final static String RECEIVED = "received/2";
 	private final static String SENT = "sent/2";
 
@@ -314,8 +312,6 @@ public class AgentValidatorSecondPass {
 		reserved.add(AGENT);
 		reserved.add(ME);
 		reserved.add(PERCEPT);
-		reserved.add(EMOTION2);
-		reserved.add(EMOTION3);
 		reserved.add(RECEIVED);
 		reserved.add(SENT);
 
