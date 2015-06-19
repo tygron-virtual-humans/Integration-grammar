@@ -374,6 +374,12 @@ abstract public class RelationParser {
 		}
 	}
 	
+	
+	/**
+	 * Method to remove whitespacing in front and at the end of the splitted objects
+	 * @param objects
+	 * @return trimmed version of the String array
+	 */
 	public static String[] removeWhiteSpaces(String[] objects) {
 		String[] res = new String[objects.length];
 		for(int i = 0; i<objects.length; i++) {
