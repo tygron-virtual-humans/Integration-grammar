@@ -43,6 +43,12 @@ public class EmotionConfig {
     this.setSubGoals(SubGoals);
     this.setGoals(goals);
     this.setRelations(relations);
+    this.setDefaultUtility(1);
+	this.setDefaultNegativeCongruence(-1);
+	this.setDefaultPositiveCongruence(1);
+	this.setDefaultBelLikelihood(1);
+	this.setDefaultIsIncremental(false);
+	this.setWhiteList(false);
   }
   
   /**
